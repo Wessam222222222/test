@@ -1,0 +1,362 @@
+
+<!-- saved from url=(0024)https://html-css-js.com/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000; /* لون الخلفية */
+    color: #000000; /* لون النص */
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    background-color: #000000; /* لون خلفية الحاوية */
+    border-radius: 10px; /* زوايا مستديرة */
+    box-shadow: 0 0 10px rgb(0, 0, 0); /* ظل المربع */
+}
+
+/* قوالب لمحتوى إضافة الإعلانات وعرض الإعلانات */
+/* يمكنك إضافة المزيد من الأنماط حسب الحاجة */
+
+.form-container {
+    margin-bottom: 30px;
+}
+
+.ads {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.ad {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    text-align: left;
+    position: relative;
+    background-color: #18dbf5;
+    transition: box-shadow 0.3s ease;
+}
+
+.ad:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* تغيير الظل عند التحويم */
+}
+
+</style>
+
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>	Sales Store - Add Your Ad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000; /* Background color */
+            color: #000000; /* Text color */
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #000000; /* Container background color */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgb(0, 0, 0); /* Box shadow */
+        }
+        .form-container {
+            margin-bottom: 30px;
+        }
+        .form-container input[type="text"],
+        .form-container textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-container input[type="submit"] {
+            background-color: #41c9ff;
+            color: rgb(0, 0, 0);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #42e6e6;
+        }
+        .ads {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .ad {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            text-align: left;
+            position: relative;
+            background-color: #18dbf5;
+            transition: box-shadow 0.3s ease;
+        }
+        .ad:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Change box shadow on hover */
+        }
+        .ad img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .ad-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .edit-btn,
+        .delete-btn {
+            background-color: #f1f1f1;
+            padding: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        #searchBtn {
+            background-color: #f1f1f1;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #searchBtn:hover {
+            background-color: #42e6e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>	Sales Store - Add Your Ad</h2>
+            <img src="file:///C:/Users/Maryam%20DES/Downloads/Colorful%20Mascot%20Illustrative%20Online%20Shop%20Logo.png" alt="">
+            <form id="adForm">
+                <input type="hidden" id="adIndex" value="-1">
+                <input type="text" id="title" name="title" placeholder="Ad Title" required=""><br>
+                <textarea id="description" name="description" placeholder="Ad Description" required=""></textarea><br>
+                <input type="tel" id="phone" name="phone" placeholder="Phone Number (8 digits)" pattern="[0-9]{8}" required=""><br>
+                <input type="number" id="price" name="price" placeholder="Price" required=""><br>
+                <input type="file" id="image" name="image" accept="image/*" multiple=""><br>
+                <input type="file" id="video" name="video" accept="video/*"><br>
+                <input type="submit" value="Publish Ad">
+            </form>
+        </div>
+        <div id="adsContainer" class="ads">
+            <!-- Ads will be added here dynamically -->
+        </div>
+        <button id="saveAds">Save Ads</button>
+        <button id="searchBtn">Search Ads</button> <!-- Add search button -->
+        <button id="langSwitch">Switch Language</button>
+    </div>
+
+    <script>
+        let lang = 'en'; // Default language is English
+
+        // Language switch
+        document.getElementById("langSwitch").addEventListener("click", function() {
+            lang = lang === 'en' ? 'ar' : 'en';
+            document.documentElement.lang = lang; // Update language in HTML element
+            // Update page texts based on selected language
+            const langData = {
+                ar: {
+                    titlePlaceholder: "عنوان الإعلان",
+                    descriptionPlaceholder: "وصف الإعلان",
+                    phonePlaceholder: "رقم الهاتف",
+                    pricePlaceholder: "السعر",
+                    submitBtn: "نشر الإعلان",
+                    saveAdsBtn: "حفظ الإعلانات",
+                    langSwitchBtn: "تغيير اللغة"
+                },
+                en: {
+                    titlePlaceholder: "Ad Title",
+                    descriptionPlaceholder: "Ad Description",
+                    phonePlaceholder: "Phone Number",
+                    pricePlaceholder: "Price",
+                    submitBtn: "Publish Ad",
+                    saveAdsBtn: "Save Ads",
+                    langSwitchBtn: "Switch Language"
+                }
+            };
+            document.getElementById("title").placeholder = langData[lang].titlePlaceholder;
+            document.getElementById("description").placeholder = langData[lang].descriptionPlaceholder;
+            document.getElementById("phone").placeholder = langData[lang].phonePlaceholder;
+            document.getElementById("price").placeholder = langData[lang].pricePlaceholder;
+            document.getElementById("video").placeholder = langData[lang].videoPlaceholder;
+            document.getElementById("saveAds").textContent = langData[lang].saveAdsBtn;
+            document.getElementById("langSwitch").textContent = langData[lang].langSwitchBtn;
+            document.getElementById("adForm").querySelector('input[type="submit"]').value = langData[lang].submitBtn;
+        });
+
+        document.getElementById("adForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Extract data from the form
+            const formData = new FormData(event.target);
+            const title = formData.get("title");
+            const description = formData.get("description");
+            const phone = formData.get("phone");
+            const price = formData.get("price");
+            const images = formData.getAll("image");
+            const video = formData.get("video");
+            const adIndex = document.getElementById("adIndex").value;
+
+            // Create and display the ad element
+            const adElement = document.createElement("div");
+            adElement.classList.add("ad");
+            adElement.innerHTML = `
+                <div class="ad-info">
+                    <h2>${title}</h2>
+                    <p>${description}</p>
+                    <p>Price: ${price}</p>
+                    <p>Phone: <a href="tel:${phone}">${phone}</a></p>
+                    <p>Published Date: ${new Date().toLocaleDateString()}</p>
+                </div>
+                <div class="ad-images">
+                    <!-- Images will be added here -->
+                </div>
+                ${video ? `<div class="ad-video"><video controls><source src="${URL.createObjectURL(video)}" type="video/mp4"></video></div>` : ""}
+                <div class="ad-buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                </div>
+            `;
+            // Add images to the ad element
+            images.forEach(image => {
+                const imageElement = document.createElement("img");
+                imageElement.src = URL.createObjectURL(image);
+                adElement.querySelector(".ad-images").appendChild(imageElement);
+            });
+
+            if (adIndex === "-1") {
+                document.getElementById("adsContainer").appendChild(adElement);
+            } else {
+                const existingAd = document.querySelector(`.ad[data-index="${adIndex}"]`);
+                existingAd.innerHTML = adElement.innerHTML;
+                existingAd.dataset.index = adIndex;
+            }
+
+            // Reset the form
+            event.target.reset();
+            document.getElementById("adIndex").value = "-1";
+        });
+
+        // Save published ads to localStorage
+        document.getElementById("saveAds").addEventListener("click", function() {
+            const ads = document.querySelectorAll(".ad");
+            const savedAds = [];
+            ads.forEach((ad, index) => {
+                const adInfo = {
+                    title: ad.querySelector("h2").textContent,
+                    description: ad.querySelector("p:nth-of-type(1)").textContent,
+                    price: ad.querySelector("p:nth-of-type(2)").textContent,
+                    phone: ad.querySelector("p:nth-of-type(3)").textContent,
+                    images: [...ad.querySelectorAll(".ad-images img")].map(img => img.src),
+                    video: ad.querySelector(".ad-video video") ? ad.querySelector(".ad-video video").src : null,
+                    publishDate: ad.querySelector(".ad-info p:nth-of-type(4)").textContent
+                };
+                savedAds.push(adInfo);
+            });
+            localStorage.setItem("savedAds", JSON.stringify(savedAds));
+            alert("Ads saved successfully!");
+        });
+
+        // Display saved ads from localStorage when the page loads
+        window.onload = function() {
+            const savedAds = JSON.parse(localStorage.getItem("savedAds")) || [];
+            savedAds.forEach(ad => {
+                const adElement = document.createElement("div");
+                adElement.classList.add("ad");
+                adElement.dataset.index = ad.index;
+                adElement.innerHTML = `
+                    <div class="ad-info">
+                        <h2>${ad.title}</h2>
+                        <p>${ad.description}</p>
+                        <p>Price: ${ad.price}</p>
+                        <p>Phone: <a href="tel:${ad.phone}">${ad.phone}</a></p>
+                        <p>Published Date: ${ad.publishDate}</p>
+                    </div>
+                    <div class="ad-images">
+                        <!-- Images will be added here -->
+                    </div>
+                    ${ad.video ? `<div class="ad-video"><video controls><source src="${ad.video}" type="video/mp4"></video></div>` : ""}
+                    <div class="ad-buttons">
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </div>
+                `;
+                ad.images.forEach(image => {
+                    const imageElement = document.createElement("img");
+                    imageElement.src = image;
+                    adElement.querySelector(".ad-images").appendChild(imageElement);
+                });
+                document.getElementById("adsContainer").appendChild(adElement);
+            });
+        };
+
+        // Add functionality to edit and delete buttons
+        document.getElementById("adsContainer").addEventListener("click", function(event) {
+            const target = event.target;
+            if (target.classList.contains("edit-btn")) {
+                const ad = target.closest(".ad");
+                const adIndex = ad.dataset.index;
+                const adData = {
+                    title: ad.querySelector(".ad-info h2").textContent,
+                    description: ad.querySelector(".ad-info p:nth-of-type(1)").textContent,
+                    price: ad.querySelector(".ad-info p:nth-of-type(2)").textContent,
+                    phone: ad.querySelector(".ad-info p:nth-of-type(3)").textContent,
+                    images: [...ad.querySelectorAll(".ad-images img")].map(img => img.src),
+                    video: ad.querySelector(".ad-video video") ? ad.querySelector(".ad-video video").src : null
+                };
+
+                document.getElementById("adIndex").value = adIndex;
+                document.getElementById("title").value = adData.title;
+                document.getElementById("description").value = adData.description;
+                document.getElementById("phone").value = adData.phone;
+                document.getElementById("price").value = adData.price.replace(/^\D+/g, '');
+                // You can add more functionality here to fill in more data if needed
+            } else if (target.classList.contains("delete-btn")) {
+                target.closest(".ad").remove();
+            }
+        });
+
+        // وظيفة للبحث عن الإعلانات
+        document.getElementById("searchBtn").addEventListener("click", function() {
+            const searchTerm = prompt("Enter search term:");
+            const ads = document.querySelectorAll(".ad-info h2"); // البحث في عناوين الإعلانات فقط
+            ads.forEach(ad => {
+                const adContainer = ad.parentElement.parentElement;
+                const title = ad.textContent.toLowerCase(); // تحويل العنوان إلى حروف صغيرة للمقارنة
+                if (title.includes(searchTerm.toLowerCase())) { // البحث بحسب الكلمة المدخلة
+                    adContainer.style.display = "block"; // إظهار الإعلان إذا تم العثور عليه
+                } else {
+                    adContainer.style.display = "none"; // إخفاء الإعلان إذا لم يتم العثور عليه
+                }
+            });
+        });
+    </script>
+
+
+</body></html>
