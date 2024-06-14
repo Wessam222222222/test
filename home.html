@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع الإعلانات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background: #eee;
+            margin: 10px 0;
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>موقع الإعلانات</h1>
+    <div class="container">
+        <form id="adForm">
+            <label for="adTitle">عنوان الإعلان:</label>
+            <input type="text" id="adTitle" required>
+            <label for="adDescription">وصف الإعلان:</label>
+            <textarea id="adDescription" required></textarea>
+            <button type="submit">نشر الإعلان</button>
+        </form>
+        <h2>الإعلانات المنشورة</h2>
+        <ul id="adList"></ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAds();
+        });
+
+        document.getElementById('adForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const adTitle = document.getElementById('adTitle').value;
+            const adDescription = document.getElementById('adDescription').value;
+
+            if (adTitle && adDescription) {
+                const ad = { title: adTitle, description: adDescription };
+                saveAd(ad);
+                displayAd(ad);
+
+                document.getElementById('adForm').reset();
+            }
+        });
+
+        function loadAds() {
+            const ads = JSON.parse(localStorage.getItem('ads')) || [];
+            ads.forEach(displayAd);
+        }
+
+        function saveAd(ad) {
+            const ads = JSON.parse(localStorage.getItem('ads')) || [];
+            ads.push(ad);
+            localStorage.setItem('ads', JSON.stringify(ads));
+        }
+
+        function displayAd(ad) {
+            const adList = document.getElementById('adList');
+            const adItem = document.createElement('li');
+            adItem.innerHTML = `<strong>${ad.title}</strong><p>${ad.description}</p>`;
+            adList.appendChild(adItem);
+        }
+    </script>
+</body>
+</html>
