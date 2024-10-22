@@ -127,6 +127,67 @@
             line-height: 1.8;
             font-size: 1.1rem;
         }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* نسبة العرض إلى الارتفاع 16:9 */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .container {
+            padding-bottom: 80px; /* إضافة مساحة أسفل المحتوى */
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--primary-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .bottom-nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .bottom-nav i {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .stories-container {
+                grid-template-columns: 1fr;
+            }
+            .search-container {
+                padding: 0 1rem;
+            }
+            #search-input {
+                width: 60%;
+            }
+            .modal-content {
+                width: 95%;
+                margin: 2% auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -151,7 +212,8 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <h2 id="modalTitle"></h2>
-                <img id="modalImage" class="full-story-image" src="" alt="">
+                <div id="videoContainer" class="video-container"></div>
+                <!-- تمت إزالة عنصر الصورة من هنا -->
                 <div id="modalContent" class="full-story-content"></div>
             </div>
         </div>
@@ -182,21 +244,87 @@
         const stories = [
             {
                 title: "قصة النبي يوسف عليه السلام",
-                image: "https://www.edarabia.com/ar/wp-content/uploads/2020/02/one-beautiful-stories-story-prophet-yusuf.jpg",
-                excerpt: "قصة النبي يوسف عليه السلام هي من أحسن القصص في القرآن الكريم، وفيها العديد من العبر والدروس.",
-                fullStory: "كانت حياة النبي يوسف عليه السلام مليئة بالاختبارات والمحن، بدءًا من غيرة إخوته وإلقائه في البئر، مرورًا بالعبودية في مصر وامتحان امرأة العزيز، وانتهاءً بالسجن ثم توليه منصب عزيز مصر. في كل هذه المراحل، أظهر يوسف صبرًا جميلًا وثقة بالله، ليصبح مثالًا للمؤمنين في الثبات على الحق والعفو عند المقدرة."
+                image: "https://i.ytimg.com/vi/RkiD_W5ffhU/maxresdefault.jpg",
+                excerpt: "قصة النبي يوسف عليه السلام هي من أحسن القصص في القرآن الكريم، مليئة بالعبر والدروس.",
+                fullStory: "كانت حياة النبي يوسف عليه السلام مليئة بالاختبارات والمحن. بدأت قصته عندما رأى رؤيا وهو صغير، فأخبر بها أباه يعقوب عليه السلام. غار إخوته منه وألقوه في البئر، ثم بيع كعبد في مصر. واجه يوسف محنة كبيرة في بيت العزيز، حيث راودته امرأة العزيز عن نفسه، لكنه رفض وفضّل السجن على المعصية. في السجن، فسّر أحلام السجناء، مما أدى في النهاية إلى خروجه وتوليه منصب عزيز مصر. عندما جاء إخوته إلى مصر طلباً للطعام، عرفهم ولم يعرفوه. وبعد سلسلة من الأحداث، جمع الله شمل العائلة. قصة يوسف تعلمنا الصبر على البلاء، والثقة بالله، والعفو عند المقدرة، وأن العاقبة دائماً للمتقين.",
+                videoId: "RkiD_W5ffhU"
             },
             {
                 title: "قصة أصحاب الكهف",
-                image: "https://i.ytimg.com/vi/lROXHK0oaKo/sddefault.jpg",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5i7rxnRdvIkJgEyr5CwUDnnfDUQ31qBmUng&s",
                 excerpt: "قصة أصحاب الكهف هي قصة إيمان وثبات على الحق في وجه الظلم والطغيان.",
-                fullStory: "فر مجموعة من الشباب المؤمنين من بطش ملكهم الظالم، ولجأوا إلى كهف طلبًا للنجاة بدينهم. نام هؤلاء الفتية في الكهف لمدة 309 سنوات، حفظهم الله خلالها من التحلل والفساد. عندما استيقظوا، وجدوا أن العالم قد تغير وأن الإيمان قد انتشر. قصتهم تعلمنا أهمية الثبات على الإيمان مهما كانت الظروف، وأن نصر الله قريب للمؤمنين."
+                fullStory: "في زمن ساد فيه الكفر والظلم، آمن فتية شجعان بالله وحده. خافوا على دينهم من بطش الملك الظالم، فقرروا الفرار بدينهم. لجأوا إلى كهف في الجبل، داعين الله أن يرحمهم ويهيئ لهم من أمرهم رشداً. استجاب الله دعاءهم وضرب على آذانهم في الكهف سنين عددا. أنامهم الله 309 سنوات، وعندما استيقظوا، ظنوا أنهم ناموا يوماً أو بعض يوم. أرسلوا أحدهم ليشتري طعاماً، فاكتشفوا أن الزمن قد تغير، وأن الله قد أظهر أمرهم للناس ليكونوا آية على قدرة الله وعلى البعث بعد الموت. قصتهم تعلمنا أهمية الثبات على الإيمان مهما كانت الظروف، وأن من يتوكل على الله فهو حسبه.",
+                videoId: "13S39pvPYlI"
             },
             {
                 title: "قصة النبي موسى عليه السلام",
-                image: "https://i.ytimg.com/vi/twBlhSOl8Hg/maxresdefault.jpg",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk3Mldc35h4NUTAaSKkCi9DtHkyOTWkR5X2g&s",
                 excerpt: "قصة النبي موسى عليه السلام مليئة بالمعجزات والدروس عن الصبر والثبات على الحق.",
-                fullStory: "ولد موسى عليه السلام في زمن كان فيه فرعون يقتل أبناء بني إسرائيل. نجاه الله وربي في قصر فرعون، ثم كلفه برسالة التوحيد. واجه موسى فرعون بالمعجزات، وقاد بني إسرائيل في الخروج من مصر، وشق البحر بإذن الله. قصة موسى مليئة بالدروس عن الصبر، والثقة بالله، ومواجهة الظلم، وأهمية الدعوة إلى التوحيد."
+                fullStory: "ولد موسى عليه السلام في زمن كان فيه فرعون يقتل أبناء بني إسرائيل. نجاه الله وربي في قصر فرعون، ثم كلفه برسالة التوحيد. واجه موسى فرعون بالمعجزات، وقاد بني إسرائيل في الخروج من مصر، وشق البحر بإذن الله. قصة موسى مليئة بالدروس عن الصبر، والثقة بالله، ومواجهة الظلم، وأهمية الدعوة إلى التوحيد.",
+                videoId: "twBlhSOl8Hg"
+            },
+            {
+                title: "قصة النبي نوح عليه السلام",
+                image: "https://i.ytimg.com/vi/05xg5S2qtU4/maxresdefault.jpg",
+                excerpt: "قصة النبي نوح عليه السلام تعلمنا الصبر والثبات في الدعوة إلى الله.",
+                fullStory: "دعا نوح عليه السلام قومه إلى عبادة الله وحده لمدة 950 عامًا، ولكن لم يؤمن معه إلا قليل. أمره الله ببناء السفينة، وحمل فيها من كل زوجين اثنين والمؤمنين. نجاهم الله من الطوفان العظيم الذي أغرق الكافرين. قصة نوح تعلمنا أهمية الاستمرار في الدعوة مهما طال الزمن، والتوكل على الله في مواجهة الصعاب.",
+                videoId: "8XmG8RmWhWU"
+            },
+            {
+                title: "قصة النبي إبراهيم عليه السلام",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRajUogLilpdQN4-NQsELte69LwrQYKBB8xiQ&s",
+                excerpt: "قصة النبي إبراهيم عليه السلام مليئة بالدروس في التوحيد والتضحية.",
+                fullStory: "عُرف إبراهيم عليه السلام بأنه خليل الله. تحدى عبادة الأصنام في قومه...",
+                videoId: "Ugu9XJ161Zk"
+            },
+            {
+                title: "قصة النبي محمد صلى الله عليه وسلم",
+                image: "https://images.twinkl.co.uk/tw1n/image/private/t_630_eco/image_repo/96/61/eg-re-1634334406-qisat-saydna-muhmd-sly-allh-lyh-wslm_ver_1.png",
+                excerpt: "سيرة النبي محمد صلى الله عليه وسلم مليئة بالدروس والعبر.",
+                fullStory: "ولد النبي محمد صلى الله عليه وسلم في مكة، ونشأ يتيمًا...",
+                videoId: "1iBM5qJaM"
+            },
+            {
+                title: "قصة النبي سليمان عليه السلام",
+                image: "https://example.com/sulaiman.jpg",
+                excerpt: "قصة النبي سليمان عليه السلام تعلمنا عن الحكمة والعدل.",
+                fullStory: "كان سليمان عليه السلام ملكًا نبيًا، آتاه الله الحكمة والعلم...",
+                videoId: "qW7XJ1Hy"
+            },
+            {
+                title: "قصة النبي أيوب عليه السلام",
+                image: "https://example.com/ayub.jpg",
+                excerpt: "قصة النبي أيوب عليه السلام هي مثال للصبر على البلاء.",
+                fullStory: "ابتلى الله أيوب عليه السلام بفقدان ماله وأهله وصحته...",
+                videoId: "Kj8mN9Hy"
+            },
+            {
+                title: "قصة النبي يونس عليه السلام",
+                image: "https://example.com/yunus.jpg",
+                excerpt: "قصة النبي يونس عليه السلام تعلمنا أهمية الصبر والتوبة.",
+                fullStory: "غادر يونس عليه السلام قومه غاضبًا قبل أن يأذن له الله...",
+                videoId: "Lm9kN7Hy"
+            },
+            {
+                title: "قصة النبي داود عليه السلام",
+                image: "https://example.com/dawud.jpg",
+                excerpt: "قصة النبي داود عليه السلام تعلمنا عن العدل والحكمة.",
+                fullStory: "كان داود عليه السلام ملكًا وقاضيًا عادلًا، وآتاه الله الزبور...",
+                videoId: "Op0mN8Hy"
+            },
+            {
+                title: "قصة النبي عيسى عليه السلام",
+                image: "https://example.com/isa.jpg",
+                excerpt: "قصة النبي عيسى عليه السلام مليئة بالمعجزات والدروس.",
+                fullStory: "ولد عيسى عليه السلام بمعجزة من غير أب، وكان آية للعالمين...",
+                videoId: "Qr1mN9Hy"
+            },
+            {
+                title: "قصة النبي إسماعيل عليه السلام",
+                image: "https://example.com/ismail.jpg",
+                excerpt: "قصة النبي إسماعيل عليه السلام تعلمنا عن الطاعة والتضحية.",
+                fullStory: "كان إسماعيل عليه السلام مثالًا للطاعة لوالده إبراهيم...",
+                videoId: "St2mN0Hy"
             }
         ];
 
@@ -232,13 +360,16 @@
             const story = stories.find(s => s.title === title);
             const modal = document.getElementById('storyModal');
             const modalTitle = document.getElementById('modalTitle');
-            const modalImage = document.getElementById('modalImage');
+            // تمت إزالة السطر الخاص بالصورة
             const modalContent = document.getElementById('modalContent');
+            const videoContainer = document.getElementById('videoContainer');
 
             modalTitle.textContent = story.title;
-            modalImage.src = story.image;
-            modalImage.alt = story.title;
+            // تمت إزالة الأسطر الخاصة بالصورة
             modalContent.textContent = story.fullStory;
+
+            // إضافة الفيديو
+            videoContainer.innerHTML = `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${story.videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
 
             modal.style.display = 'block';
         }
