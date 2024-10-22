@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القرآن الكريم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .islamic-pattern {
+            background-image: url('islamic-pattern.png');
+            background-repeat: repeat;
+            opacity: 0.1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0.5rem;
+            background-color: var(--primary-color);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 60px;
+        }
+        .ai-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .ai-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .container {
+            padding-bottom: 70px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding-bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-pattern"></div>
+    <div class="container">
+        <header>
+            <h1>القرآن الكريم</h1>
+            <p id="randomVerse" class="random-verse"></p>
+        </header>
+        
+        <main class="card-grid">
+            <div class="card" onclick="showPage('quran.html')">
+                <i class="fas fa-book-open"></i>
+                <h3>القرآن الكريم</h3>
+            </div>
+            <div class="card" onclick="showPage('hadith.html')">
+                <i class="fas fa-book"></i>
+                <h3>الأحاديث</h3>
+            </div>
+            <div class="card" onclick="showPage('azkar.html')">
+                <i class="fas fa-pray"></i>
+                <h3>الأذكار</h3>
+            </div>
+            <div class="card" onclick="showPage('qibla.html')">
+                <i class="fas fa-compass"></i>
+                <h3>اتجاه القبلة</h3>
+            </div>
+            <div class="card" onclick="showPage('stories.html')">
+                <i class="fas fa-book"></i>
+                <h3>قصص</h3>
+            </div>
+            <div class="card" onclick="showPage('fiqh.html')">
+                <i class="fas fa-balance-scale"></i>
+                <h3>كتاب الفقه</h3>
+            </div>
+            <div class="card" onclick="showPage('prayer_times.html')">
+                <i class="fas fa-clock"></i>
+                <h3>مواقيت الصلاة</h3>
+            </div>
+            <div class="card" onclick="showPage('tasbih.html')">
+                <i class="fas fa-dice"></i>
+                <h3>السبحة الإلكترونية</h3>
+            </div>
+            <div class="card" onclick="showPage('library.html')">
+                <i class="fas fa-book-reader"></i>
+                <h3>المكتبة الإسلامية</h3>
+            </div>
+            <div class="card" onclick="showPage('fatwa.html')">
+                <i class="fas fa-gavel"></i>
+                <h3>الفتاوى</h3>
+            </div>
+            <div class="card" onclick="showPage('nawawi40.html')">
+                <i class="fas fa-scroll"></i>
+                <h3>الأربعون النووية</h3>
+            </div>
+            <div class="card" onclick="showPage('bukhari.html')">
+                <i class="fas fa-mosque"></i>
+                <h3>صحيح البخاري</h3>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <button onclick="showPage('index.html')" class="active">
+                <i class="fas fa-home icon"></i>
+                الرئيسية
+            </button>
+            <button onclick="showPage('hadith.html')">
+                <i class="fas fa-book icon"></i>
+                الأحاديث
+            </button>
+            <button onclick="showAI()" class="ai-button">AI</button>
+            <button onclick="showPage('favorites.html')">
+                <i class="fas fa-star icon"></i>
+                المفضلة
+            </button>
+            <button onclick="showPage('settings.html')">
+                <i class="fas fa-cog icon"></i>
+                الإعدادات
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('introShown') !== 'true') {
+                window.location.href = 'intro.html';
+            }
+        });
+    </script>
+</body>
+</html>

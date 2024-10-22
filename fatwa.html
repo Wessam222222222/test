@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الفتاوى</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', 'Amiri', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color, #f0e6d2);
+            color: var(--text-color, #333);
+            padding-bottom: 70px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: var(--primary-color, #8B4513);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .fatwa-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .fatwa-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        .fatwa-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .fatwa-question {
+            font-weight: bold;
+            color: var(--primary-color, #8B4513);
+            margin-bottom: 0.5rem;
+        }
+        .fatwa-answer {
+            margin-top: 0.5rem;
+            color: var(--text-color, #333);
+        }
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: var(--bg-color, #f0e6d2);
+            color: var(--text-color, #333);
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--footer-color, #1e88e5);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        .bottom-nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .bottom-nav .icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .bottom-nav .ai-button {
+            background-color: #4CAF50;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>الفتاوى</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث في الفتاوى...">
+        </div>
+        <ul class="fatwa-list" id="fatwaList">
+            <!-- الفتاوى ستضاف هنا ديناميكيًا -->
+        </ul>
+    </div>
+
+    <nav class="bottom-nav">
+        <button onclick="showPage('index.html')">
+            <i class="fas fa-home icon"></i>
+            الرئيسية
+        </button>
+        <button onclick="showPage('hadith.html')">
+            <i class="fas fa-book icon"></i>
+            الأحاديث
+        </button>
+        <button onclick="showAI()" class="ai-button">AI</button>
+        <button onclick="showPage('favorites.html')">
+            <i class="fas fa-star icon"></i>
+            المفضلة
+        </button>
+        <button onclick="showPage('settings.html')">
+            <i class="fas fa-cog icon"></i>
+            الإعدادات
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+    <script>
+        const fatwas = [
+            { 
+                question: "ما حكم صلاة الجماعة في المسجد؟",
+                answer: "صلاة الجماعة في المسجد واجبة على الرجال القادرين، وهي من شعائر الإسلام الظاهرة. قال النبي ﷺ: «صلاة الجماعة تفضل صلاة الفذ بسبع وعشرين درجة»."
+            },
+            { 
+                question: "هل يجوز الجمع بين الصلوات في السفر؟",
+                answer: "نعم، يجوز الجمع بين الظهر والعصر، وبين المغرب والعشاء في السفر الطويل. وهذا من تيسير الله على عباده. قال تعالى: «يريد الله بكم اليسر ولا يريد بكم العسر»."
+            },
+            {
+                question: "ما حكم الزكاة على الذهب والفضة؟",
+                answer: "تجب الزكاة في الذهب والفضة إذا بلغت النصاب وحال عليها الحول. نصاب الذهب هو 85 جراماً، ونصاب الفضة 595 جراماً. ومقدار الزكاة فيهما هو ربع العشر (2.5%)."
+            },
+            {
+                question: "هل يجوز للمرأة أن تصوم التطوع بدون إذن زوجها؟",
+                answer: "لا يجوز للمرأة أن تصوم تطوعاً وزوجها حاضر إلا بإذنه، لحديث أبي هريرة رضي الله عنه أن النبي ﷺ قال: «لا يحل للمرأة أن تصوم وزوجها شاهد إلا بإذنه»."
+            },
+            {
+                question: "ما حكم التعامل بالربا في البنوك؟",
+                answer: "التعامل بالربا محرم شرعاً، سواء كان في البنوك أو غيرها. قال الله تعالى: «وأحل الله البيع وحرم الربا». ويجب على المسلم أن يبتعد عن كل المعاملات الربوية."
+            },
+            {
+                question: "هل يجوز استخدام معجون الأسنان أثناء الصيام؟",
+                answer: "يجوز استخدام معجون الأسنان أثناء الصيام، ولكن يُنصح بالاحتراز من ابتلاع شيء منه. وإذا ابتلع شيئاً منه عن غير قصد فلا يفسد صومه."
+            },
+            {
+                question: "ما حكم لبس الذهب للرجال؟",
+                answer: "يحرم على الرجال لبس الذهب، لحديث أبي موسى الأشعري رضي الله عنه أن النبي ﷺ قال: «حرم لباس الحرير والذهب على ذكور أمتي، وأحل لإناثهم»."
+            },
+            {
+                question: "هل يجوز الدعاء بغير اللغة العربية؟",
+                answer: "نعم، يجوز الدعاء بأي لغة يفهمها الداعي. فالله تعالى يعلم السر وأخفى، ويفهم جميع اللغات. والمهم في الدعاء هو صدق النية وحضور القلب."
+            },
+            {
+                question: "ما حكم التبرع بالأعضاء بعد الوفاة؟",
+                answer: "يجوز التبرع بالأعضاء بعد الوفاة إذا كان ذلك لإنقاذ حياة إنسان أو علاجه من مرض خطير، بشرط أن يكون ذلك بموافقة الشخص قبل وفاته أو موافقة ورثته بعد وفاته."
+            },
+            {
+                question: "هل يجوز للمرأة أن تقود السيارة؟",
+                answer: "يجوز للمرأة أن تقود السيارة إذا كان ذلك في إطار الضوابط الشرعية من الحشمة والستر وأمن الفتنة. وقد أجاز ذلك كثير من العلماء المعاصرين."
+            }
+        ];
+
+        function displayFatwas(fatwasToShow) {
+            const fatwaList = document.getElementById('fatwaList');
+            fatwaList.innerHTML = '';
+            fatwasToShow.forEach(fatwa => {
+                const li = document.createElement('li');
+                li.className = 'fatwa-item';
+                li.innerHTML = `
+                    <div class="fatwa-question">${fatwa.question}</div>
+                    <div class="fatwa-answer">${fatwa.answer}</div>
+                `;
+                fatwaList.appendChild(li);
+            });
+        }
+
+        function searchFatwas() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredFatwas = fatwas.filter(fatwa => 
+                fatwa.question.toLowerCase().includes(searchTerm) ||
+                fatwa.answer.toLowerCase().includes(searchTerm)
+            );
+            displayFatwas(filteredFatwas);
+        }
+
+        function applySettings() {
+            const fontSize = localStorage.getItem('fontSize') || '16';
+            document.body.style.fontSize = `${fontSize}px`;
+
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            document.body.classList.toggle('dark-mode', isDarkMode);
+
+            const headerColor = localStorage.getItem('headerColor') || '#1e88e5';
+            document.querySelector('header').style.backgroundColor = headerColor;
+
+            const footerColor = localStorage.getItem('footerColor') || '#1e88e5';
+            document.querySelector('.bottom-nav').style.backgroundColor = footerColor;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayFatwas(fatwas);
+            applySettings();
+            document.getElementById('searchInput').addEventListener('input', searchFatwas);
+        });
+
+        // إضافة مستمع للتغييرات في التخزين المحلي
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'footerColor') {
+                document.querySelector('.bottom-nav').style.backgroundColor = event.newValue;
+            } else if (event.key === 'fontSize' || event.key === 'darkMode' || event.key === 'headerColor') {
+                applySettings();
+            }
+        });
+
+        function showPage(page) {
+            window.location.href = page;
+        }
+
+        function showAI() {
+            alert('سيتم تفعيل خاصية الذكاء الاصطناعي قريباً');
+        }
+    </script>
+</body>
+</html>

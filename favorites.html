@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المفضلة - القرآن الكريم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .favorite-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .favorite-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .favorite-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0.5rem;
+        }
+        .favorite-actions button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.3rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>المفضلة</h1>
+        </header>
+        
+        <main id="favoritesList">
+            <!-- Favorites will be inserted here -->
+        </main>
+        
+        <nav class="bottom-nav">
+            <button onclick="showPage('index.html')">
+                <i class="fas fa-home icon"></i>
+                الرئيسية
+            </button>
+            <button onclick="showPage('hadith.html')">
+                <i class="fas fa-book icon"></i>
+                الأحاديث
+            </button>
+            <button onclick="showPage('favorites.html')" class="active">
+                <i class="fas fa-star icon"></i>
+                المفضلة
+            </button>
+            <button onclick="showPage('settings.html')">
+                <i class="fas fa-cog icon"></i>
+                الإعدادات
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function fetchSurahs() {
+            try {
+                const response = await fetch('https://api.alquran.cloud/v1/surah');
+                const data = await response.json();
+                return data.data;
+            } catch (error) {
+                console.error('Error fetching surahs:', error);
+                return [];
+            }
+        }
+
+        async function displayFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('favoriteSurahs')) || [];
+            const favoritesList = document.getElementById('favoritesList');
+            favoritesList.innerHTML = '';
+            
+            if (favorites.length === 0) {
+                favoritesList.innerHTML = '<p>لا توجد سور مفضلة حالياً.</p>';
+                return;
+            }
+
+            const allSurahs = await fetchSurahs();
+
+            favorites.forEach(surahNumber => {
+                const surah = allSurahs.find(s => s.number === surahNumber);
+                if (surah) {
+                    const favoriteDiv = document.createElement('div');
+                    favoriteDiv.className = 'favorite-item';
+                    favoriteDiv.innerHTML = `
+                        <h3>${surah.name}</h3>
+                        <p>سورة رقم ${surah.number}</p>
+                        <div class="favorite-actions">
+                            <button onclick="openSurahPage(${surah.number})">قراءة</button>
+                            <button onclick="removeFavorite(${surah.number})">إزالة من المفضلة</button>
+                        </div>
+                    `;
+                    favoritesList.appendChild(favoriteDiv);
+                }
+            });
+        }
+
+        function removeFavorite(surahNumber) {
+            let favorites = JSON.parse(localStorage.getItem('favoriteSurahs')) || [];
+            favorites = favorites.filter(num => num !== surahNumber);
+            localStorage.setItem('favoriteSurahs', JSON.stringify(favorites));
+            displayFavorites();
+        }
+
+        function openSurahPage(surahNumber) {
+            localStorage.setItem('currentSurahNumber', surahNumber);
+            window.location.href = 'surah_page.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyCommonSettings();
+            displayFavorites();
+        });
+    </script>
+</body>
+</html>

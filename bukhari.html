@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صحيح البخاري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', 'Amiri', sans-serif;
+            line-height: 1.6;
+            background-color: #f0e6d2;
+            color: #333;
+            padding-bottom: 70px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: #8B4513;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .hadith-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .hadith-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .hadith-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .hadith-number {
+            font-weight: bold;
+            color: #8B4513;
+            font-size: 1.2rem;
+        }
+        .hadith-content {
+            margin-top: 0.5rem;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #8B4513;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        .bottom-nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .bottom-nav .icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .bottom-nav .ai-button {
+            background-color: #4CAF50;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        .listen-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .listen-button:hover {
+            background-color: #45a049;
+        }
+        .hadith-title {
+            font-weight: bold;
+            color: #4A5568;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .hadith-text {
+            font-style: italic;
+            color: #718096;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>صحيح البخاري</h1>
+        <ul class="hadith-list" id="hadithList">
+            <!-- الأحاديث ستضاف هنا ديناميكيًا -->
+        </ul>
+    </div>
+
+    <nav class="bottom-nav">
+        <button onclick="showPage('index.html')">
+            <i class="fas fa-home icon"></i>
+            الرئيسية
+        </button>
+        <button onclick="showPage('hadith.html')">
+            <i class="fas fa-book icon"></i>
+            الأحاديث
+        </button>
+        <button onclick="showAI()" class="ai-button">AI</button>
+        <button onclick="showPage('favorites.html')">
+            <i class="fas fa-star icon"></i>
+            المفضلة
+        </button>
+        <button onclick="showPage('settings.html')">
+            <i class="fas fa-cog icon"></i>
+            الإعدادات
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+    <script>
+        const hadiths = [
+            { number: 1, title: "النية في الأعمال", text: "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى...", content: "عن أمير المؤمنين أبي حفص عمر بن الخطاب رضي الله عنه قال: سمعت رسول الله ﷺ يقول: «إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى، فمن كانت هجرته إلى الله ورسوله فهجرته إلى الله ورسوله، ومن كانت هجرته لدنيا يصيبها أو امرأة ينكحها فهجرته إلى ما هاجر إليه»" },
+            { number: 2, title: "أركان الإسلام", text: "بني الإسلام على خمس: شهادة أن لا إله إلا الله...", content: "عن ابن عمر رضي الله عنهما قال: قال رسول الله ﷺ: «بني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدا رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان»" },
+            { number: 3, title: "حسن الإسلام", text: "من حسن إسلام المرء تركه ما لا يعنيه", content: "عن أبي هريرة رضي الله عنه قال: قال رسول الله ﷺ: «من حسن إسلام المرء تركه ما لا يعنيه»" },
+            { number: 4, title: "حلاوة الإيمان", text: "ثلاث من كن فيه وجد حلاوة الإيمان...", content: "عن أنس رضي الله عنه، عن النبي ﷺ قال: «ثلاث من كن فيه وجد حلاوة الإيمان: أن يكون الله ورسوله أحب إليه مما سواهما، وأن يحب المرء لا يحبه إلا لله، وأن يكره أن يعود في الكفر كما يكره أن يقذف في النار»" },
+            { number: 5, title: "المسلم من سلم المسلمون", text: "المسلم من سلم المسلمون من لسانه ويده...", content: "عن عبد الله بن عمرو رضي الله عنهما، عن النبي ﷺ قال: «المسلم من سلم المسلمون من لسانه ويده، والمهاجر من هجر ما نهى الله عنه»" },
+        ];
+
+        function displayHadiths() {
+            const hadithList = document.getElementById('hadithList');
+            hadithList.innerHTML = '';
+            hadiths.forEach(hadith => {
+                const li = document.createElement('li');
+                li.className = 'hadith-item';
+                li.innerHTML = `
+                    <div class="hadith-number">الحديث رقم ${hadith.number}</div>
+                    <div class="hadith-title">${hadith.title}</div>
+                    <div class="hadith-text">${hadith.text}</div>
+                    <div class="hadith-content">${hadith.content}</div>
+                    <button class="listen-button" onclick="listenToHadith(${hadith.number})">
+                        <i class="fas fa-volume-up"></i> استمع للحديث
+                    </button>
+                `;
+                hadithList.appendChild(li);
+            });
+        }
+
+        function listenToHadith(number) {
+            alert(`عذرًا، ميزة الاستماع للحديث رقم ${number} غير متاحة حاليًا. نعمل على توفيرها قريبًا.`);
+        }
+
+        // عرض الأحاديث مباشرة عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            displayHadiths();
+        });
+    </script>
+</body>
+</html>

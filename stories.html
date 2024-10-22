@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قصص إسلامية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .stories-container {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .search-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        #search-input {
+            width: 70%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            outline: none;
+        }
+        #search-button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #search-button:hover {
+            background-color: var(--secondary-color);
+        }
+        .story-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .story-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .story-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .story-content {
+            padding: 1.5rem;
+        }
+        .story-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .story-excerpt {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .read-more {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .read-more:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            animation: modalOpen 0.5s;
+        }
+        @keyframes modalOpen {
+            from {opacity: 0; transform: scale(0.8);}
+            to {opacity: 1; transform: scale(1);}
+        }
+        .close {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .full-story-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        .full-story-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-pattern"></div>
+    <div class="container">
+        <header>
+            <h1>قصص إسلامية</h1>
+        </header>
+        
+        <main>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="ابحث عن قصة...">
+                <button id="search-button" onclick="searchStories()">بحث</button>
+            </div>
+            
+            <div class="stories-container" id="stories-list">
+                <!-- القصص ستُضاف هنا ديناميكيًا -->
+            </div>
+        </main>
+        
+        <div id="storyModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="modalTitle"></h2>
+                <img id="modalImage" class="full-story-image" src="" alt="">
+                <div id="modalContent" class="full-story-content"></div>
+            </div>
+        </div>
+        
+        <nav class="bottom-nav">
+            <button onclick="showPage('index.html')">
+                <i class="fas fa-home icon"></i>
+                الرئيسية
+            </button>
+            <button onclick="showPage('hadith.html')">
+                <i class="fas fa-book icon"></i>
+                الأحاديث
+            </button>
+            <button onclick="showAI()" class="ai-button">AI</button>
+            <button onclick="showPage('favorites.html')">
+                <i class="fas fa-star icon"></i>
+                المفضلة
+            </button>
+            <button onclick="showPage('settings.html')">
+                <i class="fas fa-cog icon"></i>
+                الإعدادات
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        const stories = [
+            {
+                title: "قصة النبي يوسف عليه السلام",
+                image: "https://www.edarabia.com/ar/wp-content/uploads/2020/02/one-beautiful-stories-story-prophet-yusuf.jpg",
+                excerpt: "قصة النبي يوسف عليه السلام هي من أحسن القصص في القرآن الكريم، وفيها العديد من العبر والدروس.",
+                fullStory: "كانت حياة النبي يوسف عليه السلام مليئة بالاختبارات والمحن، بدءًا من غيرة إخوته وإلقائه في البئر، مرورًا بالعبودية في مصر وامتحان امرأة العزيز، وانتهاءً بالسجن ثم توليه منصب عزيز مصر. في كل هذه المراحل، أظهر يوسف صبرًا جميلًا وثقة بالله، ليصبح مثالًا للمؤمنين في الثبات على الحق والعفو عند المقدرة."
+            },
+            {
+                title: "قصة أصحاب الكهف",
+                image: "https://i.ytimg.com/vi/lROXHK0oaKo/sddefault.jpg",
+                excerpt: "قصة أصحاب الكهف هي قصة إيمان وثبات على الحق في وجه الظلم والطغيان.",
+                fullStory: "فر مجموعة من الشباب المؤمنين من بطش ملكهم الظالم، ولجأوا إلى كهف طلبًا للنجاة بدينهم. نام هؤلاء الفتية في الكهف لمدة 309 سنوات، حفظهم الله خلالها من التحلل والفساد. عندما استيقظوا، وجدوا أن العالم قد تغير وأن الإيمان قد انتشر. قصتهم تعلمنا أهمية الثبات على الإيمان مهما كانت الظروف، وأن نصر الله قريب للمؤمنين."
+            },
+            {
+                title: "قصة النبي موسى عليه السلام",
+                image: "https://i.ytimg.com/vi/twBlhSOl8Hg/maxresdefault.jpg",
+                excerpt: "قصة النبي موسى عليه السلام مليئة بالمعجزات والدروس عن الصبر والثبات على الحق.",
+                fullStory: "ولد موسى عليه السلام في زمن كان فيه فرعون يقتل أبناء بني إسرائيل. نجاه الله وربي في قصر فرعون، ثم كلفه برسالة التوحيد. واجه موسى فرعون بالمعجزات، وقاد بني إسرائيل في الخروج من مصر، وشق البحر بإذن الله. قصة موسى مليئة بالدروس عن الصبر، والثقة بالله، ومواجهة الظلم، وأهمية الدعوة إلى التوحيد."
+            }
+        ];
+
+        function displayStories(storiesToShow) {
+            const storiesList = document.getElementById('stories-list');
+            storiesList.innerHTML = '';
+            
+            storiesToShow.forEach(story => {
+                const storyCard = document.createElement('div');
+                storyCard.className = 'story-card';
+                storyCard.innerHTML = `
+                    <img src="${story.image}" alt="${story.title}" class="story-image">
+                    <div class="story-content">
+                        <h2 class="story-title">${story.title}</h2>
+                        <p class="story-excerpt">${story.excerpt}</p>
+                        <a href="#" class="read-more" onclick="openStory('${story.title}')">اقرأ المزيد</a>
+                    </div>
+                `;
+                storiesList.appendChild(storyCard);
+            });
+        }
+
+        function searchStories() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filteredStories = stories.filter(story => 
+                story.title.toLowerCase().includes(searchTerm) || 
+                story.excerpt.toLowerCase().includes(searchTerm)
+            );
+            displayStories(filteredStories);
+        }
+
+        function openStory(title) {
+            const story = stories.find(s => s.title === title);
+            const modal = document.getElementById('storyModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalImage = document.getElementById('modalImage');
+            const modalContent = document.getElementById('modalContent');
+
+            modalTitle.textContent = story.title;
+            modalImage.src = story.image;
+            modalImage.alt = story.title;
+            modalContent.textContent = story.fullStory;
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('storyModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('storyModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyCommonSettings();
+            displayStories(stories);
+        });
+    </script>
+</body>
+</html>

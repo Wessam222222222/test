@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأربعون النووية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', 'Amiri', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color, #f0e6d2);
+            color: var(--text-color, #333);
+            padding-bottom: 70px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: var(--primary-color, #8B4513);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .hadith-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .hadith-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        .hadith-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .hadith-number {
+            font-weight: bold;
+            color: var(--primary-color, #8B4513);
+            font-size: 1.2rem;
+        }
+        .hadith-title {
+            font-weight: bold;
+            color: #34495E;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .hadith-text {
+            color: var(--text-color, #333);
+            margin-bottom: 0.5rem;
+        }
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--footer-color, #1e88e5);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        .bottom-nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+        .bottom-nav .icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .bottom-nav .ai-button {
+            background-color: #4CAF50;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>الأربعون النووية</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث في الأحاديث...">
+        </div>
+        <ul class="hadith-list" id="hadithList">
+            <!-- الأحاديث ستضاف هنا ديناميكيًا -->
+        </ul>
+    </div>
+
+    <nav class="bottom-nav">
+        <button onclick="showPage('index.html')">
+            <i class="fas fa-home icon"></i>
+            الرئيسية
+        </button>
+        <button onclick="showPage('hadith.html')">
+            <i class="fas fa-book icon"></i>
+            الأحاديث
+        </button>
+        <button onclick="showAI()" class="ai-button">AI</button>
+        <button onclick="showPage('favorites.html')">
+            <i class="fas fa-star icon"></i>
+            المفضلة
+        </button>
+        <button onclick="showPage('settings.html')">
+            <i class="fas fa-cog icon"></i>
+            الإعدادات
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+    <script>
+        const hadiths = [
+            { number: 1, title: "الأعمال بالنيات", text: "عن أمير المؤمنين أبي حفص عمر بن الخطاب رضي الله عنه قال: سمعت رسول الله ﷺ يقول: «إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى، فمن كانت هجرته إلى الله ورسوله فهجرته إلى الله ورسوله، ومن كانت هجرته لدنيا يصيبها أو امرأة ينكحها فهجرته إلى ما هاجر إليه»" },
+            { number: 2, title: "مراتب الدين", text: "عن عمر رضي الله عنه أيضاً قال: بينما نحن جلوس عند رسول الله ﷺ ذات يوم إذ طلع علينا رجل شديد بياض الثياب شديد سواد الشعر لا يرى عليه أثر السفر ولا يعرفه منا أحد. حتى جلس إلى النبي ﷺ فأسند ركبتيه إلى ركبتيه ووضع كفيه على فخذيه وقال: يا محمد أخبرني عن الإسلام، فقال رسول الله ﷺ: «الإسلام أن تشهد أن لا إله إلا الله وأن محمداً رسول الله وتقيم الصلاة وتؤتي الزكاة وتصوم رمضان وتحج البيت إن استطعت إليه سبيلاً» ..." },
+            // أضف باقي الأحاديث الأربعين هنا...
+        ];
+
+        function displayHadiths(hadithsToShow) {
+            const hadithList = document.getElementById('hadithList');
+            hadithList.innerHTML = '';
+            hadithsToShow.forEach(hadith => {
+                const li = document.createElement('li');
+                li.className = 'hadith-item';
+                li.innerHTML = `
+                    <div class="hadith-number">الحديث رقم ${hadith.number}</div>
+                    <div class="hadith-title">${hadith.title}</div>
+                    <div class="hadith-text">${hadith.text}</div>
+                `;
+                hadithList.appendChild(li);
+            });
+        }
+
+        function searchHadiths() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredHadiths = hadiths.filter(hadith => 
+                hadith.text.toLowerCase().includes(searchTerm) ||
+                hadith.title.toLowerCase().includes(searchTerm)
+            );
+            displayHadiths(filteredHadiths);
+        }
+
+        function applySettings() {
+            const fontSize = localStorage.getItem('fontSize') || '16';
+            document.body.style.fontSize = `${fontSize}px`;
+
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            document.body.classList.toggle('dark-mode', isDarkMode);
+
+            const headerColor = localStorage.getItem('headerColor') || '#1e88e5';
+            document.querySelector('header').style.backgroundColor = headerColor;
+
+            const footerColor = localStorage.getItem('footerColor') || '#1e88e5';
+            document.querySelector('.bottom-nav').style.backgroundColor = footerColor;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayHadiths(hadiths);
+            applySettings();
+            document.getElementById('searchInput').addEventListener('input', searchHadiths);
+        });
+
+        // إضافة مستمع للتغييرات في التخزين المحلي
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'footerColor') {
+                document.querySelector('.bottom-nav').style.backgroundColor = event.newValue;
+            } else if (event.key === 'fontSize' || event.key === 'darkMode' || event.key === 'headerColor') {
+                applySettings();
+            }
+        });
+
+        function showPage(page) {
+            window.location.href = page;
+        }
+
+        function showAI() {
+            alert('سيتم تفعيل خاصية الذكاء الاصطناعي قريباً');
+        }
+    </script>
+</body>
+</html>

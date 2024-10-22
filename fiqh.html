@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كتاب الفقه الإسلامي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1F3A5F;
+            --secondary-color: #4A6FA5;
+            --text-color: #333;
+            --background-color: #F0F4F8;
+        }
+        body {
+            font-family: 'Tajawal', 'Amiri', sans-serif;
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-bottom: 80px;
+        }
+        header h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .fiqh-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .fiqh-item {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid var(--primary-color);
+        }
+        .fiqh-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .fiqh-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        .fiqh-item p {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+        .fiqh-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        .search-container {
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+        .search-container input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+        .search-container input:focus {
+            box-shadow: 0 0 10px rgba(31, 58, 95, 0.5);
+        }
+        .button-pulse {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .button-pulse:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(31, 58, 95, 0.4);
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--primary-color);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .bottom-nav button {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .bottom-nav button:hover {
+            transform: translateY(-5px);
+        }
+        .bottom-nav .icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        .bottom-nav .ai-button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .close {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #000;
+        }
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            text-align: center;
+            display: block;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-pattern"></div>
+    <div class="container">
+        <header>
+            <h1>كتاب الفقه الإسلامي</h1>
+        </header>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث في مواضيع الفقه..." onkeyup="searchFiqhTopics()">
+        </div>
+        
+        <main class="fiqh-grid" id="fiqhGrid">
+            <!-- سيتم إضافة عناصر الفقه هنا ديناميكيًا -->
+        </main>
+    </div>
+
+    <div id="topicModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <i id="modalIcon" class="modal-icon"></i>
+            <h2 id="modalTitle"></h2>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button onclick="showPage('index.html')">
+            <i class="fas fa-home icon"></i>
+            الرئيسية
+        </button>
+        <button onclick="showPage('hadith.html')">
+            <i class="fas fa-book icon"></i>
+            الأحاديث
+        </button>
+        <button onclick="showAI()" class="ai-button">AI</button>
+        <button onclick="showPage('favorites.html')">
+            <i class="fas fa-star icon"></i>
+            المفضلة
+        </button>
+        <button onclick="showPage('settings.html')">
+            <i class="fas fa-cog icon"></i>
+            الإعدادات
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+    <script>
+        const fiqhTopics = [
+            {
+                title: "الطهارة",
+                description: "أحكام الوضوء والغسل والتيمم",
+                icon: "fas fa-water",
+                details: "تشمل الطهارة أحكام الوضوء والغسل والتيمم.",
+                content: `
+                    <h3>الوضوء</h3>
+                    <p>الوضوء هو شرط لصحة الصلاة، ويتضمن الخطوات التالية:</p>
+                    <ul>
+                        <li>غسل الوجه</li>
+                        <li>غسل اليدين إلى المرفقين</li>
+                        <li>مسح الرأس</li>
+                        <li>غسل القدمين إلى الكعبين</li>
+                    </ul>
+
+                    <h3>الغسل</h3>
+                    <p>الغسل يكون واجباً في حالات معينة مثل الجنابة. خطوات الغسل تشمل:</p>
+                    <ul>
+                        <li>النية</li>
+                        <li>تعميم الجسد بالماء</li>
+                        <li>تخليل الشعر</li>
+                    </ul>
+
+                    <h3>التيمم</h3>
+                    <p>التيمم هو بديل للوضوء والغسل عند عدم توفر الماء أو القدرة على استخدامه. خطوات التيمم:</p>
+                    <ul>
+                        <li>النية</li>
+                        <li>ضرب اليدين على التراب الطاهر</li>
+                        <li>مسح الوجه واليدين</li>
+                    </ul>
+                `
+            },
+            { title: "الصلاة", description: "أركان الصلاة وشروطها وأنواعها", icon: "fas fa-pray", details: "الصلاة هي الركن الثاني من أركان الإسلام. تشمل أركان الصلاة: النية، تكبيرة الإحرام، القيام، قراءة الفاتحة، الركوع، السجود، الجلوس بين السجدتين، التشهد الأخير، والسلام. هناك أنواع مختلفة من الصلوات مثل الفرض والسنة والنافلة.", content: "الصلاة هي الركن الثاني من أركان الإسلام. تشمل أركان الصلاة: النية، تكبيرة الإحرام، القيام، قراءة الفاتحة، الركوع، السجود، الجلوس بين السجدتين، التشهد الأخير، والسلام. هناك أنواع مختلفة من الصلوات مثل الفرض والسنة والنافلة." },
+            { title: "الزكاة", description: "أحكام الزكاة ومصارفها", icon: "fas fa-hand-holding-usd", details: "الزكاة هي الركن الثالث من أركان الإسلام. تجب على من يملك نصاباً من المال أو الذهب أو الفضة أو الأنعام أو الزروع والثمار. مصارف الزكاة ثمانية كما ذكرت في القرآن الكريم، منها الفقراء والمساكين والعاملين عليها والمؤلفة قلوبهم.", content: "الزكاة هي الركن الثالث من أركان الإسلام. تجب على من يملك نصاباً من المال أو الذهب أو الفضة أو الأنعام أو الزروع والثمار. مصارف الزكاة ثمانية كما ذكرت في القرآن الكريم، منها الفقراء والمساكين والعاملين عليها والمؤلفة قلوبهم." },
+            { title: "الصيام", description: "أحكام الصيام وفضائله", icon: "fas fa-moon", details: "الصيام هو الركن الرابع من أركان الإسلام. يجب صيام شهر رمضان على كل مسلم بالغ عاقل قادر. من أحكامه الإمساك عن الطعام والشراب والجماع من طلوع الفجر إلى غروب الشمس. للصيام فضائل عديدة منها تكفير الذنوب وتهذيب النفس.", content: "الصيام هو الركن الرابع من أركان الإسلام. يجب صيام شهر رمضان على كل مسلم بالغ عاقل قادر. من أحكامه الإمساك عن الطعام والشراب والجماع من طلوع الفجر إلى غروب الشمس. للصيام فضائل عديدة منها تكفير الذنوب وتهذيب النفس." },
+            { title: "الحج", description: "مناسك الحج والعمرة", icon: "fas fa-kaaba", details: "الحج هو الركن الخامس من أركان الإسلام. يجب مرة واحدة في العمر على المستطيع. من مناسك الحج: الإحرام، الطواف، السعي، الوقوف بعرفة، المبيت بمزدلفة، رمي الجمرات، والمبيت بمنى. العمرة تشمل الإحرام والطواف والسعي والتقصير.", content: "الحج هو الركن الخامس من أركان الإسلام. يجب مرة واحدة في العمر على المستطيع. من مناسك الحج: الإحرام، الطواف، السعي، الوقوف بعرفة، المبيت بمزدلفة، رمي الجمرات، والمبيت بمنى. العمرة تشمل الإحرام والطواف والسعي والتقصير." },
+            { title: "المعاملات", description: "البيع والشراء والإجارة", icon: "fas fa-handshake", details: "تشمل المعاملات في الفقه الإسلامي أحكام البيع والشراء والإجارة وغيرها. من شروط صحة البيع: التراضي، أهلية المتعاقدين، ملكية البائع للسلعة، وأن تكون السلعة مباحة ومعلومة. الإجارة هي عقد على منفعة مباحة معلومة لمدة معلومة بعوض معلوم.", content: "تشمل المعاملات في الفقه الإسلامي أحكام البيع والشراء والإجارة وغيرها. من شروط صحة البيع: التراضي، أهلية المتعاقدين، ملكية البائع للسلعة، وأن تكون السلعة مباحة ومعلومة. الإجارة هي عقد على منفعة مباحة معلومة لمدة معلومة بعوض معلوم." },
+            { title: "النكاح", description: "أحكام الزواج والطلاق", icon: "fas fa-ring", details: "النكاح (الزواج) من السنن المؤكدة في الإسلام. من شروطه: الإيجاب والقبول، الولي، الشهود، والمهر. الطلاق مباح ولكنه أبغض الحلال إلى الله. يشمل الفقه أحكام الطلاق والرجعة والخلع وغيرها من المسائل المتعلقة بالأسرة.", content: "النكاح (الزواج) من السنن المؤكدة في الإسلام. من شروطه: الإيجاب والقبول، الولي، الشهود، والمهر. الطلاق مباح ولكنه أبغض الحلال إلى الله. يشمل الفقه أحكام الطلاق والرجعة والخلع وغيرها من المسائل المتعلقة بالأسرة." },
+            { title: "الجنايات", description: "أحكام القصاص والديات", icon: "fas fa-balance-scale", details: "تتناول أحكام الجنايات في الفقه الإسلامي القصاص والديات. القصاص هو المعاقبة بالمثل في حالات القتل العمد والجروح العمدية. الدية هي المال الواجب بسبب الجناية على النفس أو ما دونها. تهدف هذه الأحكام إلى حفظ النفس وتحقيق العدالة.", content: "تتناول أحكام الجنايات في الفقه الإسلامي القصاص والديات. القصاص هو المعاقبة بالمثل في حالات القتل العمد والجروح العمدية. الدية هي المال الواجب بسبب الجناية على النفس أو ما دونها. تهدف هذه الأحكام إلى حفظ النفس وتحقيق العدالة." }
+        ];
+
+        function displayFiqhTopics() {
+            const fiqhGrid = document.getElementById('fiqhGrid');
+            fiqhGrid.innerHTML = '';
+            fiqhTopics.forEach(topic => {
+                const topicDiv = document.createElement('div');
+                topicDiv.className = 'fiqh-item';
+                topicDiv.innerHTML = `
+                    <i class="${topic.icon} fiqh-icon"></i>
+                    <h3>${topic.title}</h3>
+                    <p>${topic.description}</p>
+                    <button class="button-pulse" onclick="openTopicModal('${topic.title}')">اقرأ المزيد</button>
+                `;
+                fiqhGrid.appendChild(topicDiv);
+            });
+        }
+
+        function openTopicModal(title) {
+            const topic = fiqhTopics.find(t => t.title === title);
+            if (topic) {
+                document.getElementById('modalIcon').className = `${topic.icon} modal-icon`;
+                document.getElementById('modalTitle').textContent = topic.title;
+                document.getElementById('modalContent').innerHTML = topic.content;
+                document.getElementById('topicModal').style.display = 'block';
+            }
+        }
+
+        // Close modal when clicking on the close button or outside the modal
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('topicModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('topicModal')) {
+                document.getElementById('topicModal').style.display = 'none';
+            }
+        }
+
+        function searchFiqhTopics() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredTopics = fiqhTopics.filter(topic => 
+                topic.title.toLowerCase().includes(searchTerm) || 
+                topic.description.toLowerCase().includes(searchTerm)
+            );
+            displayFilteredTopics(filteredTopics);
+        }
+
+        function displayFilteredTopics(topics) {
+            const fiqhGrid = document.getElementById('fiqhGrid');
+            fiqhGrid.innerHTML = '';
+            topics.forEach(topic => {
+                const topicDiv = document.createElement('div');
+                topicDiv.className = 'fiqh-item';
+                topicDiv.innerHTML = `
+                    <i class="${topic.icon} fiqh-icon"></i>
+                    <h3>${topic.title}</h3>
+                    <p>${topic.description}</p>
+                    <button class="button-pulse" onclick="openTopicModal('${topic.title}')">اقرأ المزيد</button>
+                `;
+                fiqhGrid.appendChild(topicDiv);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof applyCommonSettings === 'function') {
+                applyCommonSettings();
+            }
+            displayFiqhTopics();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات - القرآن الكريم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .setting {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .setting:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .setting label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .setting button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .setting button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .about-section {
+            background-color: #333;
+            color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .about-section:hover {
+            transform: translateY(-5px);
+        }
+        .about-section h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        .about-section p {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .developer-info {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        .color-picker {
+            display: flex;
+            align-items: center;
+        }
+        .color-picker input[type="color"] {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>الإعدادات</h1>
+        </header>
+        
+        <main>
+            <div class="setting">
+                <label for="darkMode">
+                    الوضع الليلي
+                    <label class="switch">
+                        <input type="checkbox" id="darkMode" onchange="toggleDarkMode()">
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </div>
+            <div class="setting">
+                <label for="fontSize">حجم الخط</label>
+                <input type="range" id="fontSize" min="12" max="24" value="16" onchange="changeFontSize()">
+            </div>
+            <div class="setting">
+                <label for="autoPlay">
+                    تشغيل تلقائي للآيات
+                    <label class="switch">
+                        <input type="checkbox" id="autoPlay" onchange="toggleAutoPlay()">
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </div>
+            <div class="setting">
+                <button onclick="clearHistory()">مسح سجل القراءة</button>
+            </div>
+            <div class="setting">
+                <button onclick="exportBookmarks()">تصدير المفضلة</button>
+            </div>
+            <div class="setting">
+                <label for="headerColor">
+                    لون الشريط العلوي
+                    <div class="color-picker">
+                        <input type="color" id="headerColor" onchange="changeHeaderColor(this.value)">
+                    </div>
+                </label>
+            </div>
+            <div class="setting">
+                <label for="footerColor">
+                    لون الشريط السفلي
+                    <div class="color-picker">
+                        <input type="color" id="footerColor" onchange="changeFooterColor(this.value)">
+                    </div>
+                </label>
+            </div>
+            <div class="setting">
+                <label for="language">اللغة</label>
+                <select id="language" onchange="changeLanguage(this.value)">
+                    <option value="ar">العربية</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <div class="about-section">
+                <h2>من نحن</h2>
+                <p>تطبيق القرآن الكريم هو مشروع يهدف إلى تسهيل قراءة وحفظ القرآن الكريم، مع توفير أدوات مساعدة للتعلم والتدبر.</p>
+                <div class="developer-info">
+                    <p><strong>المطور:</strong> وسام أحمد</p>
+                    <p><strong>سنة الإنشاء:</strong> 2023</p>
+                    <p><strong>الإصدار:</strong> 1.0.0</p>
+                </div>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <button onclick="showPage('index.html')">
+                <i class="fas fa-home icon"></i>
+                الرئيسية
+            </button>
+            <button onclick="showPage('hadith.html')">
+                <i class="fas fa-book icon"></i>
+                الأحاديث
+            </button>
+            <button onclick="showPage('favorites.html')">
+                <i class="fas fa-star icon"></i>
+                المفضلة
+            </button>
+            <button onclick="showPage('settings.html')" class="active">
+                <i class="fas fa-cog icon"></i>
+                الإعدادات
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        function toggleDarkMode() {
+            const isDarkMode = document.getElementById('darkMode').checked;
+            updateSettings('darkMode', isDarkMode);
+        }
+
+        function changeFontSize() {
+            const fontSize = document.getElementById('fontSize').value;
+            updateSettings('fontSize', fontSize);
+        }
+
+        function toggleAutoPlay() {
+            const autoPlay = document.getElementById('autoPlay').checked;
+            localStorage.setItem('autoPlay', autoPlay);
+        }
+
+        function clearHistory() {
+            localStorage.removeItem('readingHistory');
+            alert('تم مسح سجل القراءة بنجاح');
+        }
+
+        function exportBookmarks() {
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+            const bookmarksString = JSON.stringify(bookmarks, null, 2);
+            const blob = new Blob([bookmarksString], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'quran_bookmarks.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function applyDarkMode() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            if (isDarkMode) {
+                document.documentElement.style.setProperty('--bg-color', '#1a202c');
+                document.documentElement.style.setProperty('--text-color', '#e2e8f0');
+            } else {
+                document.documentElement.style.setProperty('--bg-color', '#f5f5f5');
+                document.documentElement.style.setProperty('--text-color', '#333');
+            }
+        }
+
+        function changeHeaderColor(color) {
+            document.querySelector('header').style.backgroundColor = color;
+            localStorage.setItem('headerColor', color);
+        }
+
+        function changeFooterColor(color) {
+            document.querySelector('.bottom-nav').style.backgroundColor = color;
+            localStorage.setItem('footerColor', color);
+        }
+
+        function changeLanguage(lang) {
+            localStorage.setItem('language', lang);
+            // هنا يمكنك إضافة المنطق لتغيير لغة التطبيق
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyCommonSettings();
+            
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            document.getElementById('darkMode').checked = isDarkMode;
+
+            const fontSize = localStorage.getItem('fontSize') || '16';
+            document.getElementById('fontSize').value = fontSize;
+            document.body.style.fontSize = `${fontSize}px`;
+
+            const autoPlay = localStorage.getItem('autoPlay') === 'true';
+            document.getElementById('autoPlay').checked = autoPlay;
+
+            const headerColor = localStorage.getItem('headerColor') || '#1e88e5';
+            document.getElementById('headerColor').value = headerColor;
+            document.querySelector('header').style.backgroundColor = headerColor;
+
+            const footerColor = localStorage.getItem('footerColor') || '#1e88e5';
+            document.getElementById('footerColor').value = footerColor;
+            document.querySelector('.bottom-nav').style.backgroundColor = footerColor;
+
+            const language = localStorage.getItem('language') || 'ar';
+            document.getElementById('language').value = language;
+        });
+    </script>
+</body>
+</html>

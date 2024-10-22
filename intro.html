@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مرحبًا بك في تطبيق القرآن الكريم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e88e5, #64b5f6);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .intro-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .feature {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+        }
+        .feature h2 {
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        .feature-icon {
+            font-size: 4rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+        .feature p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        .next-button, .start-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto 0;
+            padding: 15px;
+            background-color: #FFD700;
+            color: #1e88e5;
+            text-align: center;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: none;
+            cursor: pointer;
+        }
+        .next-button:hover, .start-button:hover {
+            background-color: #FFC400;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+        }
+        .start-button {
+            display: none;
+        }
+        .progress-bar {
+            width: 80%;
+            height: 4px;
+            background-color: rgba(255,255,255,0.3);
+            position: fixed;
+            bottom: 20px;
+            left: 10%;
+            border-radius: 2px;
+        }
+        .progress {
+            height: 100%;
+            background-color: #FFD700;
+            width: 0;
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        @media (max-width: 600px) {
+            .feature {
+                padding: 30px;
+                width: 90%;
+            }
+            .feature h2 {
+                font-size: 1.5rem;
+            }
+            .feature p {
+                font-size: 1rem;
+            }
+            .next-button, .start-button {
+                width: 80%;
+                font-size: 16px;
+            }
+        }
+        
+        .skip-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .skip-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <button class="skip-button" onclick="skipIntro()">تخطي</button>
+    
+    <div class="container">
+        <header>
+            <h1>مرحبًا بك في تطبيق القرآن الكريم</h1>
+        </header>
+        
+        <main class="intro-container">
+            <div class="feature" id="feature1">
+                <i class="fas fa-book-open feature-icon"></i>
+                <h2>قراءة القرآن</h2>
+                <p>تصفح جميع سور القرآن الكريم بسهولة وقم بقراءتها في أي وقت.</p>
+            </div>
+            
+            <button class="next-button" id="nextButton" onclick="showNextFeature()">التالي</button>
+            <button class="start-button" id="startButton" onclick="startApp()">ابدأ الاستخدام</button>
+        </main>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progressBar"></div>
+    </div>
+
+    <script>
+        const features = [
+            {
+                icon: 'fas fa-book-open',
+                title: 'قراءة القرآن',
+                description: 'تصفح جميع سور القرآن الكريم بسهولة وقم بقراءتها في أي وقت.'
+            },
+            {
+                icon: 'fas fa-headphones',
+                title: 'الاستماع للتلاوات',
+                description: 'استمع إلى تلاوات القرآن الكريم من مجموعة من القراء المشهورين.'
+            },
+            {
+                icon: 'fas fa-microphone',
+                title: 'التسميع الصوتي',
+                description: 'قم بتسميع الآيات صوتيًا وتلقى تقييمًا فوريًا لقراءتك.'
+            },
+            {
+                icon: 'fas fa-keyboard',
+                title: 'التسميع الكتابي',
+                description: 'اختبر حفظك للآيات عن طريق كتابتها وتلقي التصحيح الفوري.'
+            },
+            {
+                icon: 'fas fa-star',
+                title: 'المفضلة',
+                description: 'أضف السور والآيات المفضلة لديك للوصول إليها بسرعة في أي وقت.'
+            },
+            {
+                icon: 'fas fa-moon',
+                title: 'الوضع الليلي',
+                description: 'استخدم الوضع الليلي لراحة عينيك أثناء القراءة في الظلام.'
+            }
+        ];
+
+        let currentFeature = 0;
+        const featureElement = document.getElementById('feature1');
+        const nextButton = document.getElementById('nextButton');
+        const startButton = document.getElementById('startButton');
+        const progressBar = document.getElementById('progressBar');
+
+        function showNextFeature() {
+            currentFeature++;
+            if (currentFeature < features.length) {
+                const feature = features[currentFeature];
+                featureElement.innerHTML = `
+                    <i class="${feature.icon} feature-icon"></i>
+                    <h2>${feature.title}</h2>
+                    <p>${feature.description}</p>
+                `;
+                updateProgressBar();
+            } else {
+                nextButton.style.display = 'none';
+                startButton.style.display = 'block';
+                updateProgressBar();
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentFeature + 1) / features.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function startApp() {
+            localStorage.setItem('introShown', 'true');
+            window.location.href = 'index.html';
+        }
+
+        function skipIntro() {
+            localStorage.setItem('introShown', 'true');
+            window.location.href = 'index.html';
+        }
+
+        // التحقق مما إذا كانت المقدمة قد تم عرضها من قبل
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('introShown') === 'true') {
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Show the first feature immediately
+        updateProgressBar();
+
+        // Swipe functionality for mobile
+        let touchstartX = 0;
+        let touchendX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchendX < touchstartX) showNextFeature();
+        }
+    </script>
+</body>
+</html>

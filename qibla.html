@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتجاه القبلة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .qibla-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+        #qibla-compass {
+            width: 300px;
+            height: 300px;
+            background-image: url('compass-bg.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: relative;
+            margin-bottom: 2rem;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2), inset 0 0 50px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        #qibla-arrow {
+            width: 6px;
+            height: 140px;
+            background-color: #e74c3c;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transition: transform 1s ease;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        #qibla-arrow::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            bottom: -8px;
+            left: -5px;
+        }
+        #qibla-arrow::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(231, 76, 60, 0.3);
+            border-radius: 50%;
+            bottom: -15px;
+            left: -12px;
+        }
+        .compass-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 50%, rgba(255,255,255,0.1) 100%);
+            pointer-events: none;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .location-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .location-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        .qibla-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .qibla-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .qibla-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-pattern"></div>
+    <div class="container">
+        <header>
+            <h1>اتجاه القبلة</h1>
+        </header>
+        
+        <main class="qibla-container">
+            <div id="qibla-compass">
+                <div id="qibla-arrow"></div>
+                <div class="compass-overlay"></div>
+            </div>
+            <p id="qibla-info"></p>
+            <button class="location-button" onclick="getQiblaDirection()">تحديث الموقع</button>
+            <div class="qibla-card">
+                <h3>معلومات إضافية</h3>
+                <p>المسافة إلى مكة: <span id="distance-to-mecca"></span></p>
+                <p>الوقت المقدر للوصول سيرًا على الأقدام: <span id="walking-time"></span></p>
+            </div>
+        </main>
+        
+        <nav class="bottom-nav">
+            <!-- ... (نفس شريط التنقل السفلي كما في index.html) ... -->
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        function getQiblaDirection() {
+            const button = document.querySelector('.location-button');
+            button.disabled = true;
+            button.textContent = 'جاري التحديث...';
+            
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const qiblaDirection = calculateQiblaDirection(lat, lon);
+                    rotateCompass(qiblaDirection);
+                    updateQiblaInfo(qiblaDirection, lat, lon);
+                    
+                    setTimeout(() => {
+                        button.disabled = false;
+                        button.textContent = 'تحديث الموقع';
+                    }, 1500);
+                });
+            } else {
+                alert("الموقع الجغرافي غير متاح في متصفحك");
+                button.disabled = false;
+                button.textContent = 'تحديث الموقع';
+            }
+        }
+
+        function rotateCompass(degree) {
+            const arrow = document.getElementById('qibla-arrow');
+            arrow.style.transform = `translateX(-50%) rotate(${degree}deg)`;
+            
+            // إضافة حركة دوران للبوصلة نفسها
+            const compass = document.getElementById('qibla-compass');
+            compass.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                compass.style.transition = 'none';
+                compass.style.transform = 'rotate(0deg)';
+                setTimeout(() => {
+                    compass.style.transition = 'transform 0.3s ease';
+                }, 50);
+            }, 1000);
+        }
+
+        function updateQiblaInfo(direction, lat, lon) {
+            document.getElementById('qibla-info').textContent = `اتجاه القبلة: ${direction.toFixed(2)} درجة`;
+            const distance = calculateDistance(lat, lon, 21.4225, 39.8262);
+            document.getElementById('distance-to-mecca').textContent = `${distance.toFixed(2)} كم`;
+            const walkingTime = calculateWalkingTime(distance);
+            document.getElementById('walking-time').textContent = walkingTime;
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // نصف قطر الأرض بالكيلومتر
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function calculateWalkingTime(distance) {
+            const walkingSpeed = 5; // كم/ساعة
+            const hours = distance / walkingSpeed;
+            const days = Math.floor(hours / 24);
+            const remainingHours = Math.floor(hours % 24);
+            return `${days} يوم و ${remainingHours} ساعة`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyCommonSettings();
+            getQiblaDirection();
+        });
+    </script>
+</body>
+</html>

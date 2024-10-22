@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المكتبة الإسلامية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', 'Amiri', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color, #f0e6d2);
+            color: var(--text-color, #333);
+            padding-bottom: 70px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        h1 {
+            color: var(--primary-color, #8B4513);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .book-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .book-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .book-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .book-title {
+            font-weight: bold;
+            color: var(--primary-color, #8B4513);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .book-description {
+            color: var(--text-color, #333);
+            margin-bottom: 0.5rem;
+        }
+        .book-content {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            color: var(--text-color, #333);
+        }
+        .islamic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background-image: url('path/to/islamic-pattern.png');
+            opacity: 0.1;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-pattern"></div>
+    <div class="container">
+        <h1>المكتبة الإسلامية</h1>
+        <ul class="book-list" id="bookList">
+            <!-- الكتب ستضاف هنا ديناميكيًا -->
+        </ul>
+    </div>
+
+    <nav class="bottom-nav">
+        <button onclick="showPage('index.html')">
+            <i class="fas fa-home icon"></i>
+            الرئيسية
+        </button>
+        <button onclick="showPage('hadith.html')">
+            <i class="fas fa-book icon"></i>
+            الأحاديث
+        </button>
+        <button onclick="showAI()" class="ai-button">AI</button>
+        <button onclick="showPage('favorites.html')">
+            <i class="fas fa-star icon"></i>
+            المفضلة
+        </button>
+        <button onclick="showPage('settings.html')">
+            <i class="fas fa-cog icon"></i>
+            الإعدادات
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+    <script>
+        const books = [
+            { 
+                title: "الطب البديل", 
+                description: "مجموعة من الممارسات الطبية التقليدية والبديلة",
+                content: "الطب البديل هو مج��وعة من الممارسات الطبية التي تستخدم كبديل أو مكمل للطب التقليدي. يشمل العلاجات العشبية، الوخز بالإبر، العلاج بالتدليك، واليوغا. يهدف إلى علاج الجسم والعقل والروح معًا. من أهم مبادئه: تعزيز قدرة الجسم على الشفاء الذاتي، والتركيز على الوقاية، واستخدام العلاجات الطبيعية."
+            },
+            { 
+                title: "55 وصية من وصايا الرسول", 
+                description: "مجموعة من الوصايا النبوية الشريفة",
+                content: "هذه مجموعة من الوصايا النبوية التي تغطي جوانب مختلفة من الحياة. بعض الأمثلة: 1) اتق الله حيثما كنت. 2) أتبع السيئة الحسنة تمحها. 3) خالق الناس بخلق حسن. 4) لا تغضب. 5) ازهد في الدنيا يحبك الله. 6) أحب للناس ما تحب لنفسك. هذه الوصايا تهدف إلى تحسين سلوك المسلم وعلاقته مع الله والناس."
+            },
+            { 
+                title: "الطب النبوي", 
+                description: "الممارسات الطبية المستمدة من السنة النبوية",
+                content: "الطب النبوي هو مجموعة من الممارسات الطبية والتوصيات الصحية المستمدة من أحاديث النبي محمد ﷺ. يشمل استخدام الحبة السوداء، العسل، والحجامة. كما يؤكد على أهمية النظافة، الصيام، واعتدال في الأكل. الطب النبوي يجمع بين العلاج الجسدي والروحي، ويشجع على الوقاية قبل العلاج."
+            },
+            { 
+                title: "سنن الرسول صلى الله عليه وسلم", 
+                description: "مجموعة من الأحاديث والممارسات النبوية",
+                content: "السنن النبوية هي الأقوال والأفعال والتقريرات المنسوبة للنبي محمد ﷺ. تشمل العبادات مثل الصلاة والصيام، والمعاملات مثل البيع والشراء، والأخلاق مثل الصدق والأمانة. من أمثلة السنن: الاستياك، التبسم في وجه الآخرين، إفشاء السلام، صلة الرحم، وغيرها. اتباع هذه السنن يساعد المسلم على تحسين حياته الدينية والدنيوية."
+            }
+        ];
+
+        function displayBooks() {
+            const bookList = document.getElementById('bookList');
+            bookList.innerHTML = '';
+            books.forEach((book, index) => {
+                const li = document.createElement('li');
+                li.className = 'book-item';
+                li.innerHTML = `
+                    <div class="book-title">${book.title}</div>
+                    <div class="book-description">${book.description}</div>
+                    <div class="book-content" id="content-${index}">${book.content}</div>
+                `;
+                li.addEventListener('click', () => toggleBookContent(index));
+                bookList.appendChild(li);
+            });
+        }
+
+        function toggleBookContent(index) {
+            const content = document.getElementById(`content-${index}`);
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+        }
+
+        function applySettings() {
+            const fontSize = localStorage.getItem('fontSize') || '16';
+            document.body.style.fontSize = `${fontSize}px`;
+
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            document.body.classList.toggle('dark-mode', isDarkMode);
+
+            const headerColor = localStorage.getItem('headerColor') || '#1e88e5';
+            document.querySelector('header').style.backgroundColor = headerColor;
+
+            const footerColor = localStorage.getItem('footerColor') || '#1e88e5';
+            document.querySelector('.bottom-nav').style.backgroundColor = footerColor;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayBooks();
+            applySettings();
+        });
+
+        // إضافة مستمع للتغييرات في التخزين المحلي
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'footerColor') {
+                document.querySelector('.bottom-nav').style.backgroundColor = event.newValue;
+            }
+        });
+
+        function showPage(page) {
+            window.location.href = page;
+        }
+
+        function showAI() {
+            alert('سيتم تفعيل خاصية الذكاء الاصطناعي قريباً');
+        }
+    </script>
+</body>
+</html>

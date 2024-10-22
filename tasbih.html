@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السبحة الإلكترونية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e5799, #207cca);
+            color: #fff;
+            font-family: 'Amiri', serif;
+        }
+        .tasbih-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .tasbih-circle {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffffff, #e0e0e0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .tasbih-count {
+            font-size: 4rem;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .tasbih-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        .tasbih-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        .tasbih-button:active {
+            transform: translateY(1px);
+        }
+        .reset-button {
+            background-color: #f44336;
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+        .reset-button:hover {
+            background-color: #d32f2f;
+        }
+        .dhikr-selector {
+            margin-bottom: 1rem;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 25px;
+            border: none;
+            background-color: #fff;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tasbih-info {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        .vibrate {
+            animation: vibrate 0.3s linear;
+        }
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        .milestone {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="islamic-pattern"></div>
+    <div class="container">
+        <header>
+            <h1>السبحة الإلكترونية</h1>
+        </header>
+        
+        <main class="tasbih-container">
+            <div class="tasbih-circle" id="tasbihCircle">
+                <div class="tasbih-count" id="count">0</div>
+            </div>
+            <select class="dhikr-selector" id="dhikrSelector">
+                <option value="سبحان الله">سبحان الله</option>
+                <option value="الحمد لله">الحمد لله</option>
+                <option value="الله أكبر">الله أكبر</option>
+                <option value="لا إله إلا الله">لا إله إلا الله</option>
+                <option value="أستغفر الله">أستغفر الله</option>
+            </select>
+            <button class="tasbih-button" id="countButton">تسبيح</button>
+            <button class="tasbih-button reset-button" id="resetButton">إعادة تعيين</button>
+            <div class="tasbih-info">
+                <p>الذكر الحالي: <span id="currentDhikr">سبحان الله</span></p>
+                <p>عدد التسبيحات: <span id="totalCount">0</span></p>
+            </div>
+        </main>
+        
+        <div class="milestone" id="milestone"></div>
+        
+        <nav class="bottom-nav">
+            <button onclick="showPage('index.html')">
+                <i class="fas fa-home icon"></i>
+                الرئيسية
+            </button>
+            <button onclick="showPage('hadith.html')">
+                <i class="fas fa-book icon"></i>
+                الأحاديث
+            </button>
+            <button onclick="showAI()" class="ai-button button-pulse">AI</button>
+            <button onclick="showPage('favorites.html')">
+                <i class="fas fa-star icon"></i>
+                المفضلة
+            </button>
+            <button onclick="showPage('settings.html')">
+                <i class="fas fa-cog icon"></i>
+                الإعدادات
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        let count = 0;
+        let totalCount = 0;
+        const countElement = document.getElementById('count');
+        const totalCountElement = document.getElementById('totalCount');
+        const currentDhikrElement = document.getElementById('currentDhikr');
+        const dhikrSelector = document.getElementById('dhikrSelector');
+        const tasbihCircle = document.getElementById('tasbihCircle');
+        const milestone = document.getElementById('milestone');
+
+        document.getElementById('countButton').addEventListener('click', incrementCount);
+        document.getElementById('resetButton').addEventListener('click', resetCount);
+        dhikrSelector.addEventListener('change', updateDhikr);
+
+        function incrementCount() {
+            count++;
+            totalCount++;
+            countElement.textContent = count;
+            totalCountElement.textContent = totalCount;
+            addRippleEffect();
+            vibrateOnCount();
+            checkMilestone();
+        }
+
+        function resetCount() {
+            count = 0;
+            countElement.textContent = count;
+        }
+
+        function updateDhikr() {
+            currentDhikrElement.textContent = dhikrSelector.value;
+            resetCount();
+        }
+
+        function addRippleEffect() {
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const size = Math.max(tasbihCircle.offsetWidth, tasbihCircle.offsetHeight);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            tasbihCircle.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        function vibrateOnCount() {
+            if ('vibrate' in navigator) {
+                navigator.vibrate(20);
+            }
+            tasbihCircle.classList.add('vibrate');
+            setTimeout(() => tasbihCircle.classList.remove('vibrate'), 300);
+        }
+
+        function checkMilestone() {
+            const milestones = [33, 66, 99, 100];
+            if (milestones.includes(count)) {
+                showMilestone(`أحسنت! لقد أكملت ${count} تسبيحة`);
+            }
+        }
+
+        function showMilestone(message) {
+            milestone.textContent = message;
+            milestone.style.opacity = '1';
+            setTimeout(() => {
+                milestone.style.opacity = '0';
+            }, 2000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyCommonSettings();
+        });
+    </script>
+</body>
+</html>
