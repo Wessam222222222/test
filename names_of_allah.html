@@ -6,48 +6,242 @@
     <title>أسماء الله الحسنى</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .names-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .name-card {
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .name-card:hover {
+            transform: translateY(-5px);
+            background-color: #e8e8e8;
+        }
+        .name-arabic {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .name-meaning {
+            font-size: 1rem;
+            color: #555;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .search-container input {
+            width: 70%;
+            padding: 0.5rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+        .name-details {
+            display: none;
+            background-color: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .show-details {
+            display: block;
+        }
+        .daily-name {
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>أسماء الله الحسنى</h1>
         </header>
-        
-        <main>
-            <section>
-                <h2>فضل أسماء الله الحسنى</h2>
-                <p>قال رسول الله صلى الله عليه وسلم: "إن لله تسعة وتسعين اسما، مائة إلا واحدا، من أحصاها دخل الجنة".</p>
-            </section>
-            
-            <section>
-                <h2>قائمة أسماء الله الحسنى</h2>
-                <ul class="names-grid">
-                    <li>الله</li>
-                    <li>الرحمن</li>
-                    <li>الرحيم</li>
-                    <li>الملك</li>
-                    <li>القدوس</li>
-                    <!-- يمكن إضافة المزيد من الأسماء هنا -->
-                </ul>
-            </section>
-            
-            <section>
-                <h2>معاني بعض الأسماء</h2>
-                <dl>
-                    <dt>الرحمن</dt>
-                    <dd>ذو الرحمة الشاملة لجميع الخلق في الدنيا</dd>
-                    <dt>العزيز</dt>
-                    <dd>الذي له العزة جميعا</dd>
-                    <dt>الحكيم</dt>
-                    <dd>الذي يضع الأمور في نصابها</dd>
-                </dl>
-            </section>
-            
-            <section>
-                <h2>كيفية الدعاء بأسماء الله الحسنى</h2>
-                <p>يمكن الدعاء بأسماء الله الحسنى بحسب الحاجة والمقام. مثلا، عند طلب الرزق يمكن الدعاء باسم "الرزاق".</p>
-            </section>
+
+        <div class="daily-name">
+            <h2>اسم الله اليومي</h2>
+            <p id="dailyName" class="name-arabic"></p>
+            <p id="dailyMeaning" class="name-meaning"></p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث عن اسم من أسماء الله الحسنى...">
+        </div>
+
+        <main class="names-grid" id="namesGrid">
+            <!-- سيتم ملء هذا القسم بأسماء الله الحسنى باستخدام JavaScript -->
         </main>
     </div>
+
+    <script>
+        const allahNames = [
+            { name: "الله", meaning: "الله: الإله المعبود بحق" },
+            { name: "الرحمن", meaning: "الرحمن: ذو الرحمة الشاملة" },
+            { name: "الرحيم", meaning: "الرحيم: ذو الرحمة الخاصة بالمؤمنين" },
+            { name: "الملك", meaning: "الملك: المالك لكل شيء" },
+            { name: "القدوس", meaning: "القدوس: المنزه عن النقائص" },
+            { name: "السلام", meaning: "السلام: السالم من العيوب" },
+            { name: "المؤمن", meaning: "المؤمن: الذي يؤمن عباده من عذابه" },
+            { name: "المهيمن", meaning: "المهيمن: الرقيب الحافظ لكل شيء" },
+            { name: "العزيز", meaning: "العزيز: القوي الغالب" },
+            { name: "الجبار", meaning: "الجبار: القاهر لخلقه على ما أراد" },
+            { name: "المتكبر", meaning: "المتكبر: المتعالي عن صفات الخلق" },
+            { name: "الخالق", meaning: "الخالق: الموجد للأشياء من العدم" },
+            { name: "البارئ", meaning: "البارئ: الخالق الموجد للخلق بلا مثال سابق" },
+            { name: "المصور", meaning: "المصور: الذي صور جميع الموجودات" },
+            { name: "الغفار", meaning: "الغفار: كثير المغفرة والستر على عباده" },
+            { name: "القهار", meaning: "القهار: الغالب لكل شيء" },
+            { name: "الوهاب", meaning: "الوهاب: المعطي بلا عوض" },
+            { name: "الرزاق", meaning: "الرزاق: المتكفل بالرزق لجميع خلقه" },
+            { name: "الفتاح", meaning: "الفتاح: الذي يفتح لعباده أبواب الرحمة والرزق" },
+            { name: "العليم", meaning: "العليم: العالم بكل شيء ظاهراً وباطناً" },
+            { name: "القابض", meaning: "القابض: الذي يقبض الرزق وغيره عن العباد بحكمته" },
+            { name: "الباسط", meaning: "الباسط: الذي يبسط الرزق لمن يشاء من عباده" },
+            { name: "الخافض", meaning: "الخافض: الذي يخفض من يشاء بعدله" },
+            { name: "الرافع", meaning: "الرافع: الذي يرفع من يشاء بفضله" },
+            { name: "المعز", meaning: "المعز: الذي يهب العزة لمن يشاء من عباده" },
+            { name: "المذل", meaning: "المذل: الذي يذل من يشاء بعدله" },
+            { name: "السميع", meaning: "السميع: الذي يسمع جميع الأصوات" },
+            { name: "البصير", meaning: "البصير: الذي يرى كل شيء" },
+            { name: "الحكم", meaning: "الحكم: الذي يحكم ولا معقب لحكمه" },
+            { name: "العدل", meaning: "العدل: الذي لا يجور في حكمه" },
+            { name: "اللطيف", meaning: "اللطيف: البر الرفيق بعباده" },
+            { name: "الخبير", meaning: "الخبير: العالم بدقائق الأمور" },
+            { name: "الحليم", meaning: "الحليم: الذي لا يعاجل العصاة بالعقوبة" },
+            { name: "العظيم", meaning: "العظيم: الموصوف بجميع صفات العظمة" },
+            { name: "الغفور", meaning: "الغفور: الذي يغفر الذنوب ويستر العيوب" },
+            { name: "الشكور", meaning: "الشكور: الذي يشكر اليسير من الطاعة" },
+            { name: "العلي", meaning: "العلي: الرفيع القدر" },
+            { name: "الكبير", meaning: "الكبير: العظيم الجليل" },
+            { name: "الحفيظ", meaning: "الحفيظ: الذي يحفظ عباده من المهالك" },
+            { name: "المقيت", meaning: "المقيت: المقتدر الحافظ" },
+            { name: "الحسيب", meaning: "الحسيب: الكافي الذي يحاسب عباده" },
+            { name: "الجليل", meaning: "الجليل: العظيم المتصف بصفات الجلال" },
+            { name: "الكريم", meaning: "الكريم: الجواد المعطي الذي لا ينفد عطاؤه" },
+            { name: "الرقيب", meaning: "الرقيب: الحافظ المطلع على أعمال العباد" },
+            { name: "المجيب", meaning: "المجيب: الذي يجيب دعاء من دعاه" },
+            { name: "الواسع", meaning: "الواسع: الذي وسعت رحمته كل شيء" },
+            { name: "الحكيم", meaning: "الحكيم: ذو الحكمة البالغة في خلقه وأمره" },
+            { name: "الودود", meaning: "الودود: المحب لعباده الصالحين" },
+            { name: "المجيد", meaning: "المجيد: العظيم الشأن" },
+            { name: "الباعث", meaning: "الباعث: الذي يبعث الخلق يوم القيامة" },
+            { name: "الشهيد", meaning: "الشهيد: الحاضر المطلع على كل شيء" },
+            { name: "الحق", meaning: "الحق: الموجود حقاً الذي لا شك في وجوده" },
+            { name: "الوكيل", meaning: "الوكيل: المتولي لأمور الخلق" },
+            { name: "القوي", meaning: "القوي: التام القدرة" },
+            { name: "المتين", meaning: "المتين: الشديد القوة" },
+            { name: "الولي", meaning: "الولي: الناصر" },
+            { name: "الحميد", meaning: "الحميد: المستحق للحمد" },
+            { name: "المحصي", meaning: "المحصي: الذي أحصى كل شيء علماً" },
+            { name: "المبدئ", meaning: "المبدئ: الذي أنشأ الخلق وبدأهم" },
+            { name: "المعيد", meaning: "المعيد: الذي يعيد الخلق بعد الموت" },
+            { name: "المحيي", meaning: "المحيي: الذي يحيي الخلق" },
+            { name: "المميت", meaning: "المميت: الذي يميت الأحياء" },
+            { name: "الحي", meaning: "الحي: الموصوف بالحياة الكاملة الأبدية" },
+            { name: "القيوم", meaning: "القيوم: القائم على كل نفس بما كسبت" },
+            { name: "الواجد", meaning: "الواجد: الغني الذي لا يفتقر" },
+            { name: "الماجد", meaning: "الماجد: الكامل في صفاته" },
+            { name: "الواحد", meaning: "الواحد: المنفرد بالذات والصفات" },
+            { name: "الأحد", meaning: "الأحد: المنفرد بالألوهية" },
+            { name: "الصمد", meaning: "الصمد: السيد الذي يُصمد إليه في الحوائج" },
+            { name: "القادر", meaning: "القادر: الذي يقدر على إيجاد المعدوم وإعدام الموجود" },
+            { name: "المقتدر", meaning: "المقتدر: البالغ أقصى درجات القدرة" },
+            { name: "المقدم", meaning: "المقدم: الذي يقدم من يشاء" },
+            { name: "المؤخر", meaning: "المؤخر: الذي يؤخر من يشاء" },
+            { name: "الأول", meaning: "الأول: الذي ليس قبله شيء" },
+            { name: "الآخر", meaning: "الآخر: الذي ليس بعده شيء" },
+            { name: "الظاهر", meaning: "الظاهر: الذي ظهر فوق كل شيء" },
+            { name: "الباطن", meaning: "الباطن: العالم بكل شيء" },
+            { name: "الوالي", meaning: "الوالي: المتصرف بالملك والملكوت" },
+            { name: "المتعالي", meaning: "المتعالي: المنزه عن إدراك الحواس" },
+            { name: "البر", meaning: "البر: المحسن إلى خلقه" },
+            { name: "التواب", meaning: "التواب: الذي يقبل التوبة عن عباده" },
+            { name: "المنتقم", meaning: "المنتقم: الذي يعاقب العصاة" },
+            { name: "العفو", meaning: "العفو: الذي يعفو عن ذنوب عباده" },
+            { name: "الرؤوف", meaning: "الرؤوف: شديد الرأفة بعباده" },
+            { name: "مالك الملك", meaning: "مالك الملك: المتصرف في ملكه كيف يشاء" },
+            { name: "ذو الجلال والإكرام", meaning: "ذو الجلال والإكرام: المستحق للإجلال والتعظيم" },
+            { name: "المقسط", meaning: "المقسط: العادل في حكمه" },
+            { name: "الجامع", meaning: "الجامع: الذي يجمع الخلائق ليوم القيامة" },
+            { name: "الغني", meaning: "الغني: الذي لا يحتاج إلى أحد" },
+            { name: "المغني", meaning: "المغني: الذي يغني من يشاء من عباده" },
+            { name: "المانع", meaning: "المانع: الذي يمنع ما يشاء عمن يشاء" },
+            { name: "الضار", meaning: "الضار: الذي يضر من يشاء بعدله وحكمته" },
+            { name: "النافع", meaning: "النافع: الذي ينفع من يشاء برحمته" },
+            { name: "النور", meaning: "النور: الذي نور السماوات والأرض" },
+            { name: "الهادي", meaning: "الهادي: الذي يهدي من يشاء إلى الصراط المستقيم" },
+            { name: "البديع", meaning: "البديع: الذي أبدع الخلق على غير مثال سابق" },
+            { name: "الباقي", meaning: "الباقي: الدائم الذي لا يفنى" },
+            { name: "الوارث", meaning: "الوارث: الباقي بعد فناء خلقه" },
+            { name: "الرشيد", meaning: "الرشيد: الذي يرشد عباده إلى مصالحهم" },
+            { name: "الصبور", meaning: "الصبور: الذي لا يعجل بالعقوبة" }
+        ];
+
+        function createNameCard(name, meaning) {
+            const card = document.createElement('div');
+            card.className = 'name-card';
+            card.innerHTML = `
+                <div class="name-arabic">${name}</div>
+                <div class="name-meaning">${meaning}</div>
+                <div class="name-details">
+                    <h3>تفسير الاسم</h3>
+                    <p>هنا يمكن إضافة تفسير مفصل لاسم الله ${name}</p>
+                    <h3>فضل الدعاء بهذا الاسم</h3>
+                    <p>يمكن إضافة معلومات عن فضل الدعاء بهذا الاسم هنا</p>
+                </div>
+            `;
+            card.addEventListener('click', () => {
+                card.querySelector('.name-details').classList.toggle('show-details');
+            });
+            return card;
+        }
+
+        function displayNames(names) {
+            const grid = document.getElementById('namesGrid');
+            grid.innerHTML = '';
+            names.forEach(nameObj => {
+                grid.appendChild(createNameCard(nameObj.name, nameObj.meaning));
+            });
+        }
+
+        function searchNames() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredNames = allahNames.filter(nameObj => 
+                nameObj.name.toLowerCase().includes(searchTerm) || 
+                nameObj.meaning.toLowerCase().includes(searchTerm)
+            );
+            displayNames(filteredNames);
+        }
+
+        function setDailyName() {
+            const today = new Date();
+            const index = today.getDate() % allahNames.length;
+            const dailyName = allahNames[index];
+            document.getElementById('dailyName').textContent = dailyName.name;
+            document.getElementById('dailyMeaning').textContent = dailyName.meaning;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayNames(allahNames);
+            setDailyName();
+            document.getElementById('searchInput').addEventListener('input', searchNames);
+        });
+    </script>
 </body>
 </html>
