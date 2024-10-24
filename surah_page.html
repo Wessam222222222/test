@@ -365,6 +365,42 @@
         .hide-options-content button:hover {
             background-color: var(--secondary-color);
         }
+        .keyboard {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f8f9fa;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .keyboard button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 2px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .keyboard button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -448,7 +484,7 @@
     </div>
 
     <!-- لوحة المفاتيح المخصصة -->
-    <div id="customKeyboard" class="keyboard">
+    <div id="customKeyboard" class="keyboard" style="display: none;">
         <div class="keyboard-row">
             <button onclick="insertCharacter('ا')">ا</button>
             <button onclick="insertCharacter('ب')">ب</button>
@@ -852,7 +888,7 @@
 
         // Function to show the custom keyboard
         function showKeyboard() {
-            document.getElementById('customKeyboard').style.display = 'block';
+            document.getElementById('customKeyboard').style.display = 'flex';
         }
 
         // Function to close the custom keyboard
@@ -861,7 +897,12 @@
         }
 
         // Modify the input area to use the custom keyboard
-        document.getElementById('userInput').addEventListener('focus', showKeyboard);
+        document.getElementById('userInput').addEventListener('focus', function() {
+            const useCustomKeyboard = confirm('هل ترغب في استخدام لوحة المفاتيح المخصصة لكتابة السورة بالتشكيل؟');
+            if (useCustomKeyboard) {
+                showKeyboard();
+            }
+        });
     </script>
 </body>
 </html>
