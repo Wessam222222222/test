@@ -5,23 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التقويم الهجري</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #1f4068;
+            --secondary-color: #1b2845;
+            --accent-color: #e43f5a;
+            --text-color: #333;
+            --bg-color: #f8f8f8;
+        }
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        h1, h2 {
+            margin-bottom: 1rem;
+        }
         .calendar {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            margin-top: 20px;
+            gap: 1rem;
         }
         .calendar-day {
-            background-color: #f0f0f0;
-            padding: 10px;
             text-align: center;
+            padding: 0.5rem;
             border-radius: 5px;
+            background-color: var(--bg-color);
         }
-        .islamic-event {
-            background-color: #4CAF50;
+        .calendar-day.current {
+            background-color: var(--accent-color);
             color: white;
+            font-weight: bold;
+        }
+        .important-dates {
+            margin-top: 2rem;
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        .important-date {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ccc;
+        }
+        .important-date:last-child {
+            border-bottom: none;
+        }
+        .conversion-tool {
+            margin-top: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .conversion-tool input, .conversion-tool button {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            width: 100%;
+        }
+        .conversion-tool button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .conversion-tool button:hover {
+            background-color: var(--secondary-color);
         }
     </style>
 </head>
@@ -32,29 +110,93 @@
         </header>
         
         <main>
-            <section>
-                <h2>الشهر الحالي: <span id="current-month"></span></h2>
-                <div class="calendar" id="calendar-grid"></div>
+            <section class="calendar">
+                <div class="calendar-header">
+                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                    <h2 id="currentMonth"></h2>
+                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- سيتم ملء هذا القسم بأيام الشهر باستخدام JavaScript -->
+                </div>
             </section>
             
-            <section>
-                <h2>المناسبات الإسلامية القادمة</h2>
-                <ul id="upcoming-events"></ul>
+            <section class="important-dates">
+                <h2>مناسبات إسلامية هامة</h2>
+                <div class="important-date">
+                    <h3>رمضان</h3>
+                    <p>شهر الصيام والعبادة</p>
+                </div>
+                <div class="important-date">
+                    <h3>عيد الفطر</h3>
+                    <p>أول أيام شهر شوال</p>
+                </div>
+                <div class="important-date">
+                    <h3>عيد الأضحى</h3>
+                    <p>العاشر من ذي الحجة</p>
+                </div>
+                <!-- يمكن إضافة المزيد من المناسبات هنا -->
             </section>
             
-            <section>
-                <h2>تحويل التاريخ</h2>
-                <form id="date-converter">
-                    <label for="gregorian-date">التاريخ الميلادي:</label>
-                    <input type="date" id="gregorian-date">
-                    <button type="submit">تحويل</button>
-                </form>
-                <p id="hijri-date-result"></p>
+            <section class="conversion-tool">
+                <h2>أداة تحويل التاريخ</h2>
+                <input type="date" id="gregorianDate" placeholder="التاريخ الميلادي">
+                <button onclick="convertDate()">تحويل إلى التاريخ الهجري</button>
+                <p id="hijriDate"></p>
             </section>
         </main>
     </div>
+
     <script>
-        // هنا يمكن إضافة كود JavaScript لعرض التقويم وتحويل التواريخ
+        const hijriMonths = [
+            "محرم", "صفر", "ربيع الأول", "ربيع الثاني", "جمادى الأولى", "جمادى الآخرة",
+            "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"
+        ];
+
+        let currentDate = new Date();
+
+        function updateCalendar() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            // تحويل التاريخ الميلادي إلى هجري (هذه مجرد محاكاة، يجب استخدام مكتبة حقيقية للتحويل)
+            const hijriYear = currentDate.getFullYear() - 579;
+            const hijriMonth = currentDate.getMonth();
+            const daysInMonth = 30; // تبسيط: نفترض أن كل شهر هجري 30 يوم
+
+            document.getElementById('currentMonth').textContent = `${hijriMonths[hijriMonth]} ${hijriYear}`;
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = i;
+                if (i === currentDate.getDate()) {
+                    dayElement.classList.add('current');
+                }
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateCalendar();
+        });
+
+        function convertDate() {
+            const gregorianDate = new Date(document.getElementById('gregorianDate').value);
+            // هذه مجرد محاكاة للتحويل، يجب استخدام خوارزمية دقيقة أو مكتبة للتحويل الفعلي
+            const hijriYear = gregorianDate.getFullYear() - 579;
+            const hijriMonth = gregorianDate.getMonth();
+            const hijriDay = gregorianDate.getDate();
+            document.getElementById('hijriDate').textContent = `${hijriDay} ${hijriMonths[hijriMonth]} ${hijriYear}`;
+        }
+
+        updateCalendar();
     </script>
 </body>
 </html>

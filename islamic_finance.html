@@ -6,41 +6,185 @@
     <title>التمويل الإسلامي</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .finance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .finance-card {
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .finance-card:hover {
+            transform: translateY(-5px);
+        }
+        .finance-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .finance-card p {
+            margin-bottom: 1rem;
+        }
+        .calculator {
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .calculator input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+        }
+        .calculator button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background-color: var(--secondary-color);
+        }
+        .fatwa-section {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .instructions {
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .currency-select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>التمويل الإسلامي</h1>
         </header>
-        
+
         <main>
-            <section>
+            <section class="instructions">
                 <h2>ما هو التمويل الإسلامي؟</h2>
-                <p>التمويل الإسلامي هو نظام مالي يعمل وفقًا لمبادئ الشريعة الإسلامية. يحرم الربا ويشجع على المشاركة في الربح والخسارة.</p>
+                <p>التمويل الإسلامي هو نظام مالي يعمل وفقًا لمبادئ الشريعة الإسلامية. يحرم الربا (الفائدة) ويشجع على المشاركة في الأرباح والخسائر. يهدف إلى تحقيق العدالة الاجتماعية والاقتصادية من خلال معاملات مالية أخلاقية.</p>
             </section>
-            
-            <section>
-                <h2>المبادئ الأساسية للتمويل الإسلامي</h2>
-                <ul>
-                    <li>تحريم الربا (الفائدة)</li>
-                    <li>تقاسم المخاطر</li>
-                    <li>الاستثمار في الأنشطة الحلال فقط</li>
-                    <li>الشفافية في المعاملات</li>
-                    <li>الزكاة</li>
-                </ul>
+
+            <section class="calculator">
+                <h2>حاسبة الربح في المرابحة</h2>
+                <p>المرابحة هي عقد بيع حيث يشتري البنك سلعة ويبيعها للعميل بسعر أعلى، مع الإفصاح عن التكلفة والربح.</p>
+                <select id="currency" class="currency-select">
+                    <option value="OMR">ريال عماني (OMR)</option>
+                    <option value="SAR">ريال سعودي (SAR)</option>
+                    <option value="AED">درهم إماراتي (AED)</option>
+                    <option value="KWD">دينار كويتي (KWD)</option>
+                    <option value="BHD">دينار بحريني (BHD)</option>
+                </select>
+                <input type="number" id="principal" placeholder="المبلغ الأساسي">
+                <input type="number" id="profitRate" placeholder="نسبة الربح (%)">
+                <input type="number" id="duration" placeholder="مدة التمويل (بالأشهر)">
+                <button onclick="calculateProfit()">احسب الربح</button>
+                <p id="result"></p>
             </section>
-            
-            <section>
-                <h2>أدوات التمويل الإسلامي</h2>
-                <ul>
-                    <li>المرابحة</li>
-                    <li>المضاربة</li>
-                    <li>المشاركة</li>
-                    <li>الإجارة</li>
-                    <li>الصكوك</li>
+
+            <div class="finance-grid">
+                <div class="finance-card">
+                    <h3>المرابحة</h3>
+                    <p>عقد بيع يقوم فيه البائع بتحديد تكلفة السلعة وإضافة هامش ربح متفق عليه.</p>
+                </div>
+                <div class="finance-card">
+                    <h3>المضاربة</h3>
+                    <p>شراكة حيث يقدم طرف رأس المال والآخر الخبرة والعمل، ويتم تقاسم الأرباح حسب الاتفاق.</p>
+                </div>
+                <div class="finance-card">
+                    <h3>المشاركة</h3>
+                    <p>اتفاق بين طرفين أو أكثر للمساهمة في رأس المال وتقاسم الأرباح والخسائر.</p>
+                </div>
+                <div class="finance-card">
+                    <h3>الإجارة</h3>
+                    <p>عقد تأجير حيث يتم تأجير أصل معين مقابل دفعات إيجار متفق عليها.</p>
+                </div>
+                <div class="finance-card">
+                    <h3>السلم</h3>
+                    <p>عقد بيع آجل حيث يتم دفع الثمن مقدماً وتسليم السلعة في تاريخ مستقبلي محدد.</p>
+                </div>
+                <div class="finance-card">
+                    <h3>الاستصناع</h3>
+                    <p>عقد لتصنيع سلعة معينة حسب مواصفات محددة مع دفع الثمن مقدماً أو على أقساط.</p>
+                </div>
+            </div>
+
+            <section class="fatwa-section">
+                <h2>فتاوى في التمويل الإسلامي</h2>
+                <ul id="fatwaList">
+                    <!-- سيتم ملء هذه القائمة بالفتاوى باستخدام JavaScript -->
                 </ul>
             </section>
         </main>
     </div>
+
+    <script>
+        function calculateProfit() {
+            const principal = parseFloat(document.getElementById('principal').value);
+            const profitRate = parseFloat(document.getElementById('profitRate').value) / 100;
+            const duration = parseFloat(document.getElementById('duration').value);
+            const currency = document.getElementById('currency').value;
+
+            if (isNaN(principal) || isNaN(profitRate) || isNaN(duration)) {
+                document.getElementById('result').textContent = 'الرجاء إدخال قيم صحيحة';
+                return;
+            }
+
+            const totalProfit = principal * profitRate * (duration / 12);
+            const totalAmount = principal + totalProfit;
+            const monthlyPayment = totalAmount / duration;
+
+            document.getElementById('result').innerHTML = `
+                العملة: ${currency}<br>
+                إجمالي الربح: ${totalProfit.toFixed(2)} ${currency}<br>
+                إجمالي المبلغ المستحق: ${totalAmount.toFixed(2)} ${currency}<br>
+                القسط الشهري: ${monthlyPayment.toFixed(2)} ${currency}
+            `;
+        }
+
+        const fatwas = [
+            "حكم التعامل مع البنوك التقليدية في حالة الضرورة",
+            "ضوابط الاستثمار في الأسهم والصكوك",
+            "حكم بطاقات الائتمان وشروط استخدامها",
+            "الفرق بين الربا والربح في المعاملات المالية",
+            "حكم التأمين التعاوني والتأمين التجاري",
+            "ضوابط عقود المرابحة في البنوك الإسلامية",
+            "حكم الاستثمار في العملات الرقمية (البيتكوين وغيرها)"
+        ];
+
+        function displayFatwas() {
+            const fatwaList = document.getElementById('fatwaList');
+            fatwas.forEach(fatwa => {
+                const li = document.createElement('li');
+                li.textContent = fatwa;
+                fatwaList.appendChild(li);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', displayFatwas);
+    </script>
 </body>
 </html>

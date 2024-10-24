@@ -4,180 +4,340 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صحيح البخاري</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --text-color: #333;
+            --bg-color: #f0f9ff;
+        }
         body {
-            font-family: 'Tajawal', 'Amiri', sans-serif;
+            font-family: 'Amiri', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
-            background-color: #f0e6d2;
-            color: #333;
-            padding-bottom: 70px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border-radius: 15px;
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
-        h1 {
-            color: #8B4513;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        .hadith-list {
-            list-style-type: none;
+            margin: 0;
             padding: 0;
         }
-        .hadith-item {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        .hadith-item:hover {
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        h1, h2 {
+            margin-bottom: 1rem;
+        }
+        .hadith-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .hadith-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .hadith-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .hadith-number {
             font-weight: bold;
-            color: #8B4513;
-            font-size: 1.2rem;
-        }
-        .hadith-content {
-            margin-top: 0.5rem;
-        }
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #8B4513;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        }
-        .bottom-nav button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 0.9rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-        }
-        .bottom-nav .icon {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-        .bottom-nav .ai-button {
-            background-color: #4CAF50;
-            padding: 5px 15px;
-            border-radius: 20px;
-        }
-        .listen-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-        .listen-button:hover {
-            background-color: #45a049;
-        }
-        .hadith-title {
-            font-weight: bold;
-            color: #4A5568;
-            font-size: 1.1rem;
+            color: var(--secondary-color);
             margin-bottom: 0.5rem;
         }
-        
         .hadith-text {
             font-style: italic;
-            color: #718096;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .hadith-narrator {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .search-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .search-container input {
+            width: 70%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+        }
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .category-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .category-btn:hover {
+            background-color: var(--accent-color);
+        }
+        .hadith-of-day {
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .explanation {
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>صحيح البخاري</h1>
-        <ul class="hadith-list" id="hadithList">
-            <!-- الأحاديث ستضاف هنا ديناميكيًا -->
-        </ul>
+    </header>
+    
+    <div class="container">
+        <section class="hadith-of-day">
+            <h2>حديث اليوم</h2>
+            <p id="dailyHadith" class="hadith-text"></p>
+            <p id="dailyNarrator" class="hadith-narrator"></p>
+        </section>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث في الأحاديث...">
+        </div>
+
+        <div class="categories">
+            <button class="category-btn" onclick="filterHadiths('all')">الكل</button>
+            <button class="category-btn" onclick="filterHadiths('iman')">الإيمان</button>
+            <button class="category-btn" onclick="filterHadiths('salah')">الصلاة</button>
+            <button class="category-btn" onclick="filterHadiths('zakat')">الزكاة</button>
+            <button class="category-btn" onclick="filterHadiths('akhlaq')">الأخلاق</button>
+        </div>
+
+        <main class="hadith-grid" id="hadithGrid">
+            <!-- سيتم ملء هذا القسم بالأحاديث باستخدام JavaScript -->
+        </main>
     </div>
 
-    <nav class="bottom-nav">
-        <button onclick="showPage('index.html')">
-            <i class="fas fa-home icon"></i>
-            الرئيسية
-        </button>
-        <button onclick="showPage('hadith.html')">
-            <i class="fas fa-book icon"></i>
-            الأحاديث
-        </button>
-        <button onclick="showAI()" class="ai-button">AI</button>
-        <button onclick="showPage('favorites.html')">
-            <i class="fas fa-star icon"></i>
-            المفضلة
-        </button>
-        <button onclick="showPage('settings.html')">
-            <i class="fas fa-cog icon"></i>
-            الإعدادات
-        </button>
-    </nav>
-
-    <script src="app.js"></script>
     <script>
         const hadiths = [
-            { number: 1, title: "النية في الأعمال", text: "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى...", content: "عن أمير المؤمنين أبي حفص عمر بن الخطاب رضي الله عنه قال: سمعت رسول الله ﷺ يقول: «إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى، فمن كانت هجرته إلى الله ورسوله فهجرته إلى الله ورسوله، ومن كانت هجرته لدنيا يصيبها أو امرأة ينكحها فهجرته إلى ما هاجر إليه»" },
-            { number: 2, title: "أركان الإسلام", text: "بني الإسلام على خمس: شهادة أن لا إله إلا الله...", content: "عن ابن عمر رضي الله عنهما قال: قال رسول الله ﷺ: «بني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدا رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان»" },
-            { number: 3, title: "حسن الإسلام", text: "من حسن إسلام المرء تركه ما لا يعنيه", content: "عن أبي هريرة رضي الله عنه قال: قال رسول الله ﷺ: «من حسن إسلام المرء تركه ما لا يعنيه»" },
-            { number: 4, title: "حلاوة الإيمان", text: "ثلاث من كن فيه وجد حلاوة الإيمان...", content: "عن أنس رضي الله عنه، عن النبي ﷺ قال: «ثلاث من كن فيه وجد حلاوة الإيمان: أن يكون الله ورسوله أحب إليه مما سواهما، وأن يحب المرء لا يحبه إلا لله، وأن يكره أن يعود في الكفر كما يكره أن يقذف في النار»" },
-            { number: 5, title: "المسلم من سلم المسلمون", text: "المسلم من سلم المسلمون من لسانه ويده...", content: "عن عبد الله بن عمرو رضي الله عنهما، عن النبي ﷺ قال: «المسلم من سلم المسلمون من لسانه ويده، والمهاجر من هجر ما نهى الله عنه»" },
+            {
+                number: 1,
+                text: "إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى",
+                narrator: "عمر بن الخطاب رضي الله عنه",
+                category: "iman",
+                explanation: "هذا الحديث يؤكد على أهمية النية في الأعمال، وأن الأعمال تُقيَّم بحسب نية صاحبها."
+            },
+            {
+                number: 2,
+                text: "بُني الإسلام على خمس: شهادة أن لا إله إلا الله وأن محمدا رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان",
+                narrator: "ابن عمر رضي الله عنهما",
+                category: "iman",
+                explanation: "هذا الحديث يوضح أركان الإسلام الخمسة التي تمثل أساس الدين الإسلامي."
+            },
+            {
+                number: 3,
+                text: "من كان يؤمن بالله واليوم الآخر فليقل خيرا أو ليصمت",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يحث على حسن الكلام وتجنب الكلام الضار، وهو من آداب الإسلام المهمة."
+            },
+            {
+                number: 4,
+                text: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه",
+                narrator: "أنس بن مالك رضي الله عنه",
+                category: "iman",
+                explanation: "هذا الحديث يدعو إلى المحبة والإيثار بين المسلمين."
+            },
+            {
+                number: 5,
+                text: "من غشنا فليس منا",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يحذر من الغش ويدعو إلى الصدق والأمانة في المعاملات."
+            },
+            {
+                number: 6,
+                text: "طلب العلم فريضة على كل مسلم",
+                narrator: "أنس بن مالك رضي الله عنه",
+                category: "ilm",
+                explanation: "هذا الحديث يؤكد على أهمية العلم وطلبه في الإسلام."
+            },
+            {
+                number: 7,
+                text: "الدين النصيحة",
+                narrator: "تميم الداري رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يبين أن النصح والإرشاد من أساسيات الدين الإسلامي."
+            },
+            {
+                number: 8,
+                text: "من حسن إسلام المرء تركه ما لا يعنيه",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يدعو إلى التركيز على ما هو مفيد وترك ما لا فائدة منه."
+            },
+            {
+                number: 9,
+                text: "لا تغضب",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يحث على ضبط النفس وتجنب الغضب."
+            },
+            {
+                number: 10,
+                text: "إن الله رفيق يحب الرفق في الأمر كله",
+                narrator: "عائشة رضي الله عنها",
+                category: "akhlaq",
+                explanation: "هذا الحديث يدعو إلى الرفق واللين في التعامل مع الآخرين."
+            },
+            {
+                number: 11,
+                text: "من صام رمضان إيمانا واحتسابا غفر له ما تقدم من ذنبه",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "ibadah",
+                explanation: "هذا الحديث يبين فضل صيام رمضان بإيمان واحتساب."
+            },
+            {
+                number: 12,
+                text: "الطهور شطر الإيمان",
+                narrator: "أبو مالك الأشعري رضي الله عنه",
+                category: "taharah",
+                explanation: "هذا الحديث يؤكد على أهمية الطهارة في الإسلام."
+            },
+            {
+                number: 13,
+                text: "من قام ليلة القدر إيمانا واحتسابا غفر له ما تقدم من ذنبه",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "ibadah",
+                explanation: "هذا الحديث يبين فضل قيام ليلة القدر."
+            },
+            {
+                number: 14,
+                text: "لا يدخل الجنة من كان في قلبه مثقال ذرة من كبر",
+                narrator: "عبد الله بن مسعود رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يحذر من الكبر ويدعو إلى التواضع."
+            },
+            {
+                number: 15,
+                text: "من سلك طريقا يلتمس فيه علما سهل الله له به طريقا إلى الجنة",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "ilm",
+                explanation: "هذا الحديث يبين فضل طلب العلم."
+            },
+            {
+                number: 16,
+                text: "المسلم من سلم المسلمون من لسانه ويده",
+                narrator: "عبد الله بن عمرو رضي الله عنهما",
+                category: "akhlaq",
+                explanation: "هذا الحديث يعرف المسلم الحقيقي بأنه من لا يؤذي المسلمين بقوله أو فعله."
+            },
+            {
+                number: 17,
+                text: "لا يشكر الله من لا يشكر الناس",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يحث على شكر الناس وتقدير جهودهم."
+            },
+            {
+                number: 18,
+                text: "من كان يؤمن بالله واليوم الآخر فليكرم ضيفه",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يحث على إكرام الضيف وحسن استقباله."
+            },
+            {
+                number: 19,
+                text: "لا تحاسدوا، ولا تناجشوا، ولا تباغضوا، ولا تدابروا، وكونوا عباد الله إخوانا",
+                narrator: "أبو هريرة رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث ينهى عن الحسد والتباغض ويدعو إلى الأخوة بين المسلمين."
+            },
+            {
+                number: 20,
+                text: "الحياء لا يأتي إلا بخير",
+                narrator: "عمران بن حصين رضي الله عنه",
+                category: "akhlaq",
+                explanation: "هذا الحديث يبين فضيلة الحياء وأنه خلق محمود."
+            }
         ];
 
-        function displayHadiths() {
-            const hadithList = document.getElementById('hadithList');
-            hadithList.innerHTML = '';
-            hadiths.forEach(hadith => {
-                const li = document.createElement('li');
-                li.className = 'hadith-item';
-                li.innerHTML = `
-                    <div class="hadith-number">الحديث رقم ${hadith.number}</div>
-                    <div class="hadith-title">${hadith.title}</div>
-                    <div class="hadith-text">${hadith.text}</div>
-                    <div class="hadith-content">${hadith.content}</div>
-                    <button class="listen-button" onclick="listenToHadith(${hadith.number})">
-                        <i class="fas fa-volume-up"></i> استمع للحديث
-                    </button>
-                `;
-                hadithList.appendChild(li);
+        function createHadithCard(hadith) {
+            const card = document.createElement('div');
+            card.className = 'hadith-card';
+            card.innerHTML = `
+                <div class="hadith-number">حديث رقم ${hadith.number}</div>
+                <p class="hadith-text">${hadith.text}</p>
+                <p class="hadith-narrator">راوي الحديث: ${hadith.narrator}</p>
+                <div class="explanation">
+                    <h3>شرح الحديث:</h3>
+                    <p>${hadith.explanation}</p>
+                </div>
+            `;
+            return card;
+        }
+
+        function displayHadiths(hadithsToShow) {
+            const grid = document.getElementById('hadithGrid');
+            grid.innerHTML = '';
+            hadithsToShow.forEach(hadith => {
+                grid.appendChild(createHadithCard(hadith));
             });
         }
 
-        function listenToHadith(number) {
-            alert(`عذرًا، ميزة الاستماع للحديث رقم ${number} غير متاحة حاليًا. نعمل على توفيرها قريبًا.`);
+        function filterHadiths(category) {
+            if (category === 'all') {
+                displayHadiths(hadiths);
+            } else {
+                const filteredHadiths = hadiths.filter(hadith => hadith.category === category);
+                displayHadiths(filteredHadiths);
+            }
         }
 
-        // عرض الأحاديث مباشرة عند تحميل الصفحة
+        function searchHadiths() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredHadiths = hadiths.filter(hadith => 
+                hadith.text.toLowerCase().includes(searchTerm) || 
+                hadith.narrator.toLowerCase().includes(searchTerm)
+            );
+            displayHadiths(filteredHadiths);
+        }
+
+        function setDailyHadith() {
+            const today = new Date();
+            const index = today.getDate() % hadiths.length;
+            const dailyHadith = hadiths[index];
+            document.getElementById('dailyHadith').textContent = dailyHadith.text;
+            document.getElementById('dailyNarrator').textContent = `راوي الحديث: ${dailyHadith.narrator}`;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            displayHadiths();
+            displayHadiths(hadiths);
+            setDailyHadith();
+            document.getElementById('searchInput').addEventListener('input', searchHadiths);
         });
     </script>
 </body>

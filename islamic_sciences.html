@@ -5,58 +5,223 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>العلوم الإسلامية</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1f4068;
+            --secondary-color: #1b2845;
+            --accent-color: #e43f5a;
+            --text-color: #333;
+            --bg-color: #f8f8f8;
+        }
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        h1, h2 {
+            margin-bottom: 1rem;
+        }
+        .intro {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .science-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .science-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .science-card:hover {
+            transform: translateY(-5px);
+        }
+        .science-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid var(--accent-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .left {
+            left: 0;
+        }
+        .right {
+            left: 50%;
+        }
+        .right::after {
+            left: -16px;
+        }
+        .content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .importance {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        .importance ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .importance li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .importance li::before {
+            content: "\f00c";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>العلوم الإسلامية</h1>
+    </header>
+    
     <div class="container">
-        <header>
-            <h1>العلوم الإسلامية</h1>
-        </header>
-        
-        <main>
-            <section>
-                <h2>مقدمة في العلوم الإسلامية</h2>
-                <p>العلوم الإسلامية هي مجموعة من العلوم التي نشأت وتطورت في ظل الحضارة الإسلامية، وتهدف إلى فهم وتفسير النصوص الدينية وتطبيقها في الحياة العملية.</p>
-            </section>
-            
-            <section>
-                <h2>أهم العلوم الإسلامية</h2>
-                <ul>
-                    <li>علوم القرآن</li>
-                    <li>علوم الحديث</li>
-                    <li>الفقه وأصوله</li>
-                    <li>العقيدة</li>
-                    <li>التفسير</li>
-                    <li>السيرة النبوية</li>
-                    <li>اللغة العربية</li>
-                </ul>
-            </section>
-            
-            <section>
-                <h2>علوم القرآن</h2>
+        <section class="intro">
+            <h2>مقدمة في العلوم الإسلامية</h2>
+            <p>العلوم الإسلامية هي مجموعة من العلوم التي نشأت وتطورت في ظل الحضارة الإسلامية، وتهدف إلى فهم وتفسير النصوص الدينية وتطبيقها في الحياة العملية.</p>
+        </section>
+
+        <section class="science-grid">
+            <div class="science-card">
+                <i class="fas fa-book-open science-icon"></i>
+                <h3>علوم القرآن</h3>
                 <p>تشمل دراسة تاريخ القرآن، أسباب النزول، القراءات، الإعجاز القرآني، وغيرها من المواضيع المتعلقة بالقرآن الكريم.</p>
-            </section>
-            
-            <section>
-                <h2>علوم الحديث</h2>
+            </div>
+            <div class="science-card">
+                <i class="fas fa-comment-alt science-icon"></i>
+                <h3>علوم الحديث</h3>
                 <p>تهتم بدراسة الأحاديث النبوية، تصنيفها، التحقق من صحتها، وفهم معانيها.</p>
-            </section>
-            
-            <section>
-                <h2>الفقه وأصوله</h2>
+            </div>
+            <div class="science-card">
+                <i class="fas fa-balance-scale science-icon"></i>
+                <h3>الفقه وأصوله</h3>
                 <p>يتناول الأحكام الشرعية العملية وكيفية استنباطها من النصوص الشرعية.</p>
-            </section>
-            
-            <section>
-                <h2>أهمية دراسة العلوم الإسلامية</h2>
-                <ul>
-                    <li>فهم الدين الإسلامي بشكل صحيح</li>
-                    <li>تطبيق الشريعة الإسلامية في الحياة اليومية</li>
-                    <li>الرد على الشبهات والأفكار المغلوطة</li>
-                    <li>تطوير الفكر الإسلامي ومواكبة التطورات العصرية</li>
-                </ul>
-            </section>
-        </main>
+            </div>
+            <div class="science-card">
+                <i class="fas fa-star-and-crescent science-icon"></i>
+                <h3>العقيدة</h3>
+                <p>تتعلق بأصول الإيمان والعقائد الإسلامية الأساسية.</p>
+            </div>
+            <div class="science-card">
+                <i class="fas fa-book science-icon"></i>
+                <h3>التفسير</h3>
+                <p>يهتم بشرح وتوضيح معاني آيات القرآن الكريم.</p>
+            </div>
+            <div class="science-card">
+                <i class="fas fa-history science-icon"></i>
+                <h3>السيرة النبوية</h3>
+                <p>تدرس حياة النبي محمد صلى الله عليه وسلم وأحداث سيرته.</p>
+            </div>
+        </section>
+
+        <section class="timeline">
+            <h2>تطور العلوم الإسلامية عبر التاريخ</h2>
+            <div class="timeline-item">
+                <div class="content">
+                    <h3>العصر النبوي والخلفاء الراشدين (610-661 م)</h3>
+                    <p>تأسيس أسس العلوم الإسلامية، جمع القرآن، بداية تدوين الحديث والفقه.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="content">
+                    <h3>العصر الأموي والعباسي (661-1258 م)</h3>
+                    <p>العصر الذهبي للعلوم الإسلامية. تطور علوم اللغة، الحديث، الفقه، والتفسير.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="content">
+                    <h3>العصر المملوكي والعثماني (1258-1924 م)</h3>
+                    <p>استمرار تطور العلوم الإسلامية، ظهور الموسوعات الفقهية والحديثية.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="content">
+                    <h3>العصر الحديث (1924 م - الآن)</h3>
+                    <p>إعادة تفسير العلوم الإسلامية في ضوء التحديات المعاصرة، ظهور الدراسات الإسلامية الأكاديمية.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="importance">
+            <h2>أهمية دراسة العلوم الإسلامية</h2>
+            <ul>
+                <li>فهم الدين الإسلامي بشكل صحيح</li>
+                <li>تطبيق الشريعة الإسلامية في الحياة اليومية</li>
+                <li>الرد على الشبهات والأفكار المغلوطة</li>
+                <li>تطوير الفكر الإسلامي ومواكبة التطورات العصرية</li>
+                <li>الحفاظ على الهوية الإسلامية وتعزيزها</li>
+                <li>تعزيز التسامح والتعايش من خلال فهم صحيح للإسلام</li>
+            </ul>
+        </section>
     </div>
 </body>
 </html>

@@ -6,42 +6,151 @@
     <title>قصص الأنبياء</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .prophet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+        .prophet-card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .prophet-card:hover {
+            transform: translateY(-10px);
+        }
+        .prophet-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #4a90e2, #50e3c2);
+        }
+        .prophet-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .prophet-content {
+            padding: 1.5rem;
+        }
+        .prophet-name {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .prophet-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        .read-more {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .islamic-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f0f4f8"/><path d="M0 0h100v100H0z" fill="none" stroke="%23e1e8ed" stroke-width="2"/><path d="M50 0v100M0 50h100" stroke="%23e1e8ed" stroke-width="1"/></svg>');
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, #4a90e2, #50e3c2);
+            margin: 10px auto;
+        }
+    </style>
 </head>
 <body>
+    <div class="islamic-pattern"></div>
     <div class="container">
         <header>
-            <h1>قصص الأنبياء</h1>
+            <h1 class="section-title">قصص الأنبياء</h1>
         </header>
         
-        <main>
-            <section>
-                <h2>أهمية قصص الأنبياء</h2>
-                <p>قصص الأنبياء تحمل دروسًا وعبرًا قيمة للمؤمنين. تساعدنا على فهم تاريخ الرسالات السماوية وكيفية مواجهة التحديات بإيمان وصبر.</p>
-            </section>
+        <main class="prophet-grid">
+            <div class="prophet-card">
+                <img src="https://example.com/adam.jpg" alt="آدم عليه السلام" class="prophet-image">
+                <div class="prophet-content">
+                    <h2 class="prophet-name">آدم عليه السلام</h2>
+                    <p class="prophet-description">أبو البشر وأول الأنبياء، خلقه الله بيده ونفخ فيه من روحه.</p>
+                    <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
             
-            <section>
-                <h2>بعض الأنبياء المذكورين في القرآن</h2>
-                <ul>
-                    <li>آدم عليه السلام</li>
-                    <li>نوح عليه السلام</li>
-                    <li>إبراهيم عليه السلام</li>
-                    <li>موسى عليه السلام</li>
-                    <li>عيسى عليه السلام</li>
-                    <li>محمد صلى الله عليه وسلم</li>
-                </ul>
-            </section>
+            <div class="prophet-card">
+                <img src="https://example.com/noah.jpg" alt="نوح عليه السلام" class="prophet-image">
+                <div class="prophet-content">
+                    <h2 class="prophet-name">نوح عليه السلام</h2>
+                    <p class="prophet-description">صاحب السفينة، دعا قومه إلى عبادة الله وحده لمدة 950 عاماً.</p>
+                    <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
             
-            <section>
-                <h2>دروس مستفادة من قصص الأنبياء</h2>
-                <ul>
-                    <li>الصبر على الابتلاءات</li>
-                    <li>الثبات على الحق</li>
-                    <li>الدعوة إلى الله بالحكمة</li>
-                    <li>التوكل على الله</li>
-                    <li>الإخلاص في العبادة</li>
-                </ul>
-            </section>
+            <div class="prophet-card">
+                <img src="https://example.com/ibrahim.jpg" alt="إبراهيم عليه السلام" class="prophet-image">
+                <div class="prophet-content">
+                    <h2 class="prophet-name">إبراهيم عليه السلام</h2>
+                    <p class="prophet-description">خليل الرحمن، أبو الأنبياء وباني الكعبة المشرفة.</p>
+                    <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="prophet-card">
+                <img src="https://example.com/musa.jpg" alt="موسى عليه السلام" class="prophet-image">
+                <div class="prophet-content">
+                    <h2 class="prophet-name">موسى عليه السلام</h2>
+                    <p class="prophet-description">كليم الله، أرسله الله إلى فرعون وقومه وأنزل عليه التوراة.</p>
+                    <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="prophet-card">
+                <img src="https://example.com/isa.jpg" alt="عيسى عليه السلام" class="prophet-image">
+                <div class="prophet-content">
+                    <h2 class="prophet-name">عيسى عليه السلام</h2>
+                    <p class="prophet-description">المسيح ابن مريم، أيده الله بالمعجزات وأنزل عليه الإنجيل.</p>
+                    <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="prophet-card">
+                <img src="https://example.com/muhammad.jpg" alt="محمد صلى الله عليه وسلم" class="prophet-image">
+                <div class="prophet-content">
+                    <h2 class="prophet-name">محمد صلى الله عليه وسلم</h2>
+                    <p class="prophet-description">خاتم الأنبياء والمرسلين، أرسله الله رحمة للعالمين.</p>
+                    <a href="#" class="read-more">اقرأ المزيد <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
         </main>
     </div>
+
+    <script>
+        // يمكنك إضافة أي سكريبت JavaScript هنا إذا كنت بحاجة إلى وظائف إضافية
+    </script>
 </body>
 </html>

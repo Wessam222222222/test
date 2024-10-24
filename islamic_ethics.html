@@ -6,6 +6,99 @@
     <title>الأخلاق الإسلامية</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .ethics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+        .ethics-card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        .ethics-card:hover {
+            transform: translateY(-10px);
+        }
+        .ethics-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #4a90e2, #50e3c2);
+        }
+        .ethics-icon {
+            font-size: 3rem;
+            color: #4a90e2;
+            margin-bottom: 1rem;
+        }
+        .ethics-content {
+            padding: 1.5rem;
+        }
+        .ethics-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .ethics-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        .hadith-section {
+            background-color: #f0f4f8;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 15px;
+        }
+        .hadith-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .hadith-text {
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        .hadith-source {
+            font-weight: bold;
+            color: #4a90e2;
+        }
+        .quiz-section {
+            background-color: #e6f7ff;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 15px;
+        }
+        .quiz-question {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .quiz-options label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .submit-quiz {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        .submit-quiz:hover {
+            background-color: #3a7bd5;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -14,35 +107,96 @@
         </header>
         
         <main>
-            <section>
-                <h2>أهمية الأخلاق في الإسلام</h2>
-                <p>الأخلاق تعتبر ركنًا أساسيًا في الدين الإسلامي. قال النبي محمد صلى الله عليه وسلم: "إنما بعثت لأتمم مكارم الأخلاق".</p>
+            <section class="ethics-grid">
+                <div class="ethics-card">
+                    <div class="ethics-content">
+                        <i class="fas fa-heart ethics-icon"></i>
+                        <h2 class="ethics-title">الصدق</h2>
+                        <p class="ethics-description">الصدق هو قول الحق والالتزام به في القول والعمل. وهو من أهم الأخلاق الإسلامية التي حث عليها الإسلام.</p>
+                    </div>
+                </div>
+                
+                <div class="ethics-card">
+                    <div class="ethics-content">
+                        <i class="fas fa-hands-helping ethics-icon"></i>
+                        <h2 class="ethics-title">الأمانة</h2>
+                        <p class="ethics-description">الأمانة هي حفظ ما استؤمن عليه الإنسان وأداؤه على الوجه الأكمل. وهي صفة أساسية للمؤمن.</p>
+                    </div>
+                </div>
+                
+                <div class="ethics-card">
+                    <div class="ethics-content">
+                        <i class="fas fa-dove ethics-icon"></i>
+                        <h2 class="ethics-title">الرحمة</h2>
+                        <p class="ethics-description">الرحمة هي الشفقة والعطف على الآخرين. وهي من صفات الله تعالى التي يجب أن يتحلى بها المسلم.</p>
+                    </div>
+                </div>
+                
+                <div class="ethics-card">
+                    <div class="ethics-content">
+                        <i class="fas fa-balance-scale ethics-icon"></i>
+                        <h2 class="ethics-title">العدل</h2>
+                        <p class="ethics-description">العدل هو إعطاء كل ذي حق حقه. وهو أساس الحكم والمعاملات في الإسلام.</p>
+                    </div>
+                </div>
+                
+                <div class="ethics-card">
+                    <div class="ethics-content">
+                        <i class="fas fa-handshake ethics-icon"></i>
+                        <h2 class="ethics-title">التواضع</h2>
+                        <p class="ethics-description">التواضع هو خفض الجناح للناس وعدم التكبر عليهم. وهو من الصفات المحمودة في الإسلام.</p>
+                    </div>
+                </div>
+                
+                <div class="ethics-card">
+                    <div class="ethics-content">
+                        <i class="fas fa-user-friends ethics-icon"></i>
+                        <h2 class="ethics-title">حسن الخلق</h2>
+                        <p class="ethics-description">حسن الخلق هو التعامل مع الناس بلطف ورفق. وهو من أهم ما يميز المسلم في تعاملاته اليومية.</p>
+                    </div>
+                </div>
             </section>
-            
-            <section>
-                <h2>بعض الأخلاق الإسلامية الأساسية</h2>
-                <ul>
-                    <li>الصدق</li>
-                    <li>الأمانة</li>
-                    <li>الإخلاص</li>
-                    <li>التواضع</li>
-                    <li>الرحمة</li>
-                    <li>العدل</li>
-                    <li>الصبر</li>
-                </ul>
+
+            <section class="hadith-section">
+                <h2>أحاديث في الأخلاق</h2>
+                <div class="hadith-card">
+                    <p class="hadith-text">"إنما بعثت لأتمم مكارم الأخلاق"</p>
+                    <p class="hadith-source">رواه البخاري</p>
+                </div>
+                <div class="hadith-card">
+                    <p class="hadith-text">"أكمل المؤمنين إيمانا أحسنهم خلقا"</p>
+                    <p class="hadith-source">رواه الترمذي</p>
+                </div>
             </section>
-            
-            <section>
-                <h2>كيفية تطبيق الأخلاق الإسلامية في الحياة اليومية</h2>
-                <ul>
-                    <li>التحلي بالصبر في مواجهة الصعوبات</li>
-                    <li>معاملة الآخرين بالعدل والإحسان</li>
-                    <li>الصدق في القول والعمل</li>
-                    <li>مساعدة المحتاجين والضعفاء</li>
-                    <li>احترام الوالدين وكبار السن</li>
-                </ul>
+
+            <section class="quiz-section">
+                <h2>اختبر معلوماتك</h2>
+                <div class="quiz-question">
+                    <p>ما هو الخلق الذي يعني قول الحق والالتزام به في القول والعمل؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> الأمانة</label>
+                        <label><input type="radio" name="q1" value="b"> الصدق</label>
+                        <label><input type="radio" name="q1" value="c"> العدل</label>
+                    </div>
+                </div>
+                <button class="submit-quiz" onclick="checkQuiz()">تحقق من إجابتك</button>
             </section>
         </main>
     </div>
+
+    <script>
+        function checkQuiz() {
+            const answer = document.querySelector('input[name="q1"]:checked');
+            if (answer) {
+                if (answer.value === 'b') {
+                    alert('إجابة صحيحة! أحسنت.');
+                } else {
+                    alert('إجابة خاطئة. حاول مرة أخرى.');
+                }
+            } else {
+                alert('الرجاء اختيار إجابة.');
+            }
+        }
+    </script>
 </body>
 </html>

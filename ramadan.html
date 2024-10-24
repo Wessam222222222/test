@@ -3,63 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رمضان</title>
+    <title>شهر رمضان المبارك</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1f4068;
+            --secondary-color: #1b2845;
+            --accent-color: #e43f5a;
+            --text-color: #333;
+            --bg-color: #f8f8f8;
+        }
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"><g fill="%23ffffff" opacity="0.1"><path d="M0 0h80v80H0z"/><circle cx="40" cy="40" r="30"/><path d="M40 0l40 40-40 40L0 40z"/></g></svg>');
+            background-repeat: repeat;
+            opacity: 0.1;
+        }
+        h1, h2 {
+            margin-bottom: 1rem;
+        }
+        .ramadan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .ramadan-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .ramadan-card:hover {
+            transform: translateY(-5px);
+        }
+        .ramadan-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .countdown {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .countdown-item {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            border-radius: 5px;
+            min-width: 80px;
+        }
+        .countdown-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .dua-section {
+            background-color: #e6f7ff;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+        .calendar {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .calendar th, .calendar td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .calendar th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .today {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>شهر رمضان المبارك</h1>
+    </header>
+    
     <div class="container">
-        <header>
-            <h1>رمضان</h1>
-        </header>
-        
-        <main>
-            <section>
-                <h2>شهر رمضان المبارك</h2>
-                <p>رمضان هو الشهر التاسع في التقويم الهجري، وهو شهر الصيام والعبادة للمسلمين في جميع أنحاء العالم.</p>
-            </section>
-            
-            <section>
-                <h2>فضائل رمضان</h2>
-                <ul>
-                    <li>نزول القرآن الكريم</li>
-                    <li>ليلة القدر</li>
-                    <li>مضاعفة الأجر والثواب</li>
-                    <li>تكفير الذنوب</li>
-                    <li>فتح أبواب الجنة وغلق أبواب النار</li>
-                </ul>
-            </section>
-            
-            <section>
-                <h2>أحكام الصيام</h2>
-                <p>الصيام هو الامتناع عن الطعام والشراب وسائر المفطرات من طلوع الفجر إلى غروب الشمس.</p>
-                <ul>
-                    <li>شروط وجوب الصيام</li>
-                    <li>مبطلات الصيام</li>
-                    <li>من يجوز لهم الإفطار</li>
-                </ul>
-            </section>
-            
-            <section>
-                <h2>العبادات في رمضان</h2>
-                <ul>
-                    <li>صلاة التراويح</li>
-                    <li>قراءة القرآن</li>
-                    <li>الاعتكاف</li>
-                    <li>الصدقة وإفطار الصائمين</li>
-                </ul>
-            </section>
-            
-            <section>
-                <h2>نصائح صحية للصائمين</h2>
-                <ul>
-                    <li>تناول وجبة السحور</li>
-                    <li>شرب كميات كافية من الماء</li>
-                    <li>تجنب الأطعمة الدسمة والمقلية</li>
-                    <li>ممارسة الرياضة باعتدال</li>
-                </ul>
-            </section>
-        </main>
+        <section class="countdown">
+            <h2>العد التنازلي لرمضان</h2>
+            <div class="countdown-timer" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="days">00</div>
+                    <div>أيام</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="hours">00</div>
+                    <div>ساعات</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="minutes">00</div>
+                    <div>دقائق</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="seconds">00</div>
+                    <div>ثواني</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="ramadan-grid">
+            <div class="ramadan-card">
+                <div class="ramadan-icon"><i class="fas fa-moon"></i></div>
+                <h3>فضائل رمضان</h3>
+                <p>شهر رمضان هو شهر الصيام والقرآن، وفيه تفتح أبواب الجنة وتغلق أبواب النار.</p>
+            </div>
+            <div class="ramadan-card">
+                <div class="ramadan-icon"><i class="fas fa-book-open"></i></div>
+                <h3>قراءة القرآن</h3>
+                <p>يستحب الإكثار من قراءة القرآن في رمضان، فهو شهر نزول القرآن.</p>
+            </div>
+            <div class="ramadan-card">
+                <div class="ramadan-icon"><i class="fas fa-hands-helping"></i></div>
+                <h3>الصدقة والزكاة</h3>
+                <p>رمضان فرصة عظيمة للتصدق ومساعدة المحتاجين وإخراج زكاة المال.</p>
+            </div>
+            <div class="ramadan-card">
+                <div class="ramadan-icon"><i class="fas fa-mosque"></i></div>
+                <h3>صلاة التراويح</h3>
+                <p>تؤدى صلاة التراويح جماعة في المساجد بعد صلاة العشاء طوال شهر رمضان.</p>
+            </div>
+        </section>
+
+        <section class="dua-section">
+            <h2>دعاء الصائم</h2>
+            <p>"اللهم إني لك صمت، وبك آمنت، وعليك توكلت، وعلى رزقك أفطرت"</p>
+        </section>
+
+        <section class="calendar">
+            <h2>تقويم رمضان</h2>
+            <table id="ramadanCalendar">
+                <thead>
+                    <tr>
+                        <th>الأحد</th>
+                        <th>الإثنين</th>
+                        <th>الثلاثاء</th>
+                        <th>الأربعاء</th>
+                        <th>الخميس</th>
+                        <th>الجمعة</th>
+                        <th>السبت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- سيتم ملء هذا الجزء باستخدام JavaScript -->
+                </tbody>
+            </table>
+        </section>
     </div>
+
+    <script>
+        // العد التنازلي لرمضان
+        function updateCountdown() {
+            const ramadanDate = new Date("2024-03-11T00:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = ramadanDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        // إنشاء تقويم رمضان
+        function createRamadanCalendar() {
+            const ramadanStart = new Date("2024-03-11");
+            const calendarBody = document.querySelector("#ramadanCalendar tbody");
+            let date = new Date(ramadanStart);
+
+            for (let i = 0; i < 5; i++) {
+                let row = calendarBody.insertRow();
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < ramadanStart.getDay()) {
+                        row.insertCell();
+                    } else {
+                        if (date.getMonth() === ramadanStart.getMonth()) {
+                            let cell = row.insertCell();
+                            cell.textContent = date.getDate();
+                            if (date.toDateString() === new Date().toDateString()) {
+                                cell.classList.add("today");
+                            }
+                            date.setDate(date.getDate() + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", createRamadanCalendar);
+    </script>
 </body>
 </html>

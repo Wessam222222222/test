@@ -5,51 +5,235 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الأدعية</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1f4068;
+            --secondary-color: #1b2845;
+            --accent-color: #e43f5a;
+            --text-color: #333;
+            --bg-color: #f8f8f8;
+        }
+        body {
+            font-family: 'Amiri', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80"><g fill="%23ffffff" opacity="0.1"><path d="M0 0h80v80H0z"/><circle cx="40" cy="40" r="30"/><path d="M40 0l40 40-40 40L0 40z"/></g></svg>');
+            background-repeat: repeat;
+            opacity: 0.1;
+        }
+        h1, h2 {
+            margin-bottom: 1rem;
+        }
+        .dua-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .dua-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .dua-card:hover {
+            transform: translateY(-5px);
+        }
+        .dua-icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .dua-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        .dua-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        .dua-translation {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .search-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .search-container input {
+            width: 70%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+        }
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .category-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .category-btn:hover {
+            background-color: var(--accent-color);
+        }
+        .dua-of-day {
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>الأدعية</h1>
+    </header>
+    
     <div class="container">
-        <header>
-            <h1>الأدعية</h1>
-        </header>
-        
-        <main>
-            <section>
-                <h2>فضل الدعاء</h2>
-                <p>الدعاء هو العبادة، كما قال النبي صلى الله عليه وسلم. وهو وسيلة التواصل المباشر مع الله عز وجل.</p>
-            </section>
-            
-            <section>
-                <h2>آداب الدعاء</h2>
-                <ul>
-                    <li>الإخلاص لله تعالى</li>
-                    <li>اختيار الأوقات المستجابة</li>
-                    <li>رفع اليدين</li>
-                    <li>استقبال القبلة</li>
-                    <li>البدء بحمد الله والصلاة على النبي</li>
-                </ul>
-            </section>
-            
-            <section>
-                <h2>أدعية مأثورة</h2>
-                <ul>
-                    <li>دعاء الاستفتاح</li>
-                    <li>دعاء الصباح والمساء</li>
-                    <li>دعاء السفر</li>
-                    <li>دعاء دخول المسجد والخروج منه</li>
-                    <li>دعاء الهم والحزن</li>
-                </ul>
-            </section>
-            
-            <section>
-                <h2>أدعية قرآنية</h2>
-                <ul>
-                    <li>"رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ"</li>
-                    <li>"رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي"</li>
-                    <li>"رَبِّ زِدْنِي عِلْمًا"</li>
-                </ul>
-            </section>
+        <section class="dua-of-day">
+            <h2>دعاء اليوم</h2>
+            <p id="dailyDua" class="dua-text"></p>
+            <p id="dailyDuaTranslation" class="dua-translation"></p>
+        </section>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث عن دعاء...">
+        </div>
+
+        <div class="categories">
+            <button class="category-btn" onclick="filterDuas('all')">الكل</button>
+            <button class="category-btn" onclick="filterDuas('morning')">أذكار الصباح</button>
+            <button class="category-btn" onclick="filterDuas('evening')">أذكار المساء</button>
+            <button class="category-btn" onclick="filterDuas('prayer')">أدعية الصلاة</button>
+            <button class="category-btn" onclick="filterDuas('quran')">أدعية قرآنية</button>
+        </div>
+
+        <main class="dua-grid" id="duaGrid">
+            <!-- سيتم ملء هذا القسم بالأدعية باستخدام JavaScript -->
         </main>
     </div>
+
+    <script>
+        const duas = [
+            { 
+                title: "دعاء الاستيقاظ من النوم",
+                text: "الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور",
+                translation: "الحمد لله الذي أعادنا إلى الحياة بعد أن أخذنا في النوم، وإليه نعود بعد الموت.",
+                category: "morning"
+            },
+            {
+                title: "دعاء قبل النوم",
+                text: "باسمك اللهم أموت وأحيا",
+                translation: "باسمك يا الله أنام وأستيقظ.",
+                category: "evening"
+            },
+            {
+                title: "دعاء دخول المسجد",
+                text: "اللهم افتح لي أبواب رحمتك",
+                translation: "يا الله، افتح لي أبواب رحمتك.",
+                category: "prayer"
+            },
+            {
+                title: "دعاء قرآني للهداية",
+                text: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ الْوَهَّابُ",
+                translation: "ربنا لا تجعل قلوبنا تميل عن الحق بعد أن هديتنا، وامنحنا من عندك رحمة. إنك أنت الوهاب.",
+                category: "quran"
+            },
+            // يمكنك إضافة المزيد من الأدعية هنا
+        ];
+
+        function createDuaCard(dua) {
+            const card = document.createElement('div');
+            card.className = 'dua-card';
+            card.innerHTML = `
+                <div class="dua-icon"><i class="fas fa-pray"></i></div>
+                <h3 class="dua-title">${dua.title}</h3>
+                <p class="dua-text">${dua.text}</p>
+                <p class="dua-translation">${dua.translation}</p>
+            `;
+            return card;
+        }
+
+        function displayDuas(duasToShow) {
+            const grid = document.getElementById('duaGrid');
+            grid.innerHTML = '';
+            duasToShow.forEach(dua => {
+                grid.appendChild(createDuaCard(dua));
+            });
+        }
+
+        function filterDuas(category) {
+            if (category === 'all') {
+                displayDuas(duas);
+            } else {
+                const filteredDuas = duas.filter(dua => dua.category === category);
+                displayDuas(filteredDuas);
+            }
+        }
+
+        function searchDuas() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredDuas = duas.filter(dua => 
+                dua.title.toLowerCase().includes(searchTerm) || 
+                dua.text.toLowerCase().includes(searchTerm) ||
+                dua.translation.toLowerCase().includes(searchTerm)
+            );
+            displayDuas(filteredDuas);
+        }
+
+        function setDailyDua() {
+            const today = new Date();
+            const index = today.getDate() % duas.length;
+            const dailyDua = duas[index];
+            document.getElementById('dailyDua').textContent = dailyDua.text;
+            document.getElementById('dailyDuaTranslation').textContent = dailyDua.translation;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayDuas(duas);
+            setDailyDua();
+            document.getElementById('searchInput').addEventListener('input', searchDuas);
+        });
+    </script>
 </body>
 </html>

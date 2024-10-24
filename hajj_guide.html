@@ -6,6 +6,145 @@
     <title>دليل الحج والعمرة</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .section {
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .left {
+            left: 0;
+        }
+        .right {
+            left: 50%;
+        }
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid var(--primary-color);
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--primary-color);
+        }
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid var(--primary-color);
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--primary-color) transparent transparent;
+        }
+        .right::after {
+            left: -16px;
+        }
+        .content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 6px;
+        }
+        .checklist {
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        .checklist ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .checklist li {
+            margin-bottom: 0.5rem;
+        }
+        .checklist input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+        .tips {
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        .tips ul {
+            padding-left: 1.5rem;
+        }
+        .hajj-stages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .stage-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .stage-card:hover {
+            transform: translateY(-5px);
+        }
+        .stage-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        .stage-card ul {
+            padding-left: 1.5rem;
+        }
+        .stage-card li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -14,37 +153,104 @@
         </header>
         
         <main>
-            <section>
-                <h2>الحج</h2>
-                <p>الحج هو الركن الخامس من أركان الإسلام، وهو فرض على كل مسلم بالغ عاقل مستطيع مرة واحدة في العمر.</p>
+            <section class="section">
+                <h2>مقدمة عن الحج والعمرة</h2>
+                <p>الحج هو الركن الخامس من أركان الإسلام، وهو فرض على كل مسلم بالغ عاقل مستطيع مرة واحدة في العمر. أما العمرة فهي زيارة البيت الحرام لأداء مناسك معينة، وهي سنة مؤكدة في الإسلام.</p>
+                <p>قال رسول الله صلى الله عليه وسلم: "العمرة إلى العمرة كفارة لما بينهما، والحج المبرور ليس له جزاء إلا الجنة"</p>
             </section>
-            
-            <section>
+
+            <section class="section">
                 <h2>أركان الحج</h2>
-                <ul>
+                <ol>
                     <li>الإحرام</li>
                     <li>الوقوف بعرفة</li>
                     <li>طواف الإفاضة</li>
                     <li>السعي بين الصفا والمروة</li>
-                </ul>
+                </ol>
             </section>
-            
-            <section>
-                <h2>العمرة</h2>
-                <p>العمرة هي زيارة البيت الحرام لأداء مناسك معينة، وهي سنة مؤكدة في الإسلام.</p>
-            </section>
-            
-            <section>
+
+            <section class="section">
                 <h2>أركان العمرة</h2>
-                <ul>
+                <ol>
                     <li>الإحرام</li>
                     <li>الطواف</li>
                     <li>السعي</li>
                     <li>الحلق أو التقصير</li>
+                </ol>
+            </section>
+
+            <section class="section">
+                <h2>مراحل الحج</h2>
+                <div class="hajj-stages">
+                    <div class="stage-card">
+                        <h3>اليوم الأول: 8 ذو الحجة (يوم التروية)</h3>
+                        <ul>
+                            <li>الإحرام من الميقات أو من مكة للمقيمين فيها</li>
+                            <li>التوجه إلى منى والمبيت فيها</li>
+                            <li>الإكثار من التلبية والدعاء</li>
+                        </ul>
+                    </div>
+                    <div class="stage-card">
+                        <h3>اليوم الثاني: 9 ذو الحجة (يوم عرفة)</h3>
+                        <ul>
+                            <li>التوجه إلى عرفات بعد شروق الشمس</li>
+                            <li>الوقوف بعرفة حتى غروب الشمس</li>
+                            <li>الإكثار من الدعاء والذكر</li>
+                            <li>الانتقال إلى مزدلفة بعد الغروب</li>
+                            <li>المبيت في مزدلفة وصلاة المغرب والعشاء جمعاً</li>
+                        </ul>
+                    </div>
+                    <div class="stage-card">
+                        <h3>اليوم الثالث: 10 ذو الحجة (يوم النحر)</h3>
+                        <ul>
+                            <li>صلاة الفجر في مزدلفة</li>
+                            <li>التوجه إلى منى قبل شروق الشمس</li>
+                            <li>رمي جمرة العقبة الكبرى بسبع حصيات</li>
+                            <li>نحر الهدي (للمتمتع والقارن)</li>
+                            <li>الحلق أو التقصير</li>
+                            <li>طواف الإفاضة والسعي (إن لم يكن قد سعى مع طواف القدوم)</li>
+                            <li>التحلل الأول والعودة إلى منى للمبيت</li>
+                        </ul>
+                    </div>
+                    <div class="stage-card">
+                        <h3>الأيام 11-12 ذو الحجة (أيام التشريق)</h3>
+                        <ul>
+                            <li>المبيت بمنى</li>
+                            <li>رمي الجمرات الثلاث بعد الزوال كل يوم</li>
+                            <li>الإكثار من الذكر والدعاء</li>
+                        </ul>
+                    </div>
+                    <div class="stage-card">
+                        <h3>اليوم 13 ذو الحجة (التعجل أو التأخر)</h3>
+                        <ul>
+                            <li>للمتعجل: رمي الجمرات قبل مغرب اليوم الثاني عشر والخروج من منى</li>
+                            <li>للمتأخر: المبيت بمنى ورمي الجمرات بعد الزوال</li>
+                        </ul>
+                    </div>
+                    <div class="stage-card">
+                        <h3>طواف الوداع</h3>
+                        <ul>
+                            <li>أداء طواف الوداع قبل مغادرة مكة</li>
+                            <li>السعي لمن لم يسع بعد طواف الإفاضة</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section checklist">
+                <h2>قائمة التحقق للحج</h2>
+                <ul id="hajjChecklist">
+                    <li><input type="checkbox" id="passport"> <label for="passport">جواز السفر ساري المفعول</label></li>
+                    <li><input type="checkbox" id="visa"> <label for="visa">تأشيرة الحج</label></li>
+                    <li><input type="checkbox" id="tickets"> <label for="tickets">تذاكر السفر</label></li>
+                    <li><input type="checkbox" id="ihram"> <label for="ihram">ملابس الإحرام</label></li>
+                    <li><input type="checkbox" id="money"> <label for="money">النقود والبطاقات المصرفية</label></li>
+                    <li><input type="checkbox" id="medicines"> <label for="medicines">الأدوية الشخصية</label></li>
+                    <li><input type="checkbox" id="dua"> <label for="dua">كتيب الأدعية</label></li>
                 </ul>
             </section>
-            
-            <section>
+
+            <section class="section tips">
                 <h2>نصائح للحجاج والمعتمرين</h2>
                 <ul>
                     <li>الاستعداد البدني والنفسي قبل الرحلة</li>
@@ -52,9 +258,27 @@
                     <li>الالتزام بالتعليمات والإرشادات الرسمية</li>
                     <li>التحلي بالصبر والأخلاق الحسنة</li>
                     <li>الحرص على النظافة الشخصية والعامة</li>
+                    <li>الاهتمام بصحتك وشرب الماء بكثرة</li>
+                    <li>مساعدة الآخرين وخاصة كبار السن</li>
                 </ul>
             </section>
         </main>
     </div>
+
+    <script>
+        // يمكنك إضافة وظائف JavaScript هنا إذا كنت بحاجة إلى تفاعل إضافي
+        document.addEventListener('DOMContentLoaded', function() {
+            const checklistItems = document.querySelectorAll('#hajjChecklist input[type="checkbox"]');
+            checklistItems.forEach(item => {
+                item.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.parentElement.style.textDecoration = 'line-through';
+                    } else {
+                        this.parentElement.style.textDecoration = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

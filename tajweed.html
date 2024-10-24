@@ -6,6 +6,107 @@
     <title>علم التجويد</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .tajweed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .tajweed-card {
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .tajweed-card:hover {
+            transform: translateY(-5px);
+        }
+        .tajweed-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .tajweed-card p {
+            margin-bottom: 1rem;
+        }
+        .practice-section {
+            background-color: #e6f7ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .quiz-section {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .audio-player {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .interactive-quran {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 1.5rem;
+            line-height: 2.5;
+        }
+        .interactive-quran span {
+            cursor: pointer;
+            padding: 0.2rem;
+        }
+        .interactive-quran span:hover {
+            background-color: #e6f7ff;
+        }
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-width: 80%;
+            text-align: center;
+        }
+        .message-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .message-box p {
+            margin-bottom: 15px;
+        }
+        .close-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .audio-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -14,27 +115,179 @@
         </header>
         
         <main>
-            <section>
-                <h2>ما هو علم التجويد؟</h2>
-                <p>علم التجويد هو العلم الذي يُعنى بكيفية نطق كلمات القرآن الكريم بشكل صحيح، مع إعطاء كل حرف حقه ومستحقه من الصفات والمخارج.</p>
+            <section class="practice-section">
+                <h2>تمرين النطق</h2>
+                <p>استمع إلى الآية التالية وحاول تقليد النطق الصحيح:</p>
+                <audio controls class="audio-player">
+                    <source src="https://www.islamcan.com/audio/arabic/adhan-fajr.mp3" type="audio/mpeg">
+                    متصفحك لا يدعم عنصر الصوت.
+                </audio>
             </section>
-            
-            <section>
-                <h2>أهم قواعد التجويد</h2>
-                <ul>
-                    <li>مخارج الحروف</li>
-                    <li>صفات الحروف</li>
-                    <li>أحكام النون الساكنة والتنوين</li>
-                    <li>أحكام الميم الساكنة</li>
-                    <li>المدود وأنواعها</li>
-                </ul>
+
+            <div class="tajweed-grid">
+                <div class="tajweed-card">
+                    <h3>الإدغام</h3>
+                    <p>الإدغام هو إدخال حرف ساكن في حرف متحرك بحيث يصيران حرفاً واحداً مشدداً.</p>
+                </div>
+                <div class="tajweed-card">
+                    <h3>الإظهار</h3>
+                    <p>الإظهار هو إخراج كل حرف من مخرجه من غير غنة في الحرف الأول.</p>
+                </div>
+                <div class="tajweed-card">
+                    <h3>الإخفاء</h3>
+                    <p>الإخفاء هو النطق بالحرف بصفة بين الإظهار والإدغام مع بقاء الغنة في الحرف الأول.</p>
+                </div>
+                <div class="tajweed-card">
+                    <h3>القلقلة</h3>
+                    <p>القلقلة هي اضطراب الصوت عند النطق بالحرف ساكناً حتى يسمع له نبرة قوية.</p>
+                </div>
+                <div class="tajweed-card">
+                    <h3>المد</h3>
+                    <p>المد هو إطالة الصوت بحرف من حروف المد الثلاثة: الألف والواو والياء.</p>
+                </div>
+                <div class="tajweed-card">
+                    <h3>الوقف والابتداء</h3>
+                    <p>الوقف هو قطع الصوت على الكلمة القرآنية زمناً يتنفس فيه عادة بنية استئناف القراءة.</p>
+                </div>
+            </div>
+
+            <section class="interactive-quran">
+                <h2>القرآن التفاعلي</h2>
+                <p>انقر على الكلمات لمعرفة قواعد التجويد المطبقة:</p>
+                <div id="interactiveVerse">
+                    <!-- سيتم ملء هذا القسم بآية قرآنية باستخدام JavaScript -->
+                </div>
             </section>
-            
-            <section>
-                <h2>أهمية تعلم التجويد</h2>
-                <p>تعلم التجويد ضروري لقراءة القرآن الكريم بشكل صحيح، وهو واجب على كل مسلم ومسلمة. يساعد التجويد على فهم معاني القرآن بشكل أفضل ويزيد من جمال التلاوة.</p>
+
+            <section class="quiz-section">
+                <h2>اختبر معلوماتك</h2>
+                <div id="quiz">
+                    <!-- سيتم ملء هذا القسم بأسئلة الاختبار باستخدام JavaScript -->
+                </div>
+                <button onclick="checkAnswers()">تحقق من إجاباتك</button>
             </section>
         </main>
     </div>
+
+    <div id="messageBox" class="message-box">
+        <h3 id="messageTitle"></h3>
+        <p id="messageContent"></p>
+        <div class="audio-controls">
+            <button onclick="playAudio()" class="audio-btn">
+                <i class="fas fa-play"></i> تشغيل
+            </button>
+            <button onclick="pauseAudio()" class="audio-btn">
+                <i class="fas fa-pause"></i> إيقاف مؤقت
+            </button>
+        </div>
+        <button onclick="closeMessage()" class="close-btn">إغلاق</button>
+    </div>
+
+    <script>
+        const quizQuestions = [
+            {
+                question: "ما هو الإدغام؟",
+                options: ["إدخال حرف ساكن في حرف متحرك", "إخراج كل حرف من مخرجه", "إطالة الصوت بحرف المد"],
+                correctAnswer: 0
+            },
+            {
+                question: "ما هي حروف المد الثلاثة؟",
+                options: ["أ، ب، ت", "ا، و، ي", "م، ن، ل"],
+                correctAnswer: 1
+            },
+            // يمكن إضافة المزيد من الأسئلة هنا
+        ];
+
+        function displayQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.innerHTML = `
+                    <p>${index + 1}. ${q.question}</p>
+                    ${q.options.map((option, i) => `
+                        <input type="radio" name="q${index}" value="${i}" id="q${index}o${i}">
+                        <label for="q${index}o${i}">${option}</label><br>
+                    `).join('')}
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswers() {
+            let score = 0;
+            quizQuestions.forEach((q, index) => {
+                const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selectedAnswer && parseInt(selectedAnswer.value) === q.correctAnswer) {
+                    score++;
+                }
+            });
+            alert(`لقد حصلت على ${score} من ${quizQuestions.length} نقطة.`);
+        }
+
+        const interactiveVerse = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
+
+        function displayInteractiveVerse() {
+            const verseContainer = document.getElementById('interactiveVerse');
+            interactiveVerse.split(' ').forEach(word => {
+                const span = document.createElement('span');
+                span.textContent = word + ' ';
+                span.onclick = () => showTajweedRule(word);
+                verseContainer.appendChild(span);
+            });
+        }
+
+        const audioUrls = {
+            "بِسْمِ": "https://www.islamcan.com/audio/arabic/bismillah.mp3",
+            "اللَّهِ": "https://www.islamcan.com/audio/arabic/allah.mp3",
+            "الرَّحْمَٰنِ": "https://www.islamcan.com/audio/arabic/ar-rahman.mp3",
+            "الرَّحِيمِ": "https://www.islamcan.com/audio/arabic/ar-raheem.mp3"
+        };
+
+        let currentAudio = null;
+
+        function showTajweedRule(word) {
+            const rules = {
+                "بِسْمِ": "الباء مكسورة، والسين ساكنة، والميم مكسورة",
+                "اللَّهِ": "لام التعريف مدغمة في اللام الثانية، والهاء مكسورة",
+                "الرَّحْمَٰنِ": "الراء مشددة، والنون مفتوحة",
+                "الرَّحِيمِ": "الراء مشددة، والياء مكسورة، والميم مكسورة"
+            };
+            
+            document.getElementById('messageTitle').textContent = word;
+            document.getElementById('messageContent').textContent = rules[word] || "لا توجد قاعدة محددة لهذه الكلمة";
+            document.getElementById('messageBox').style.display = 'block';
+
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            currentAudio = new Audio(audioUrls[word]);
+        }
+
+        function closeMessage() {
+            document.getElementById('messageBox').style.display = 'none';
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+        }
+
+        function playAudio() {
+            if (currentAudio) {
+                currentAudio.play();
+            }
+        }
+
+        function pauseAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayQuiz();
+            displayInteractiveVerse();
+        });
+    </script>
 </body>
 </html>
