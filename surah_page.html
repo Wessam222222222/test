@@ -365,42 +365,6 @@
         .hide-options-content button:hover {
             background-color: var(--secondary-color);
         }
-        .keyboard {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #f8f9fa;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            border-radius: 10px 10px 0 0;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .keyboard-row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 5px;
-        }
-
-        .keyboard button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 15px;
-            margin: 2px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .keyboard button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
@@ -480,33 +444,6 @@
                 </button>
             </div>
             <div id="feedbackArea" class="feedback"></div>
-        </div>
-    </div>
-
-    <!-- لوحة المفاتيح المخصصة -->
-    <div id="customKeyboard" class="keyboard" style="display: none;">
-        <div class="keyboard-row">
-            <button onclick="insertCharacter('ا')">ا</button>
-            <button onclick="insertCharacter('ب')">ب</button>
-            <button onclick="insertCharacter('ت')">ت</button>
-            <button onclick="insertCharacter('َ')">َ</button> <!-- فتحة -->
-            <button onclick="insertCharacter('ُ')">ُ</button> <!-- ضمة -->
-            <button onclick="insertCharacter('ِ')">ِ</button> <!-- كسرة -->
-            <button onclick="insertCharacter('ّ')">ّ</button> <!-- شدة -->
-            <button onclick="insertCharacter('ْ')">ْ</button> <!-- سكون -->
-            <!-- أضف المزيد من الأزرار حسب الحاجة -->
-        </div>
-        <!-- أضف المزيد من الصفوف حسب الحاجة -->
-        <button onclick="closeKeyboard()">إغلاق</button>
-    </div>
-
-    <!-- نافذة منبثقة مخصصة -->
-    <div id="keyboardPrompt" class="modal" style="display: none;">
-        <div class="modal-content">
-            <h2>اختيار لوحة المفاتيح</h2>
-            <p>هل ترغب في استخدام لوحة المفاتيح المخصصة لكتابة السورة بالتشكيل؟</p>
-            <button onclick="useCustomKeyboard(true)">نعم</button>
-            <button onclick="useCustomKeyboard(false)">لا</button>
         </div>
     </div>
 
@@ -888,47 +825,6 @@
                 displaySurah(surah);
                 playAllAyahs(); // تشغيل الصوت تلقائيًا عند اختيار شيخ جديد
             });
-        });
-
-        // Function to insert character into the input
-        function insertCharacter(char) {
-            const input = document.getElementById('userInput');
-            input.value += char;
-        }
-
-        // Function to show the custom keyboard
-        function showKeyboard() {
-            document.getElementById('customKeyboard').style.display = 'flex';
-        }
-
-        // Function to close the custom keyboard
-        function closeKeyboard() {
-            document.getElementById('customKeyboard').style.display = 'none';
-        }
-
-        // Function to show the keyboard prompt
-        function showKeyboardPrompt() {
-            document.getElementById('keyboardPrompt').style.display = 'flex';
-        }
-
-        // Function to handle the user's choice
-        function useCustomKeyboard(choice) {
-            document.getElementById('keyboardPrompt').style.display = 'none';
-            if (choice) {
-                showKeyboard();
-            }
-        }
-
-        // Check if the device is a mobile device
-        function isMobileDevice() {
-            return /Mobi|Android/i.test(navigator.userAgent);
-        }
-
-        // Modify the input area to use the custom keyboard on mobile devices
-        document.getElementById('userInput').addEventListener('focus', function() {
-            if (isMobileDevice()) {
-                showKeyboardPrompt();
-            }
         });
     </script>
 </body>
