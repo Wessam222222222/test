@@ -896,11 +896,18 @@
             document.getElementById('customKeyboard').style.display = 'none';
         }
 
-        // Modify the input area to use the custom keyboard
+        // Check if the device is a mobile device
+        function isMobileDevice() {
+            return /Mobi|Android/i.test(navigator.userAgent);
+        }
+
+        // Modify the input area to use the custom keyboard on mobile devices
         document.getElementById('userInput').addEventListener('focus', function() {
-            const useCustomKeyboard = confirm('هل ترغب في استخدام لوحة المفاتيح المخصصة لكتابة السورة بالتشكيل؟');
-            if (useCustomKeyboard) {
-                showKeyboard();
+            if (isMobileDevice()) {
+                const useCustomKeyboard = confirm('هل ترغب في استخدام لوحة المفاتيح المخصصة لكتابة السورة بالتشكيل؟');
+                if (useCustomKeyboard) {
+                    showKeyboard();
+                }
             }
         });
     </script>
