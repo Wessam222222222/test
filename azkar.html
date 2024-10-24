@@ -11,23 +11,85 @@
         .azkar-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
+            gap: 1.5rem; /* زيادة المسافة بين العناصر */
+            padding: 2rem; /* زيادة الحشو حول القائمة */
+            background-color: #f9f9f9; /* لون خلفية خفيف */
         }
         .azkar-item {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1rem;
+            background-color: #fff;
+            border-radius: 15px; /* زيادة انحناء الزوايا */
+            padding: 1.5rem; /* زيادة الحشو داخل العنصر */
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.1); /* زيادة الظل */
+            transition: transform 0.2s; /* إضافة تأثير عند التحويم */
+        }
+        .azkar-item:hover {
+            transform: translateY(-5px); /* تحريك العنصر عند التحويم */
         }
         .azkar-item h3 {
-            color: #000;
-            margin-bottom: 0.5rem;
+            color: #333; /* لون أغمق للنص */
+            margin-bottom: 0.75rem; /* زيادة المسافة تحت العنوان */
         }
         .azkar-item p {
+            color: #555; /* لون أغمق للنص */
+            font-size: 1rem; /* زيادة حجم الخط */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
             color: #000;
-            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .search-container {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        #searchInput {
+            width: 80%;
+            max-width: 400px;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center; /* جعل النص في الوسط */
+        }
+
+        #searchInput::placeholder {
+            text-align: center; /* جعل نص placeholder في الوسط أيضًا */
         }
     </style>
 </head>
@@ -36,6 +98,10 @@
         <header>
             <h1>الأذكار</h1>
         </header>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="ابحث عن ذكر...">
+        </div>
         
         <main class="azkar-list" id="azkarList">
             <!-- الأذكار ستضاف هنا -->
@@ -46,30 +112,101 @@
         </nav>
     </div>
 
+    <div id="zikrModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalText"></p>
+        </div>
+    </div>
+
     <script src="app.js"></script>
     <script>
         const azkar = [
-            { title: "أذكار الصباح", text: "اللهم بك أصبحنا وبك أمسينا..." },
-            { title: "أذكار المساء", text: "اللهم بك أمسينا وبك أصبحنا..." },
-            // ... المزيد من الأذكار
+            { 
+                title: "أذكار الصباح", 
+                text: "اللهم بك أصبحنا وبك أمسينا...",
+                fullText: "اللهم بك أصبحنا وبك أمسينا، وبك نحيا وبك نموت وإليك النشور. الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور. أصبحنا على فطرة الإسلام، وعلى كلمة الإخلاص، وعلى دين نبينا محمد صلى الله عليه وسلم، وعلى ملة أبينا إبراهيم حنيفاً مسلماً وما كان من المشركين."
+            },
+            { 
+                title: "أذكار المساء", 
+                text: "اللهم بك أمسينا وبك أصبحنا...",
+                fullText: "اللهم بك أمسينا وبك أصبحنا، وبك نحيا وبك نموت وإليك المصير. أمسينا على فطرة الإسلام وعلى كلمة الإخلاص، وعلى دين نبينا محمد صلى الله عليه وسلم، وعلى ملة أبينا إبراهيم حنيفاً مسلماً وما كان من المشركين."
+            },
+            { 
+                title: "أذكار النوم", 
+                text: "باسمك اللهم أموت وأحيا...",
+                fullText: "باسمك اللهم أموت وأحيا. اللهم قني عذابك يوم تبعث عبادك. الحمد لله الذي أطعمنا وسقانا، وكفانا، وآوانا، فكم ممن لا كافي له ولا مؤوي."
+            },
+            { 
+                title: "أذكار الاستيقاظ", 
+                text: "الحمد لله الذي أحيانا بعد ما أماتنا...",
+                fullText: "الحمد لله الذي أحيانا بعد ما أماتنا، وإليه النشور. لا إله إلا الله وحده لا شريك له، له الملك وله الحمد، وهو على كل شيء قدير. سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر، ولا حول ولا قوة إلا بالله العلي العظيم، رب اغفر لي."
+            },
+            { 
+                title: "دعاء دخول المسجد", 
+                text: "اللهم افتح لي أبواب رحمتك...",
+                fullText: "اللهم افتح لي أبواب رحمتك. أعوذ بالله العظيم، وبوجهه الكريم، وسلطانه القديم، من الشيطان الرجيم."
+            },
+            { 
+                title: "دعاء الخروج من المسجد", 
+                text: "اللهم إني أسألك من فضلك...",
+                fullText: "اللهم إني أسألك من فضلك. اللهم اعصمني من الشيطان الرجيم."
+            }
         ];
 
-        function displayAzkar() {
+        function displayAzkar(filteredAzkar = azkar) {
             const azkarList = document.getElementById('azkarList');
-            azkar.forEach(zikr => {
+            azkarList.innerHTML = ''; // Clear existing content
+            filteredAzkar.forEach((zikr, index) => {
                 const zikrItem = document.createElement('div');
                 zikrItem.className = 'azkar-item';
                 zikrItem.innerHTML = `
                     <h3>${zikr.title}</h3>
                     <p>${zikr.text}</p>
                 `;
+                zikrItem.addEventListener('click', () => openModal(index));
                 azkarList.appendChild(zikrItem);
             });
+        }
+
+        function searchAzkar() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredAzkar = azkar.filter(zikr => 
+                zikr.title.toLowerCase().includes(searchTerm) || 
+                zikr.text.toLowerCase().includes(searchTerm) ||
+                zikr.fullText.toLowerCase().includes(searchTerm)
+            );
+            displayAzkar(filteredAzkar);
+        }
+
+        function openModal(index) {
+            const modal = document.getElementById('zikrModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalText');
+            
+            modalTitle.textContent = azkar[index].title;
+            modalText.textContent = azkar[index].fullText;
+            modal.style.display = 'block';
+        }
+
+        // Close the modal when clicking on <span> (x)
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('zikrModal').style.display = 'none';
+        }
+
+        // Close the modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('zikrModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             applyCommonSettings();
             displayAzkar();
+            document.getElementById('searchInput').addEventListener('input', searchAzkar);
         });
     </script>
 </body>

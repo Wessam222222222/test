@@ -500,6 +500,16 @@
         <button onclick="closeKeyboard()">إغلاق</button>
     </div>
 
+    <!-- نافذة منبثقة مخصصة -->
+    <div id="keyboardPrompt" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>اختيار لوحة المفاتيح</h2>
+            <p>هل ترغب في استخدام لوحة المفاتيح المخصصة لكتابة السورة بالتشكيل؟</p>
+            <button onclick="useCustomKeyboard(true)">نعم</button>
+            <button onclick="useCustomKeyboard(false)">لا</button>
+        </div>
+    </div>
+
     <script src="app.js"></script>
     <script>
         let surahNumber;
@@ -896,6 +906,19 @@
             document.getElementById('customKeyboard').style.display = 'none';
         }
 
+        // Function to show the keyboard prompt
+        function showKeyboardPrompt() {
+            document.getElementById('keyboardPrompt').style.display = 'flex';
+        }
+
+        // Function to handle the user's choice
+        function useCustomKeyboard(choice) {
+            document.getElementById('keyboardPrompt').style.display = 'none';
+            if (choice) {
+                showKeyboard();
+            }
+        }
+
         // Check if the device is a mobile device
         function isMobileDevice() {
             return /Mobi|Android/i.test(navigator.userAgent);
@@ -904,10 +927,7 @@
         // Modify the input area to use the custom keyboard on mobile devices
         document.getElementById('userInput').addEventListener('focus', function() {
             if (isMobileDevice()) {
-                const useCustomKeyboard = confirm('هل ترغب في استخدام لوحة المفاتيح المخصصة لكتابة السورة بالتشكيل؟');
-                if (useCustomKeyboard) {
-                    showKeyboard();
-                }
+                showKeyboardPrompt();
             }
         });
     </script>
