@@ -447,6 +447,18 @@
         </div>
     </div>
 
+    <!-- Custom Keyboard -->
+    <div id="customKeyboard" class="keyboard">
+        <div class="keyboard-row">
+            <button onclick="insertCharacter('ا')">ا</button>
+            <button onclick="insertCharacter('ب')">ب</button>
+            <button onclick="insertCharacter('ت')">ت</button>
+            <!-- Add more buttons for each character with diacritics -->
+        </div>
+        <!-- Add more rows as needed -->
+        <button onclick="closeKeyboard()">إغلاق</button>
+    </div>
+
     <script src="app.js"></script>
     <script>
         let surahNumber;
@@ -826,6 +838,25 @@
                 playAllAyahs(); // تشغيل الصوت تلقائيًا عند اختيار شيخ جديد
             });
         });
+
+        // Function to insert character into the input
+        function insertCharacter(char) {
+            const input = document.getElementById('userInput');
+            input.value += char;
+        }
+
+        // Function to show the custom keyboard
+        function showKeyboard() {
+            document.getElementById('customKeyboard').style.display = 'block';
+        }
+
+        // Function to close the custom keyboard
+        function closeKeyboard() {
+            document.getElementById('customKeyboard').style.display = 'none';
+        }
+
+        // Modify the input area to use the custom keyboard
+        document.getElementById('userInput').addEventListener('focus', showKeyboard);
     </script>
 </body>
 </html>
