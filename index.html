@@ -79,6 +79,33 @@
                 padding-bottom: 80px;
             }
         }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .search-container input {
+            width: 70%;
+            padding: 0.5rem;
+            border: 1px solid var(--primary-color);
+            border-radius: 20px 0 0 20px;
+            font-size: 1rem;
+        }
+
+        .search-container button {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: var(--secondary-color);
+        }
     </style>
 </head>
 <body>
@@ -87,6 +114,12 @@
         <header>
             <h1>القرآن الكريم</h1>
             <p id="randomVerse" class="random-verse"></p>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="ابحث عن البطاقات...">
+                <button onclick="searchCards()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
         </header>
         
         <main class="card-grid">
@@ -138,6 +171,70 @@
                 <i class="fas fa-mosque"></i>
                 <h3>صحيح البخاري</h3>
             </div>
+            <div class="card" onclick="showPage('ramadan.html')">
+                <i class="fas fa-moon"></i>
+                <h3>رمضان</h3>
+            </div>
+            <div class="card" onclick="showPage('duas.html')">
+                <i class="fas fa-hands"></i>
+                <h3>الأدعية</h3>
+            </div>
+            <div class="card" onclick="showPage('names_of_allah.html')">
+                <i class="fas fa-star-and-crescent"></i>
+                <h3>أسماء الله الحسنى</h3>
+            </div>
+            <div class="card" onclick="showPage('islamic_calendar.html')">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>التقويم الهجري</h3>
+            </div>
+            <div class="card" onclick="showPage('zakat_calculator.html')">
+                <i class="fas fa-calculator"></i>
+                <h3>حاسبة الزكاة</h3>
+            </div>
+            <div class="card" onclick="showPage('quran_memorization.html')">
+                <i class="fas fa-brain"></i>
+                <h3>حفظ القرآن</h3>
+            </div>
+            <div class="card" onclick="showPage('islamic_quiz.html')">
+                <i class="fas fa-question-circle"></i>
+                <h3>اختبار إسلامي</h3>
+            </div>
+            <div class="card" onclick="showPage('halal_finder.html')">
+                <i class="fas fa-utensils"></i>
+                <h3>دليل الحلال</h3>
+            </div>
+            <div class="card" onclick="showPage('islamic_art.html')">
+                <i class="fas fa-paint-brush"></i>
+                <h3>الفن الإسلامي</h3>
+            </div>
+            <div class="card" onclick="showPage('islamic_history.html')">
+                <i class="fas fa-landmark"></i>
+                <h3>التاريخ الإسلامي</h3>
+            </div>
+            <div class="card" onclick="showPage('tajweed.html')">
+                <i class="fas fa-microphone-alt"></i>
+                <h3>علم التجويد</h3>
+            </div>
+            <div class="card" onclick="showPage('islamic_finance.html')">
+                <i class="fas fa-coins"></i>
+                <h3>التمويل الإسلامي</h3>
+            </div>
+            <div class="card" onclick="showPage('prophets_stories.html')">
+                <i class="fas fa-users"></i>
+                <h3>قصص الأنبياء</h3>
+            </div>
+            <div class="card" onclick="showPage('islamic_ethics.html')">
+                <i class="fas fa-heart"></i>
+                <h3>الأخلاق الإسلامية</h3>
+            </div>
+            <div class="card" onclick="showPage('hajj_guide.html')">
+                <i class="fas fa-kaaba"></i>
+                <h3>دليل الحج والعمرة</h3>
+            </div>
+            <div class="card" onclick="showPage('islamic_sciences.html')">
+                <i class="fas fa-atom"></i>
+                <h3>العلوم الإسلامية</h3>
+            </div>
         </main>
         
         <nav class="bottom-nav">
@@ -168,6 +265,20 @@
                 window.location.href = 'intro.html';
             }
         });
+
+        function searchCards() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>

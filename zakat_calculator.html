@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الزكاة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .calculator {
+            background-color: #e3f2fd;
+        }
+        .info {
+            background-color: #e8f5e9;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+        .icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator icon"></i>حاسبة الزكاة</h1>
+        </header>
+        
+        <main>
+            <section class="card calculator">
+                <h2><i class="fas fa-coins icon"></i>حساب زكاة المال</h2>
+                <select id="currency">
+                    <option value="OMR">ريال عماني</option>
+                    <option value="SAR">ريال سعودي</option>
+                    <option value="AED">درهم إماراتي</option>
+                    <option value="KWD">دينار كويتي</option>
+                    <option value="USD">دولار أمريكي</option>
+                </select>
+                <input type="number" id="money-amount" placeholder="أدخل مبلغ المال">
+                <button onclick="calculateMoneyZakat()">احسب الزكاة</button>
+                <p id="money-zakat-result" class="result"></p>
+            </section>
+            
+            <section class="card calculator">
+                <h2><i class="fas fa-gem icon"></i>حساب زكاة الذهب</h2>
+                <input type="number" id="gold-weight" placeholder="أدخل وزن الذهب بالجرام">
+                <input type="number" id="gold-price" placeholder="أدخل سعر جرام الذهب">
+                <button onclick="calculateGoldZakat()">احسب الزكاة</button>
+                <p id="gold-zakat-result" class="result"></p>
+            </section>
+            
+            <section class="card info">
+                <h2><i class="fas fa-info-circle icon"></i>معلومات عن الزكاة</h2>
+                <ul>
+                    <li>نصاب الزكاة في المال: ما يعادل 85 جرامًا من الذهب</li>
+                    <li>نسبة الزكاة: 2.5% من المال الذي حال عليه الحول</li>
+                    <li>تجب الزكاة على المسلم البالغ العاقل الحر</li>
+                    <li>يجب إخراج الزكاة فور وجوبها</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script>
+        function calculateMoneyZakat() {
+            const moneyAmount = parseFloat(document.getElementById('money-amount').value);
+            const currency = document.getElementById('currency').value;
+            if (isNaN(moneyAmount) || moneyAmount <= 0) {
+                alert('الرجاء إدخال مبلغ صحيح');
+                return;
+            }
+            const zakatAmount = moneyAmount * 0.025;
+            document.getElementById('money-zakat-result').textContent = `مقدار الزكاة: ${zakatAmount.toFixed(2)} ${currency}`;
+        }
+        
+        function calculateGoldZakat() {
+            const goldWeight = parseFloat(document.getElementById('gold-weight').value);
+            const goldPrice = parseFloat(document.getElementById('gold-price').value);
+            const currency = document.getElementById('currency').value;
+            if (isNaN(goldWeight) || isNaN(goldPrice) || goldWeight <= 0 || goldPrice <= 0) {
+                alert('الرجاء إدخال قيم صحيحة');
+                return;
+            }
+            const goldValue = goldWeight * goldPrice;
+            if (goldWeight >= 85) {
+                const zakatAmount = goldValue * 0.025;
+                document.getElementById('gold-zakat-result').textContent = `مقدار الزكاة: ${zakatAmount.toFixed(2)} ${currency}`;
+            } else {
+                document.getElementById('gold-zakat-result').textContent = 'لا تجب الزكاة على هذا المقدار من الذهب';
+            }
+        }
+    </script>
+</body>
+</html>

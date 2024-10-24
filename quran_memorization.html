@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حفظ القرآن</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .memorization-tips {
+            background-color: #e8f5e9;
+        }
+        .progress-tracker {
+            background-color: #e3f2fd;
+        }
+        .memorization-plan {
+            background-color: #fff3e0;
+        }
+        .progress-bar {
+            background-color: #ddd;
+            border-radius: 5px;
+            height: 20px;
+            margin-top: 10px;
+        }
+        .progress {
+            background-color: #4CAF50;
+            height: 100%;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-quran icon"></i>حفظ القرآن</h1>
+        </header>
+        
+        <main>
+            <section class="card memorization-tips">
+                <h2><i class="fas fa-lightbulb icon"></i>نصائح لحفظ القرآن</h2>
+                <ul>
+                    <li>اخلص النية لله تعالى</li>
+                    <li>حدد وقتًا يوميًا للحفظ</li>
+                    <li>ابدأ بالسور القصيرة</li>
+                    <li>استمع للآيات قبل الحفظ</li>
+                    <li>كرر الآيات بصوت مرتفع</li>
+                    <li>راجع ما حفظته باستمرار</li>
+                </ul>
+            </section>
+            
+            <section class="card progress-tracker">
+                <h2><i class="fas fa-chart-line icon"></i>تتبع تقدمك</h2>
+                <label for="memorized-juz">عدد الأجزاء المحفوظة:</label>
+                <input type="number" id="memorized-juz" min="0" max="30" onchange="updateProgress()">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                <p id="progress-text"></p>
+            </section>
+            
+            <section class="card memorization-plan">
+                <h2><i class="fas fa-calendar-alt icon"></i>خطة الحفظ</h2>
+                <p>حدد هدفك اليومي للحفظ:</p>
+                <select id="daily-goal" onchange="updatePlan()">
+                    <option value="0.25">ربع صفحة</option>
+                    <option value="0.5">نصف صفحة</option>
+                    <option value="1">صفحة واحدة</option>
+                    <option value="2">صفحتان</option>
+                </select>
+                <p id="completion-estimate"></p>
+                <button onclick="startPlan()">ابدأ الخطة</button>
+            </section>
+        </main>
+    </div>
+    <script>
+        function updateProgress() {
+            const memorizedJuz = document.getElementById('memorized-juz').value;
+            const progress = (memorizedJuz / 30) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-text').textContent = `لقد حفظت ${memorizedJuz} جزءًا من أصل 30 جزءًا (${progress.toFixed(2)}%)`;
+        }
+
+        function updatePlan() {
+            const dailyGoal = document.getElementById('daily-goal').value;
+            const remainingPages = (30 - document.getElementById('memorized-juz').value) * 20;
+            const daysToComplete = Math.ceil(remainingPages / dailyGoal);
+            document.getElementById('completion-estimate').textContent = `بهذا المعدل، ستكمل حفظ القرآن في حوالي ${daysToComplete} يومًا`;
+        }
+
+        function startPlan() {
+            alert('تم بدء خطة الحفظ! استمر في العمل الجاد وستصل إلى هدفك بإذن الله.');
+        }
+
+        // تحديث التقدم والخطة عند تحميل الصفحة
+        window.onload = function() {
+            updateProgress();
+            updatePlan();
+        };
+    </script>
+</body>
+</html>

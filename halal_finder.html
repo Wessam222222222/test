@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل الحلال</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .search-container {
+            margin-bottom: 20px;
+        }
+        #search-input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .restaurant-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .restaurant-item {
+            background-color: #f0f0f0;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .halal-info {
+            margin-top: 20px;
+            background-color: #e0e0e0;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        #map {
+            height: 300px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>دليل الحلال</h1>
+        </header>
+        
+        <main>
+            <section class="search-container">
+                <input type="text" id="search-input" placeholder="ابحث عن مطعم أو منتج">
+                <button id="search-button" onclick="searchHalal()">بحث</button>
+            </section>
+            
+            <section>
+                <h2>المطاعم الحلال القريبة</h2>
+                <div id="map"></div>
+                <ul class="restaurant-list" id="restaurant-list"></ul>
+            </section>
+            
+            <section class="halal-info">
+                <h2>معلومات عن الأطعمة الحلال</h2>
+                <ul>
+                    <li>يجب أن تكون اللحوم مذبوحة وفقًا للشريعة الإسلامية</li>
+                    <li>يحرم لحم الخنزير ومشتقاته</li>
+                    <li>يحرم الكحول ومشتقاته في الطعام</li>
+                    <li>يجب التأكد من مصدر الجيلاتين في الحلويات</li>
+                    <li>بعض الأطعمة النباتية قد تحتوي على مكونات غير حلال</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    <script>
+        let map;
+        let service;
+        let infowindow;
+
+        function initMap() {
+            const cairo = new google.maps.LatLng(30.0444, 31.2357);
+            infowindow = new google.maps.InfoWindow();
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: cairo,
+                zoom: 15,
+            });
+        }
+
+        function searchHalal() {
+            const searchTerm = document.getElementById('search-input').value + " حلال";
+            const request = {
+                query: searchTerm,
+                fields: ["name", "geometry"],
+            };
+
+            service = new google.maps.places.PlacesService(map);
+            service.findPlaceFromQuery(request, (results, status) => {
+                if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                    for (let i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                    }
+                    map.setCenter(results[0].geometry.location);
+                    displayResults(results);
+                }
+            });
+        }
+
+        function createMarker(place) {
+            if (!place.geometry || !place.geometry.location) return;
+
+            const marker = new google.maps.Marker({
+                map,
+                position: place.geometry.location,
+            });
+
+            google.maps.event.addListener(marker, "click", () => {
+                infowindow.setContent(place.name || "");
+                infowindow.open(map, marker);
+            });
+        }
+
+        function displayResults(results) {
+            const restaurantList = document.getElementById('restaurant-list');
+            restaurantList.innerHTML = '';
+            results.forEach(place => {
+                const li = document.createElement('li');
+                li.className = 'restaurant-item';
+                li.textContent = place.name;
+                restaurantList.appendChild(li);
+            });
+        }
+
+        window.onload = initMap;
+    </script>
+</body>
+</html>

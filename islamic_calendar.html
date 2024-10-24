@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقويم الهجري</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .calendar-day {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .islamic-event {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>التقويم الهجري</h1>
+        </header>
+        
+        <main>
+            <section>
+                <h2>الشهر الحالي: <span id="current-month"></span></h2>
+                <div class="calendar" id="calendar-grid"></div>
+            </section>
+            
+            <section>
+                <h2>المناسبات الإسلامية القادمة</h2>
+                <ul id="upcoming-events"></ul>
+            </section>
+            
+            <section>
+                <h2>تحويل التاريخ</h2>
+                <form id="date-converter">
+                    <label for="gregorian-date">التاريخ الميلادي:</label>
+                    <input type="date" id="gregorian-date">
+                    <button type="submit">تحويل</button>
+                </form>
+                <p id="hijri-date-result"></p>
+            </section>
+        </main>
+    </div>
+    <script>
+        // هنا يمكن إضافة كود JavaScript لعرض التقويم وتحويل التواريخ
+    </script>
+</body>
+</html>
