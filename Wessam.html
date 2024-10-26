@@ -66,6 +66,16 @@
             color: #333;
         }
 
+        .current-user {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #0084ff;
+            font-weight: bold;
+        }
+
         .online-users {
             margin: 15px 0;
             padding: 10px;
@@ -83,6 +93,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             border: 1px solid #eee;
+            display: flex;
+            align-items: center;
         }
 
         .user-item:hover {
@@ -93,6 +105,20 @@
         .user-item.active {
             background: #e3f2fd;
             border-color: #2196f3;
+        }
+
+        .user-item.self {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            cursor: default;
+        }
+
+        .user-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+            margin-left: 10px;
         }
 
         #messages {
@@ -215,6 +241,7 @@
 
         <div id="chatBox" class="card">
             <div class="header">
+                <div class="current-user" id="currentUserDisplay"></div>
                 <div class="user-count">المستخدمون المتصلون: <span id="userCount">0</span></div>
                 <h3>المستخدمون المتصلون</h3>
             </div>
@@ -240,6 +267,8 @@
             
             ws.onopen = () => {
                 console.log('متصل');
+                users.add(currentUser); // إضافة المستخدم الحالي للقائمة
+                updateUsersList();
                 broadcastUser();
             };
 
@@ -266,6 +295,7 @@
                 currentUser = name;
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('chatBox').style.display = 'block';
+                document.getElementById('currentUserDisplay').textContent = `مرحباً ${currentUser}`;
                 connectWebSocket();
             }
         }
@@ -306,12 +336,25 @@
             const usersList = document.getElementById('onlineUsers');
             usersList.innerHTML = '';
             
+            // إضافة المستخدم الحالي أولاً
+            const currentUserDiv = document.createElement('div');
+            currentUserDiv.className = 'user-item self';
+            currentUserDiv.innerHTML = `
+                <span class="user-status"></span>
+                <span>${currentUser} (أنت)</span>
+            `;
+            usersList.appendChild(currentUserDiv);
+            
+            // إضافة باقي المستخدمين
             users.forEach(user => {
                 if (user !== currentUser) {
                     const userDiv = document.createElement('div');
                     userDiv.className = 'user-item';
                     if (user === selectedUser) userDiv.classList.add('active');
-                    userDiv.textContent = user;
+                    userDiv.innerHTML = `
+                        <span class="user-status"></span>
+                        <span>${user}</span>
+                    `;
                     userDiv.onclick = () => selectUser(user);
                     usersList.appendChild(userDiv);
                 }
