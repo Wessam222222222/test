@@ -3,140 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دردشة مباشرة</title>
+    <title>غرفة الدردشة</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #00b4db, #0083b0);
+            min-height: 100vh;
             padding: 20px;
-            background-color: #f0f2f5;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 100%;
+            width: 450px;
             margin: 0 auto;
         }
 
-        #loginForm, #searchForm, #chatBox {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                width: 100%;
+            }
         }
 
-        #chatBox, #searchForm {
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #loginForm, #chatBox {
+            transition: all 0.3s ease;
+        }
+
+        #chatBox {
             display: none;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .online-users {
+            margin: 15px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .user-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #eee;
+        }
+
+        .user-item:hover {
+            background: #f0f7ff;
+            transform: translateY(-2px);
+        }
+
+        .user-item.active {
+            background: #e3f2fd;
+            border-color: #2196f3;
         }
 
         #messages {
             height: 400px;
             overflow-y: auto;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-bottom: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 15px 0;
         }
 
         .message {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 8px;
-            max-width: 70%;
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: messageIn 0.3s ease;
+        }
+
+        @keyframes messageIn {
+            from {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .sent {
-            background-color: #0084ff;
+            background: #0084ff;
             color: white;
             margin-left: auto;
+            border-bottom-right-radius: 5px;
         }
 
         .received {
-            background-color: #e9ecef;
+            background: #e9ecef;
             margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         input {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #0084ff;
+            box-shadow: 0 0 0 3px rgba(0,132,255,0.1);
         }
 
         button {
-            padding: 10px 20px;
-            background-color: #0084ff;
-            color: white;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            background: #0084ff;
+            color: white;
             cursor: pointer;
-            margin: 5px 0;
+            transition: all 0.3s ease;
         }
 
         button:hover {
-            background-color: #0073e6;
+            background: #0073e6;
+            transform: translateY(-2px);
         }
 
-        #usersList {
-            margin-top: 10px;
+        button:active {
+            transform: translateY(0);
         }
 
-        .user-item {
-            padding: 10px;
-            border: 1px solid #ddd;
-            margin: 5px 0;
-            border-radius: 5px;
-            cursor: pointer;
+        .status {
+            text-align: center;
+            color: #666;
+            margin: 10px 0;
+            font-size: 0.9em;
         }
 
-        .user-item:hover {
-            background-color: #f0f2f5;
+        .typing {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+            height: 20px;
+        }
+
+        .user-count {
+            background: #e3f2fd;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #0084ff;
+            display: inline-block;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="loginForm">
-            <h2>تسجيل الدخول</h2>
-            <input type="text" id="username" placeholder="أدخل اسمك">
-            <button onclick="login()">دخول</button>
+        <div id="loginForm" class="card">
+            <div class="header">
+                <h2>أهلاً بك في غرفة الدردشة</h2>
+            </div>
+            <div class="input-group">
+                <input type="text" id="nameInput" placeholder="أدخل اسمك" autocomplete="off">
+                <button onclick="login()">دخول</button>
+            </div>
         </div>
 
-        <div id="searchForm">
-            <h2>البحث عن مستخدم</h2>
-            <input type="text" id="searchInput" placeholder="ابحث عن مستخدم">
-            <button onclick="searchUser()">بحث</button>
-            <div id="usersList"></div>
-        </div>
-
-        <div id="chatBox">
-            <h3 id="chatWith"></h3>
+        <div id="chatBox" class="card">
+            <div class="header">
+                <div class="user-count">المستخدمون المتصلون: <span id="userCount">0</span></div>
+                <h3>المستخدمون المتصلون</h3>
+            </div>
+            <div class="online-users" id="onlineUsers"></div>
             <div id="messages"></div>
-            <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا...">
-            <button onclick="sendMessage()">إرسال</button>
-            <button onclick="backToSearch()">عودة للبحث</button>
+            <div class="typing" id="typingStatus"></div>
+            <div class="input-group">
+                <input type="text" id="messageInput" placeholder="اكتب رسالتك..." autocomplete="off">
+                <button onclick="sendMessage()">إرسال</button>
+            </div>
         </div>
     </div>
 
     <script>
         let ws;
         let currentUser = '';
-        let chatPartner = '';
-        const activeUsers = new Map();
+        let selectedUser = '';
+        let users = new Set();
+        let typingTimeout;
 
         function connectWebSocket() {
-            ws = new WebSocket('wss://socketsbay.herokuapp.com/wss/v2/1/demo/');
+            ws = new WebSocket('wss://ws.postman-echo.com/raw');
             
             ws.onopen = () => {
-                console.log('متصل بالخادم');
-                // إرسال معلومات المستخدم للخادم
-                broadcastUserInfo();
+                console.log('متصل');
+                broadcastUser();
             };
 
             ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                handleMessage(data);
+                try {
+                    const data = JSON.parse(event.data);
+                    handleMessage(data);
+                } catch (e) {
+                    console.error('خطأ في تحليل الرسالة:', e);
+                }
             };
 
             ws.onclose = () => {
@@ -145,117 +258,143 @@
             };
         }
 
+        function login() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value.trim();
+            
+            if (name) {
+                currentUser = name;
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('chatBox').style.display = 'block';
+                connectWebSocket();
+            }
+        }
+
+        function broadcastUser() {
+            sendWebSocketMessage({
+                type: 'user_joined',
+                username: currentUser
+            });
+        }
+
         function handleMessage(data) {
             switch(data.type) {
-                case 'user_info':
+                case 'user_joined':
                     if (data.username !== currentUser) {
-                        activeUsers.set(data.username, data);
+                        users.add(data.username);
                         updateUsersList();
+                        showSystemMessage(`${data.username} انضم إلى المحادثة`);
                     }
                     break;
+                    
                 case 'chat_message':
-                    if ((data.from === chatPartner && data.to === currentUser) ||
-                        (data.from === currentUser && data.to === chatPartner)) {
-                        displayMessage(data);
+                    if (data.from !== currentUser) {
+                        displayMessage(data.message, false, data.from);
+                    }
+                    break;
+                    
+                case 'typing':
+                    if (data.username !== currentUser) {
+                        showTypingStatus(data.username);
                     }
                     break;
             }
+            updateUserCount();
         }
 
-        function login() {
-            const usernameInput = document.getElementById('username');
-            if (usernameInput.value.trim()) {
-                currentUser = usernameInput.value.trim();
-                connectWebSocket();
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('searchForm').style.display = 'block';
-            }
-        }
-
-        function broadcastUserInfo() {
-            const message = {
-                type: 'user_info',
-                username: currentUser,
-                timestamp: new Date().getTime()
-            };
-            ws.send(JSON.stringify(message));
-        }
-
-        function searchUser() {
-            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
-            updateUsersList(searchTerm);
-        }
-
-        function updateUsersList(searchTerm = '') {
-            const usersList = document.getElementById('usersList');
+        function updateUsersList() {
+            const usersList = document.getElementById('onlineUsers');
             usersList.innerHTML = '';
-
-            activeUsers.forEach((userData, username) => {
-                if (username !== currentUser && 
-                    (!searchTerm || username.toLowerCase().includes(searchTerm))) {
+            
+            users.forEach(user => {
+                if (user !== currentUser) {
                     const userDiv = document.createElement('div');
                     userDiv.className = 'user-item';
-                    userDiv.textContent = username;
-                    userDiv.onclick = () => startChat(username);
+                    if (user === selectedUser) userDiv.classList.add('active');
+                    userDiv.textContent = user;
+                    userDiv.onclick = () => selectUser(user);
                     usersList.appendChild(userDiv);
                 }
             });
         }
 
-        function startChat(username) {
-            chatPartner = username;
-            document.getElementById('searchForm').style.display = 'none';
-            document.getElementById('chatBox').style.display = 'block';
-            document.getElementById('chatWith').textContent = `محادثة مع ${username}`;
-            document.getElementById('messages').innerHTML = '';
+        function selectUser(username) {
+            selectedUser = username;
+            updateUsersList();
+            document.getElementById('messageInput').focus();
         }
 
         function sendMessage() {
             const messageInput = document.getElementById('messageInput');
-            const messageText = messageInput.value.trim();
+            const message = messageInput.value.trim();
             
-            if (messageText && ws.readyState === WebSocket.OPEN) {
-                const messageData = {
+            if (message && selectedUser) {
+                sendWebSocketMessage({
                     type: 'chat_message',
                     from: currentUser,
-                    to: chatPartner,
-                    text: messageText,
-                    timestamp: new Date().getTime()
-                };
-                ws.send(JSON.stringify(messageData));
-                displayMessage(messageData);
+                    to: selectedUser,
+                    message: message
+                });
+                
+                displayMessage(message, true);
                 messageInput.value = '';
             }
         }
 
-        function displayMessage(messageData) {
+        function displayMessage(message, isSent, from = '') {
             const messagesDiv = document.getElementById('messages');
-            const messageElement = document.createElement('div');
-            messageElement.className = `message ${messageData.from === currentUser ? 'sent' : 'received'}`;
-            messageElement.textContent = `${messageData.text}`;
-            messagesDiv.appendChild(messageElement);
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+            messageDiv.textContent = isSent ? message : `${from}: ${message}`;
+            messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        function backToSearch() {
-            chatPartner = '';
-            document.getElementById('chatBox').style.display = 'none';
-            document.getElementById('searchForm').style.display = 'block';
-            document.getElementById('searchInput').value = '';
-            updateUsersList();
+        function showSystemMessage(message) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message system';
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
-        // إضافة مستمعي الأحداث للإدخال
-        document.getElementById('messageInput')?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
+        function showTypingStatus(username) {
+            const typingDiv = document.getElementById('typingStatus');
+            typingDiv.textContent = `${username} يكتب...`;
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                typingDiv.textContent = '';
+            }, 1000);
+        }
 
-        document.getElementById('username')?.addEventListener('keypress', (e) => {
+        function updateUserCount() {
+            document.getElementById('userCount').textContent = users.size;
+        }
+
+        function sendWebSocketMessage(data) {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify(data));
+            }
+        }
+
+        // Event Listeners
+        document.getElementById('nameInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') login();
         });
 
-        document.getElementById('searchInput')?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchUser();
+        document.getElementById('messageInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+            
+            sendWebSocketMessage({
+                type: 'typing',
+                username: currentUser
+            });
+        });
+
+        // التأكد من إغلاق الاتصال عند مغادرة الصفحة
+        window.addEventListener('beforeunload', () => {
+            if (ws) ws.close();
         });
     </script>
 </body>
